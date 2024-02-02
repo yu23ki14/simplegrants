@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { CacheModule } from '@nestjs/common';
+import { CacheModule } from '@nestjs/cache-manager';
 import { UserProfile } from 'src/users/users.interface';
 import { authService, prismaService, users } from 'test/fixtures';
 import { PrismaService } from 'src/prisma/prisma.service';

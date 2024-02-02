@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Test, TestingModule } from '@nestjs/testing';
 import { GrantsService } from './grants.service';
-import { CacheModule, HttpException, HttpStatus } from '@nestjs/common';
+import { HttpException, HttpStatus } from '@nestjs/common';
+import { CacheModule } from '@nestjs/cache-manager';
 import { PrismaService } from 'src/prisma/prisma.service';
 import {
   CreateGrantDto,

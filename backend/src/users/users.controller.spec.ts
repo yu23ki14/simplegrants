@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersController } from './users.controller';
-import { CacheModule } from '@nestjs/common';
+import { CacheModule } from '@nestjs/cache-manager';
 import { UsersService } from './users.service';
 import { prismaService, users, usersService } from 'test/fixtures';
 import { UserProfile } from './users.interface';
