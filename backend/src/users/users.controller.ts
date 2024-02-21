@@ -7,9 +7,9 @@ import {
   UseInterceptors,
   ClassSerializerInterceptor,
   Body,
-  CacheInterceptor,
   Param,
 } from '@nestjs/common';
+import { CacheInterceptor } from '@nestjs/cache-manager';
 import { NextAuthGuard } from 'src/auth/guards/nextauth.guard';
 import { UsersService } from './users.service';
 import { RequestWithUser, UpdateUserDto, UserProfile } from './users.interface';

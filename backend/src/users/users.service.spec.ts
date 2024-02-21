@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from './users.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UserProfile } from './users.interface';
-import { CacheModule } from '@nestjs/common';
+import { CacheModule } from '@nestjs/cache-manager';
 import { prismaService, users } from 'test/fixtures';
 
 describe('UsersService', () => {
