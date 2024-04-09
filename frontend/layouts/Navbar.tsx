@@ -35,7 +35,7 @@ export default function Navbar({
         <div className="w-max">
           <Link className="btn btn-ghost" href="/">
             <Image
-              src="/logo.svg"
+              src="/logo.png"
               alt="SimpleGrants"
               width={103.55}
               height={32}

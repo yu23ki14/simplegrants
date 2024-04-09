@@ -22,11 +22,10 @@ export default function CreateGrantSuccess() {
   const shareInformation = React.useMemo(() => {
     if (typeof window !== undefined && createdGrant) {
       return {
-        url: `${
-          process.env.NODE_ENV === "production"
+        url: `${process.env.NODE_ENV === "production"
             ? "https://simplegrants.xyz"
             : "http://localhost:3001"
-        }/grants/${createdGrant.id}`,
+          }/grants/${createdGrant.id}`,
         message: `Check out my grant - ${createdGrant.name}!\n`,
       };
     }
@@ -67,7 +66,7 @@ export default function CreateGrantSuccess() {
         <div className="flex flex-row items-center justify-between w-full fixed top-0 px-2 py-4 lg:px-8 lg:py-6">
           <Link className="btn btn-ghost" href="/">
             <Image
-              src="/logo.svg"
+              src="/logo.png"
               alt="SimpleGrants"
               width={103.55}
               height={32}

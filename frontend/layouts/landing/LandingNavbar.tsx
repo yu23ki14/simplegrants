@@ -16,7 +16,7 @@ export default function LandingNavbar({ className }: ILandingNavbarProps) {
         <div className="w-max">
           <Link className="btn btn-ghost" href="/">
             <Image
-              src="/logo.svg"
+              src="/logo.png"
               alt="SimpleGrants"
               width={103.55}
               height={32}
@@ -27,10 +27,10 @@ export default function LandingNavbar({ className }: ILandingNavbarProps) {
       <div className="navbar-end flex-grow">
         <div className="flex-none gap-x-7 hidden lg:flex">
           <Button style="ghost" onClick={() => signIn()}>
-            Sign In
+            サインイン
           </Button>
           <Button className="bg-white border-none" onClick={() => signIn()}>
-            Sign Up
+            ログイン
           </Button>
         </div>
         <div className="dropdown dropdown-end">
