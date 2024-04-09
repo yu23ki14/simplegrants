@@ -26,7 +26,7 @@ export default function SignIn({
 
       <MainLayout className="items-center justify-center">
         <div className="flex flex-col items-center justify-between h-full rounded-lg bg-white p-8 shadow-card">
-          <h1 className="font-bold text-xl mb-16">Sign In / Sign Up</h1>
+          <h1 className="font-bold text-xl mb-16">ログイン / アカウント作成</h1>
           <div className="flex flex-col items-center justify-center gap-y-5">
             {Object.values(providers).map((provider) => (
               <Button
@@ -39,7 +39,7 @@ export default function SignIn({
                 className="px-16 py-3 text-xl"
                 width="full"
               >
-                Sign In With {provider.name}
+                {provider.name}でログイン
               </Button>
             ))}
           </div>
