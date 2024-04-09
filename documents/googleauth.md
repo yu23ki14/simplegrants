@@ -18,6 +18,12 @@ OAuth クライアント ID 作成画面から ID とシークレットを作成
 
 ![](./images/googleauth-2.png)
 
+**作成時に承認済みの JavaScript 生成元 に http://localhost:3001**
+
+**作成時に承認済みのリダイレクト URI に http://localhost:3001/api/auth/callback/google**
+
+![](./images/googleauth-3.png)
+
 ## 4. 環境変数の設定
 
 `/frontend/.env` の `GOOGLE_CLIENT_ID`、`GOOGLE_CLIENT_SECRET`にステップ 3 で作成した ID とシークレットを設定します。
