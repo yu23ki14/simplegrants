@@ -13,7 +13,7 @@ export class ProviderService {
     this.paymentProvider = new StripeProvider({
       prisma,
       secret: process.env.PAYMENT_KEY,
-      country: 'US',
+      country: 'JPN',
     });
   }
   private paymentProvider: PaymentProviderAdapter;
