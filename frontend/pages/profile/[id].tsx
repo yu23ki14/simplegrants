@@ -33,8 +33,8 @@ export default function Home() {
           console.error(err);
           toast.error(
             err.response?.data?.message ||
-              err.message ||
-              "Something went wrong",
+            err.message ||
+            "Something went wrong",
             {
               toastId: "user-profile",
             }
@@ -60,7 +60,7 @@ export default function Home() {
       <main className="flex flex-col min-w-screen min-h-screen w-full h-full overflow-x-hidden text-sg-secondary">
         <Navbar className="p-4 absolute" location="grants">
           <Link href="/grants/create">
-            <Button>Create Grant</Button>
+            <Button>プロジェクト登録</Button>
           </Link>
         </Navbar>
         {loading ? (

@@ -66,10 +66,10 @@ export default function Navbar({
                 >
                   <div className="card-body">
                     <span className="font-bold text-lg">
-                      {hasHydrated && grants.length} Items
+                      {hasHydrated && grants.length} プロジェクト
                     </span>
                     <span className="text-info">
-                      Subtotal: ${hasHydrated && subtotal}
+                      合計: ${hasHydrated && subtotal}
                     </span>
                     <div className="card-actions">
                       <Link
@@ -77,7 +77,7 @@ export default function Navbar({
                         className="w-full h-full"
                       >
                         <button className="btn btn-primary btn-block">
-                          View cart
+                          カートの中身を見る
                         </button>
                       </Link>
                     </div>
@@ -97,14 +97,14 @@ export default function Navbar({
                       className="justify-between"
                       href={`/profile/${(session.user as any).id}`}
                     >
-                      Profile
+                      アカウント
                     </Link>
                   </li>
                   <li>
-                    <a>Settings</a>
+                    <a>設定</a>
                   </li>
                   <li>
-                    <a onClick={() => signOut()}>Logout</a>
+                    <a onClick={() => signOut()}>ログアウト</a>
                   </li>
                 </ul>
               </div>
