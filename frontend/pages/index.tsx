@@ -81,10 +81,10 @@ export default function Home() {
         <div className="flex flex-col w-full items-center justify-center min-h-[60vh] text-center bg-sg-primary px-2">
           <Fade bottom distance="15px">
             <h1 className="font-bold text-3xl md:text-5xl max-w-2xl md:leading-snug">
-              Empowering the next generation of changemakers
+              助成金の分配先を自分たちの投票で決める!
             </h1>
             <p className="mt-3 text-lg md:text-xl">
-              Join us in making an impact through quadratic funding.
+              マッチングドネーション（Quadratic Funding）でお気に入りのプロジェクトに寄付して、公共財を支援しよう
             </p>
           </Fade>
         </div>
@@ -99,57 +99,45 @@ export default function Home() {
         </div>
         <section className="px-8 md:px-18 lg:px-36">
           <h2 className="font-bold text-3xl md:text-5xl mt-12 lg:mt-0 mb-5">
-            How does SimpleGrants work?
+          100円の寄付が1万円を動かす理由
           </h2>
           <p className="mb-28 max-w-3xl">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-            imperdiet scelerisque augue. In quis posuere nisl. Sed a commodo
-            massa. Praesent eu scelerisque libero, sit amet vulputate arcu. Cras
-            aliquam sit amet odio ut pulvinar. Praesent non dapibus nulla. Etiam
-            a sem tristique, tincidunt est eget, ornare lorem.
+            デジタル庁から派生したDigDAOは、DeSci Tokyoの支援を受け、"公益プロジェクトへの資金提供"の新しい仕組みを模索しています。「マッチングドネーション」という仕組みは、政府が用意した資金プールからどのプロジェクトに分配するかを市民による寄付に応じて決定するものです。
           </p>
 
           <div className="flex flex-wrap w-full items-center justify-center gap-x-12 gap-y-8">
             <div className="flex flex-col h-full w-full max-w-[350px] px-9 py-12 bg-[linear-gradient(90deg,_#E4F3DD_17.22%,_#FFE0DB_96.29%)] rounded-2xl border border-[#D9A596]">
-              <p className="font-bold text-3xl mb-10">Donate</p>
+              <p className="font-bold text-3xl mb-10">寄付</p>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-                imperdiet scelerisque augue. In quis posuere nisl. Sed a commodo
-                massa. Praesent eu scelerisque libero, sit amet vulputate arcu.
-                Cras aliquam sit amet odio ut pulvinar. Praesent non dapibus
-                nulla. Etiam a sem tristique, tincidunt est eget, ornare lorem.
+                お気に入りのプロジェクトを見つけて、誰でも寄付することができます。
+                <br></br>
+                あなたが寄付したお金は、QFの計算式に基づいてマッチングプールから上乗せされ、プロジェクトに対してより多くの資金を提供することができます。
               </p>
             </div>
             <div className="flex flex-col h-full w-full max-w-[350px] px-9 py-12 bg-[linear-gradient(90deg,_#FFE0DB_26.25%,_#FFE1A7_100%)] rounded-2xl border border-[#D9A596]">
-              <p className="font-bold text-3xl mb-10">Create</p>
+              <p className="font-bold text-3xl mb-10">資金プール</p>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-                imperdiet scelerisque augue. In quis posuere nisl. Sed a commodo
-                massa. Praesent eu scelerisque libero, sit amet vulputate arcu.
-                Cras aliquam sit amet odio ut pulvinar. Praesent non dapibus
-                nulla. Etiam a sem tristique, tincidunt est eget, ornare lorem.
+                この実験は「ビジネスとしては成り立たないけど社会的には価値のあるプロジェクト（公共財）」を支援するための新しい方法を模索しています。
+                <br></br>
+                今回は予算として10万円の資金プールを作成しました。この資金は、あなたたちの寄付によってどのプロジェクトに・どれぐらい分配するか決定されます。
               </p>
             </div>
             <div className="flex flex-col h-full w-full max-w-[350px] px-9 py-12 bg-[linear-gradient(90deg,_#FFE1A7_0.79%,_#E5F4DE_97.08%)] rounded-2xl border border-[#D9A596]">
-              <p className="font-bold text-3xl mb-10">Contribute</p>
+              <p className="font-bold text-3xl mb-10">公益プロジェクト</p>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-                imperdiet scelerisque augue. In quis posuere nisl. Sed a commodo
-                massa. Praesent eu scelerisque libero, sit amet vulputate arcu.
-                Cras aliquam sit amet odio ut pulvinar. Praesent non dapibus
-                nulla. Etiam a sem tristique, tincidunt est eget, ornare lorem.
+                私たちは、社会的意義のあるn個のプロジェクトを公募の上、選定しました。これらのプロジェクトが寄付先の選択肢となり、マッチングプールからの資金分配を受け取ることができます。
               </p>
             </div>
           </div>
           <div className="flex w-full items-center justify-center mt-16 mb-28">
             <Button onClick={() => router.push("/get-started")}>
-              Get Started
+              公益プロジェクトを見る
             </Button>
           </div>
         </section>
         <section className="px-8 md:px-18 lg:px-36">
           <h2 className="font-bold text-3xl md:text-5xl mt-12 lg:mt-0 mb-16">
-            What is quadratic funding?
+            マッチングドネーションの仕組み
           </h2>
           <div className="flex w-full items-center justify-center">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-14">
@@ -163,10 +151,9 @@ export default function Home() {
                   />
                 </div>
                 <div className="flex flex-col flex-1">
-                  <p className="font-bold text-2xl">Quadratic Funding</p>
+                  <p className="font-bold text-2xl">Quadratic Fundingによる分配</p>
                   <p>
-                    is the mathematically optimal way to fund public goods in a
-                    democratic community.
+                    マッチングドネーションの計算にQuadratic Fundingメカニズムを用いることで、幅広いコミュニティから支持されているプロジェクトが多くの助成金を受け取ることができます。
                   </p>
                 </div>
               </div>
@@ -180,8 +167,10 @@ export default function Home() {
                   />
                 </div>
                 <div className="flex flex-col flex-1">
-                  <p className="font-bold text-2xl">A matching pool </p>
-                  <p>campaign is matched according to the QF algorithm.</p>
+                  <p className="font-bold text-2xl">民主的な資金分配</p>
+
+                  <p>政府や自治体が分配先を決める従来の助成金とは違い、Quadratic Fundingでは資金プールの分配先・額はあなたたちの寄付によって決定されます。
+                  </p>
                 </div>
               </div>
               <div className="flex flex-col md:flex-row h-full w-full px-8 py-14 md:items-center rounded-2xl bg-white border border-[#D9A596] gap-6">
@@ -194,8 +183,8 @@ export default function Home() {
                   />
                 </div>
                 <div className="flex flex-col flex-1">
-                  <p className="font-bold text-2xl">Number of contributors</p>
-                  <p>matters more than amount funded.</p>
+                  <p className="font-bold text-2xl">多くの人に愛されるプロジェクトが報われる</p>
+                  <p>「あるプロジェクトへ寄付した人の数」は、各個人の寄付額より分配金額に大きな影響を与えるように設計されています。</p>
                 </div>
               </div>
               <div className="flex flex-col md:flex-row h-full w-full px-8 py-14 md:items-center rounded-2xl bg-white border border-[#D9A596] gap-6">
@@ -207,24 +196,19 @@ export default function Home() {
                     className="object-contain scale-150"
                   />
                 </div>
-                <div className="flex flex-col flex-1">
-                  <p>
-                    <span className="font-bold text-2xl inline-flex mr-2">
-                      $2,827,300{" "}
-                    </span>
-                    raised for individuals, communities, and businesses to help
-                    turn their visions into reality.
-                  </p>
-                </div>
+                  <div className="flex flex-col flex-1">
+                    <p className="font-bold text-2xl">90億円以上の分配実績を持つメカニズム</p>
+                    <p>QFは民主的な資金分配の方法として、すでに十分な実績を持っています。Ethereum上の公共財プロジェクトに$60M+の資金分配をしたり、UNICEFからNGOへ資金分配する方法として選ばれています。</p>
+                  </div>
               </div>
             </div>
           </div>
           <div className="flex w-full justify-end mt-14 mb-28">
             <Button
               style="ghost"
-              onClick={() => router.push("https://wtfisqf.com/")}
+              onClick={() => router.push("https://mirror.xyz/0xFEd3A62567FCEDfD10f56467EA6Db8c39c313606/sI97HdGBKr0ROPouXT5iKMJZHlrDm2TB45Ti4VkmLo8")}
             >
-              Learn more <ArrowTopRightIcon className="ml-2" />
+              Quadratic Fundingについてより詳しく <ArrowTopRightIcon className="ml-2" />
             </Button>
           </div>
         </section>
@@ -234,15 +218,16 @@ export default function Home() {
           </p>
           <div className="flex flex-col">
             <p className="font-bold text-4xl mb-5 z-[2] max-w-4xl">
-              SimpleGrants is the best platform to get passionate funders who go
-              the extra mile
+              マッチングドネーションの仕組みを使うことで今までは職員が審査をして決めていた助成金の分配先を、市民の寄付により決めることができるようになりました。
+              <br></br>
+              これにより、自治体内での審査プロセスは短縮し、より民主的な方法で資金を分配できるようになりました。
             </p>
-            <p>Bob Ross, Commercial Director, Homebase Labs</p>
+            <p>関 治之, Code for Japan</p>
           </div>
         </section>
         <section className="flex flex-col w-full items-center justify-center mt-24">
           <h3 className="font-bold text-3xl lg:text-5xl mb-14 text-center">
-            Projects funded
+            プロジェクトの一例
           </h3>
           <div className="flex flex-col md:flex-row gap-12">
             {data &&
@@ -259,12 +244,12 @@ export default function Home() {
           </div>
         </section>
         <section className="flex flex-col w-full items-center justify-center text-center mt-40">
-          <h3 className="font-bold text-3xl lg:text-5xl">Make an impact</h3>
+          <h3 className="font-bold text-3xl lg:text-5xl">あなたの寄付が公益プロジェクトを支える</h3>
           <p className="mt-3 mb-10 text-lg md:text-xl">
-            Start funding projects with as little as $1 today.
+            100円からでもプロジェクトに資金を提供できます。
           </p>
           <Button onClick={() => router.push("/get-started")}>
-            Get Started
+            プロジェクト一覧を見る
           </Button>
         </section>
         <div className="relative flex w-full my-16">
@@ -279,14 +264,14 @@ export default function Home() {
         <footer className="w-full flex flex-col md:flex-row px-6 py-8 md:px-28 md:py-16 gap-x-14 justify-between items-start">
           <div className="w-full flex-col">
             <Image
-              src="/logo.svg"
+              src="/logo.png"
               alt="SimpleGrants"
               width={162}
               height={50}
               className="mb-8"
             />
             <Link
-              href={"https://github.com/supermodularxyz/simplegrants"}
+              href={"https://github.com/dig-dao/simplegrants"}
               target="_blank"
             >
               <Github className="w-8 fill-sg-secondary cursor-pointer" />
@@ -294,25 +279,19 @@ export default function Home() {
           </div>
           <div className="flex flex-row flex-wrap lg:flex-nowrap gap-x-8 w-full justify-between">
             <div className="flex flex-col gap-y-3 mb-6">
-              <p className="font-bold text-xl">Product</p>
-              <p className="font-sm">Grants</p>
-              <p className="font-sm">Ecosystems</p>
+              <p className="font-bold text-xl">プロジェクトについて</p>
+              <p className="font-sm">プレスリリース</p>
+              <p className="font-sm">DigDAOとは</p>
             </div>
             <div className="flex flex-col gap-y-3 mb-6">
-              <p className="font-bold text-xl">Organization</p>
-              <p className="font-sm">About</p>
-              <p className="font-sm">Mission</p>
-              <p className="font-sm">Blog</p>
+              <p className="font-bold text-xl">連絡先</p>
+              <p className="font-sm">プロジェクトを掲載したい</p>
+              <p className="font-sm">資金を提供したい</p>
             </div>
             <div className="flex flex-col gap-y-3 mb-6">
-              <p className="font-bold text-xl">Community</p>
-              <p className="font-sm">Code of Conduct</p>
-              <p className="font-sm">Support</p>
-            </div>
-            <div className="flex flex-col gap-y-3 mb-6">
-              <p className="font-bold text-xl">Legal</p>
-              <p className="font-sm">Terms</p>
-              <p className="font-sm">Privacy</p>
+              <p className="font-bold text-xl">法に関すること</p>
+              <p className="font-sm">利用規約</p>
+              <p className="font-sm">プライバシー</p>
             </div>
           </div>
         </footer>

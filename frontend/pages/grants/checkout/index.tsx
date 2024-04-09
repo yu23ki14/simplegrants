@@ -93,7 +93,7 @@ export default function GrantsCheckout() {
       <MainLayout>
         <Navbar className="p-0" location="grants">
           <Link href="/grants/create">
-            <Button>Create Grant</Button>
+            <Button>プロジェクト登録</Button>
           </Link>
         </Navbar>
         <div className="flex flex-col items-start justify-center px-8 my-2 w-full">

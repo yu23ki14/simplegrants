@@ -88,14 +88,14 @@ export default function Grants() {
       <MainLayout>
         <Navbar className="p-0" location="grants">
           <Link href="/grants/create">
-            <Button>Create Grant</Button>
+            <Button>プロジェクト登録</Button>
           </Link>
         </Navbar>
         <div className="flex flex-col items-center justify-center px-8 my-20 w-full">
           <div className="flex flex-row w-full items-center justify-center mb-8">
             <TextInput
               type="text"
-              placeholder="Search"
+              placeholder="検索"
               onChange={handleChange}
               className="max-w-xl"
               icon={<Search className="fill-sg-900" />}
@@ -103,16 +103,16 @@ export default function Grants() {
           </div>
           <div className="flex flex-col lg:flex-row w-full items-end lg:items-center justify-between gap-y-4">
             <p className="font-bold text-xl flex-initial">
-              {data.length} Grants
+              {data.length} プロジェクト
             </p>
             <div className="flex flex-row gap-x-3 w-full flex-1 justify-end mr-0 lg:mr-3">
               <Select
-                label="Sort"
+                label="ソート"
                 options={SortOptions}
                 onValueChange={setSort}
               />
               <Select
-                label="Filter"
+                label="フィルター"
                 options={FilterOptions}
                 onValueChange={setFilter}
               />
@@ -174,7 +174,7 @@ export default function Grants() {
           ) : (
             <div className="flex flex-col items-center justify-center">
               <p className="font-bold text-xl text-center my-8">
-                No grants found
+                プロジェクトがありません
               </p>
             </div>
           )}

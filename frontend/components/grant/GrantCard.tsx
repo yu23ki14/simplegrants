@@ -113,7 +113,7 @@ const GrantCard = ({
                       : false
                   }
                 >
-                  Add to cart
+                  カートに入れる
                 </Button>
               )}
             </>

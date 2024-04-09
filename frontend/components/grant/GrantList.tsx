@@ -78,7 +78,7 @@ const GrantList = ({ grant, onClick }: IGrantListProps) => {
             (team) => team.email === session?.user?.email
           )}
         >
-          Add to cart
+          カートに入れる
         </Button>
       )}
     </div>

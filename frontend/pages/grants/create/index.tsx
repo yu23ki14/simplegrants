@@ -202,7 +202,7 @@ export default function CreateGrant() {
                 <div className="form-control w-full">
                   <label className="label">
                     <span className="label-text font-bold text-lg">
-                      Funding Goal
+                      目標金額
                     </span>
                   </label>
                   <TextInput

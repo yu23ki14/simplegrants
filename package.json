@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/easonchai/simplegrants/issues"
   },
-  "homepage": "https://github.com/easonchai/simplegrants#readme"
+  "homepage": "https://github.com/easonchai/simplegrants#readme",
+  "devDependencies": {
+    "@types/node": "^20.12.6"
+  }
 }

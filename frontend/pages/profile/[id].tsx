@@ -33,8 +33,8 @@ export default function Home() {
           console.error(err);
           toast.error(
             err.response?.data?.message ||
-              err.message ||
-              "Something went wrong",
+            err.message ||
+            "エラーが発生しました",
             {
               toastId: "user-profile",
             }
@@ -60,7 +60,7 @@ export default function Home() {
       <main className="flex flex-col min-w-screen min-h-screen w-full h-full overflow-x-hidden text-sg-secondary">
         <Navbar className="p-4 absolute" location="grants">
           <Link href="/grants/create">
-            <Button>Create Grant</Button>
+            <Button>プロジェクト登録</Button>
           </Link>
         </Navbar>
         {loading ? (
@@ -70,7 +70,7 @@ export default function Home() {
             {data ? (
               <>
                 <div className="basis-full shrink-0 md:basis-1/3 lg:basis-1/4 bg-sg-gradient px-8 sm:px-12 md:px-14 pt-24 pb-6 rounded-b-xl overflow-hidden">
-                  <p className="font-bold text-2xl text-sg-accent">Profile</p>
+                  <p className="font-bold text-2xl text-sg-accent">プロフィール</p>
                   <div className="max-w-[8rem] aspect-square rounded-full relative overflow-hidden my-6">
                     <Image fill src={data.image} alt={data.name} />
                   </div>
@@ -80,7 +80,7 @@ export default function Home() {
                   <p className="text-xl">{data.email}</p>
                   <p className="mt-4 my-12 line-clamp-4">{data.bio}</p>
                   <p className="font-bold text-xl text-sg-accent">
-                    Total Donated Amount
+                    寄付の額
                   </p>
                   <p className="text-xl mb-5">
                     ${" "}
@@ -90,7 +90,7 @@ export default function Home() {
                     USD
                   </p>
                   <p className="font-bold text-xl text-sg-accent">
-                    Total Raised Amount
+                    受け取った額
                   </p>
                   <p className="text-xl mb-5">
                     ${" "}
@@ -102,7 +102,7 @@ export default function Home() {
                   {data.totalContributed ? (
                     <>
                       <p className="font-bold text-xl text-sg-accent">
-                        Total Contributed Amount (To Pools)
+                        資金プールへの寄付
                       </p>
                       <p className="text-xl mb-5">
                         ${" "}
@@ -118,7 +118,7 @@ export default function Home() {
                   {data.totalPooled ? (
                     <>
                       <p className="font-bold text-xl text-sg-accent">
-                        Total Raised Amount (From Pools)
+                        総受取額
                       </p>
                       <p className="text-xl mb-5">
                         ${" "}
@@ -145,20 +145,20 @@ export default function Home() {
                         className="data-[state=active]:text-sg-accent data-[state=active]:underline"
                         value="donations"
                       >
-                        Donations
+                        資金プールへの寄付
                       </Tabs.Trigger>
                       <Tabs.Trigger
                         className="data-[state=active]:text-sg-accent data-[state=active]:underline"
                         value="grants"
                       >
-                        Grants
+                        プロジェクト
                       </Tabs.Trigger>
                       {data.contributions && data.contributions.length > 0 && (
                         <Tabs.Trigger
                           className="data-[state=active]:text-sg-accent data-[state=active]:underline"
                           value="contributions"
                         >
-                          Contributions
+                          寄付
                         </Tabs.Trigger>
                       )}
                       {data.pools && data.pools.length > 0 && (
@@ -166,7 +166,7 @@ export default function Home() {
                           className="data-[state=active]:text-sg-accent data-[state=active]:underline"
                           value="pools"
                         >
-                          Matching Pools
+                          作成した寄付プール
                         </Tabs.Trigger>
                       )}
                     </Tabs.List>
@@ -187,7 +187,7 @@ export default function Home() {
                         ))
                       ) : (
                         <p className="text-xl text-center">
-                          No donations to grants have been made
+                          寄付プールへの寄付はありません
                         </p>
                       )}
                     </Tabs.Content>
@@ -206,7 +206,7 @@ export default function Home() {
                         ))
                       ) : (
                         <p className="text-xl text-center">
-                          No grants have been created
+                          作成したプロジェクトはありません
                         </p>
                       )}
                     </Tabs.Content>
@@ -228,7 +228,7 @@ export default function Home() {
                         ))
                       ) : (
                         <p className="text-xl text-center">
-                          No contributions to matching pools found
+                          寄付はありません
                         </p>
                       )}
                     </Tabs.Content>
@@ -247,7 +247,7 @@ export default function Home() {
                         ))
                       ) : (
                         <p className="text-xl text-center">
-                          No matching pools have been created
+                          寄付プールはありません
                         </p>
                       )}
                     </Tabs.Content>
