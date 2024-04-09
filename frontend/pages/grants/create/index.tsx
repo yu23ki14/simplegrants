@@ -88,7 +88,7 @@ export default function CreateGrant() {
   return (
     <div>
       <Head>
-        <title>プロジェクト登録 | SimpleGrants</title>
+        <title>Create Grant | SimpleGrants</title>
         <meta
           name="description"
           content="Join us in making an impact through quadratic funding."
@@ -105,7 +105,7 @@ export default function CreateGrant() {
           <BackButton href="/grants">Back to grants</BackButton>
           <div className="w-full flex flex-col my-10 gap-y-8">
             <div className=" bg-white shadow-card py-8 px-6 rounded-xl w-full">
-              <h1 className="font-bold text-subtitle-1 mb-8">プロジェクト登録</h1>
+              <h1 className="font-bold text-subtitle-1 mb-8">Create Grant</h1>
               <div className="flex flex-col md:flex-row w-full gap-11">
                 <div className="relative h-full basis-[2/5] w-full">
                   <ImageInput
@@ -202,7 +202,7 @@ export default function CreateGrant() {
                 <div className="form-control w-full">
                   <label className="label">
                     <span className="label-text font-bold text-lg">
-                      Funding Goal
+                      目標金額
                     </span>
                   </label>
                   <TextInput
@@ -243,7 +243,7 @@ export default function CreateGrant() {
                 onClick={handleSubmit(onSubmit)}
                 disabled={loading}
               >
-                プロジェクト登録
+                Create Grant
               </Button>
             </div>
           </div>

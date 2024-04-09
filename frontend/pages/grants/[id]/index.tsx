@@ -73,7 +73,7 @@ export default function GrantDetails() {
           </Link>
         </Navbar>
         <div className="flex flex-col items-start justify-center px-4 md:px-8 my-2 w-full">
-          <BackButton href="/grants">Back to grants</BackButton>
+          <BackButton href="/grants">プロジェクト一覧へ戻る</BackButton>
           {data ? (
             <div className="w-full flex flex-col md:flex-row my-10 gap-y-8">
               <div className="basis-full md:basis-3/5 md:px-4">
@@ -123,12 +123,11 @@ export default function GrantDetails() {
                     })}
                   </p>
                   <p className="mb-2">
-                    raised of ${" "}
+                    目標金額 ${" "}
                     {data.fundingGoal.toLocaleString("en-US", {
                       minimumFractionDigits: 0,
                       maximumFractionDigits: 0,
                     })}{" "}
-                    goal
                   </p>
 
                   <p className="font-bold text-2xl">
@@ -137,10 +136,10 @@ export default function GrantDetails() {
                       maximumFractionDigits: 0,
                     })}
                   </p>
-                  <p className="mb-4">contributors</p>
+                  <p className="mb-4">寄付者</p>
                   {!data.verified && (
                     <div className="badge badge-error mb-4">
-                      Unverified Grant
+                      認証されていないプロジェクト
                     </div>
                   )}
                   {grants.find((grant) => grant.id === id) ? (
@@ -149,7 +148,7 @@ export default function GrantDetails() {
                       className="btn-error"
                       onClick={() => removeFromCart(id as string)}
                     >
-                      Remove from cart
+                      カードから削除
                     </Button>
                   ) : (
                     <div
@@ -168,7 +167,7 @@ export default function GrantDetails() {
                             disabled={!data.verified}
                             onClick={() => addToCart(data)}
                           >
-                            Add to cart
+                            カートに入れる
                           </Button>
                         )}
                     </div>
@@ -181,7 +180,7 @@ export default function GrantDetails() {
                       <p className="font-bold mb-4">Looking to make changes?</p>
                       <Link href={`/grants/${id}/edit`}>
                         <Button width="full" className="">
-                          Edit Grant
+                          プロジェクトを編集する
                         </Button>
                       </Link>
                     </div>
@@ -190,7 +189,7 @@ export default function GrantDetails() {
             </div>
           ) : (
             <div className="w-full flex flex-col md:flex-row my-10 gap-y-8 items-center justify-center">
-              <p className="font-bold text-xl text-center">Grant not found</p>
+              <p className="font-bold text-xl text-center">プロジェクトが見つかりません</p>
             </div>
           )}
         </div>

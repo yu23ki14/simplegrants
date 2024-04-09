@@ -118,7 +118,7 @@ const PoolCard = ({
                   }}
                   disabled={dayjs(pool.endDate).diff(dayjs()) <= 0}
                 >
-                  Add to cart
+                  カートに入れる
                 </Button>
               )}
             </>

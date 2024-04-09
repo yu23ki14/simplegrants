@@ -190,7 +190,7 @@ export default function PoolDetails() {
                         disabled={!data.verified || hasEnded}
                         onClick={() => addToCart(data)}
                       >
-                        Add to cart
+                        カートに入れる
                       </Button>
                     </div>
                   )}

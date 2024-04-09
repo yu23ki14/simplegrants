@@ -104,7 +104,7 @@ const PoolList = ({ pool, onClick }: IPoolListProps) => {
           }}
           disabled={dayjs(pool.endDate).diff(dayjs()) <= 0}
         >
-          Add to cart
+          カートに入れる
         </Button>
       )}
     </div>
