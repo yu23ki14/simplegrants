@@ -151,14 +151,14 @@ export default function Home() {
                         className="data-[state=active]:text-sg-accent data-[state=active]:underline"
                         value="grants"
                       >
-                        プロジェクト
+                        作成したプロジェクト
                       </Tabs.Trigger>
                       {data.contributions && data.contributions.length > 0 && (
                         <Tabs.Trigger
                           className="data-[state=active]:text-sg-accent data-[state=active]:underline"
                           value="contributions"
                         >
-                          寄付
+                          プロジェクトへの寄付
                         </Tabs.Trigger>
                       )}
                       {data.pools && data.pools.length > 0 && (
@@ -166,7 +166,7 @@ export default function Home() {
                           className="data-[state=active]:text-sg-accent data-[state=active]:underline"
                           value="pools"
                         >
-                          作成した寄付プール
+                          作成した資金プール
                         </Tabs.Trigger>
                       )}
                     </Tabs.List>

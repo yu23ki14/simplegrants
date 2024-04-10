@@ -97,8 +97,8 @@ export default function GrantsCheckout() {
           </Link>
         </Navbar>
         <div className="flex flex-col items-start justify-center px-8 my-2 w-full">
-          <BackButton href="/grants">Back to grants</BackButton>
-          <h1 className="font-bold text-2xl my-10 px-4">Checkout Grants</h1>
+          <BackButton href="/grants">プロジェクト一覧へ戻る</BackButton>
+          <h1 className="font-bold text-2xl my-10 px-4">カート内のプロジェクト</h1>
           <div className="w-full flex flex-col md:flex-row gap-y-8">
             <div className="basis-full md:basis-3/5 px-4">
               <div className="flex flex-col bg-white shadow-card py-8 px-6 rounded-xl gap-y-6">
@@ -143,7 +143,7 @@ export default function GrantsCheckout() {
                           className="cursor-pointer h-full items-center justify-center text-sg-error"
                           onClick={() => removeFromCart(grant.id)}
                         >
-                          Remove
+                          削除
                         </p>
                       </div>
                       {index !== grants.length - 1 && (
@@ -159,8 +159,8 @@ export default function GrantsCheckout() {
             </div>
             <div className="basis-full md:basis-2/5 px-4 flex flex-col items-center ">
               <div className="flex flex-col w-full bg-white shadow-card py-8 px-6 rounded-xl max-w-sm">
-                <p className="font-bold text-xl mb-8">Summary</p>
-                <p className="font-bold text-lg mb-3">Your Contributions</p>
+                <p className="font-bold text-xl mb-8">合計金額</p>
+                <p className="font-bold text-lg mb-3">カートに入れたプロジェクト</p>
                 <div className="flex flex-col mb-6 gap-y-3">
                   {hasHydrated &&
                     grants.map((grant) => (
@@ -184,7 +184,7 @@ export default function GrantsCheckout() {
                 <Divider orientation="horizontal" className="bg-sg-700" />
                 <div className="flex flex-row w-full items-center justify-between mt-6 mb-8">
                   <p className="flex flex-1 text-ellipsis truncate justify-start font-bold text-lg">
-                    Total
+                    合計
                   </p>
                   <p className="flex flex-1 text-ellipsis truncate justify-end">
                     {hasHydrated &&
@@ -200,7 +200,7 @@ export default function GrantsCheckout() {
                   width="full"
                   disabled={(hasHydrated && subtotal <= 1) || loading}
                 >
-                  Checkout
+                  寄付する
                 </Button>
               </div>
             </div>
