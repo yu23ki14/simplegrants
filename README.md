@@ -1,73 +1,73 @@
 # SimpleGrants 💰
 
-A super modular, plug-and-play Web2 grants funding system.
+超モジュラーでプラグアンドプレイ可能なWeb2グラント資金調達システム。
 
-## Contents 📄
+## 目次 📄
 
-- [Backend](./backend/)
-- [Frontend](./frontend/)
+- [バックエンド](./backend/)
+- [フロントエンド](./frontend/)
 
-## Main Goal/Objective 🎯
+## 主な目標/目的 🎯
 
-- Facilitate funding for any Web2 entities and more
-- Super modular design that can be plugged into any payment gateway or fundraising platform
-- Comprehensive documentations, tests, clean architecture, and easy forking
+- あらゆるWeb2エンティティの資金調達を容易にする
+- 任意の支払いゲートウェイや資金調達プラットフォームにプラグイン可能な超モジュラー設計
+- 包括的なドキュメンテーション、テスト、クリーンなアーキテクチャ、簡単なフォーキング
 
-## About This Project ❓
+## このプロジェクトについて ❓
 
-This project is built based on this [Gitcoin Issue](https://gitcoin.co/issue/29568). Essentially, we want a modular Web2 grant funding system that can accept any payment providers or even plug in to another platform in a simple plug & play system.
+このプロジェクトは、この[Gitcoin Issue](https://gitcoin.co/issue/29568)に基づいて構築されました。基本的に、私たちは任意の支払いプロバイダーを受け入れ、簡単なプラグアンドプレイシステムで他のプラットフォームにプラグインすることができるモジュラーなWeb2グラント資金調達システムを求めています。
 
-## Features 💥
+## 特徴 💥
 
-- Plug-and-play system for supported payment gateways
-- Easy & quick deployment
-- Analytics to track all important metrics such as grants with the highest amount raised, contributors, etc.
-- Swagger API documentation for backend
+- サポートされている支払いゲートウェイのためのプラグアンドプレイシステム
+- 簡単かつ迅速なデプロイ
+- 調達金額が最も高いグラント、寄付者など、すべての重要な指標を追跡するための分析機能
+- バックエンドのためのSwagger APIドキュメンテーション
 
-## Navigating This Repository 🛠
+## このリポジトリの使い方 🛠
 
-This repository is broken down into two folders, `backend` & `frontend` and folder names are self explanatory. For further information on how to get everything set up, do check out the README in each of the folders!
+このリポジトリは`backend`および`frontend`の2つのフォルダに分かれており、フォルダ名は自己説明的です。セットアップ方法についての詳細は、各フォルダ内のREADMEをご覧ください！
 
-## Installation & Setup 🧪
+## インストールとセットアップ 🧪
 
-1. Clone the repository
-2. Navigate to the `backend` folder and follow the installation and setup instructions in the [Backend README](./backend/README.md).
-3. Navigate to the `frontend` folder and follow the installation and setup instructions in the [Frontend README](./frontend/README.md).
+1. リポジトリをクローンする
+2. `backend`フォルダに移動し、[Backend README](./backend/README.md)に記載されているインストールとセットアップの指示に従う。
+3. `frontend`フォルダに移動し、[Frontend README](./frontend/README.md)に記載されているインストールとセットアップの指示に従う。
 
-### Local Development 👨🏻‍💻
+### ローカル開発 👨🏻‍💻
 
-If you would like to run the services for local development, follow the steps below.
+ローカル開発のためにサービスを実行したい場合は、以下の手順に従ってください。
 
-1. Firstly, ensure you install and setup everything according to the README in each folder as described above. You do not need to run any of the services yet.
-2. If you are using Stripe as your payment provider, ensure that you have Stripe CLI setup & already logged in.
-3. Once everything is setup, you may run the command below to instantly spin up all the required services.
+1. まず、上記のように各フォルダのREADMEに記載されているとおりにすべてをインストールしセットアップします。まだサービスを実行する必要はありません。
+2. 支払いプロバイダとしてStripeを使用している場合は、Stripe CLIがセットアップされ、すでにログインしていることを確認してください。
+3. すべてがセットアップされたら、以下のコマンドを実行して必要なサービスをすぐに立ち上げます。
 
 ```bash
-# Update the .env accordingly for both frontend and backend
-# Then, build & run everything
-# This will automatically run seeds, migrations, and run the Stripe webhook listener
+# フロントエンドとバックエンドの.envを適宜更新
+# その後、全てをビルドして実行
+# これにより、自動的にシード、マイグレーションが実行され、StripeのWebhookリスナーが起動します
 $ npm run start:dev
 ```
 
-### Deployment Configuration 🚀
+### デプロイメント設定 🚀
 
-If you would like to deploy this application, there is a simple script that you can run to help speed up the process slightly.
+このアプリケーションをデプロイしたい場合、プロセスを少し速めるのに役立つシンプルなスクリプトがあります。
 
-1. Firstly, ensure you install and setup everything according to the README in each folder as described above. You do not need to run any of the services yet.
-2. Once everything is setup, you may run the command below to instantly spin up all the required services. **Note: This assumes that you would be deploying everything in one server using Docker, rather than hosting on multiple platforms**.
+1. まず、上記の各フォルダのREADMEに記載されているとおりに全てをインストールし、セットアップしてください。まだサービスを実行する必要はありません。
+2. 全てがセットアップされたら、以下のコマンドを実行して必要なサービスを即座に立ち上げます。**注意: これは、複数のプラットフォームにホスティングするのではなく、Dockerを使用してすべてを一つのサーバーにデプロイすることを前提としています**。
 
 ```bash
-# Update the .env accordingly for both frontend and backend
-# Then, deploy everything in a single server
-# This will automatically run seeds & migrations as needed
+# フロントエンドとバックエンドの.envを適宜更新
+# その後、全てを一つのサーバーにデプロイ
+# 必要に応じてシードとマイグレーションが自動的に実行されます
 $ npm run start
 ```
 
-3. Ensure that your payment provider webhooks are setup accordingly.
-4. Because you are using Docker, it is very important to remember that the containers cannot speak to each other via `localhost`. That means that you should ideally setup NGINX (or whichever reverse proxy you use) to point to the services and change your environment variables to use the canonical URLs instead.
+3. 支払いプロバイダーのWebhookが適切に設定されていることを確認してください。
+4. Dockerを使用しているため、コンテナ間で`localhost`を介して通信することができないことを覚えておくことが非常に重要です。これは、理想的にはNGINX（または使用しているリバースプロキシ）をサービスを指すように設定し、環境変数を正規のURLを使用するように変更することを意味します。
 
-## Additional Notes 🧠
+## 追加のノート 🧠
 
-This project is intended for developers and entities who want to launch their own instance of this project and deploy it to their own platform.
+このプロジェクトは、自分たちのプラットフォームにこのプロジェクトのインスタンスを立ち上げてデプロイしたい開発者やエンティティを対象としています。
 
-For more information and detailed instructions, please refer to the README in each folder.
+詳細な情報や詳細な指示については、各フォルダのREADMEを参照してください。
