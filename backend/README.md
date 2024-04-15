@@ -1,8 +1,4 @@
-GitHubのREADMEを日本語に翻訳しました。固有名詞はそのまま保持しています。
-
----
-
-# SimpleGrants Backend 📡 <!-- omit from toc -->
+# Backend 📡 <!-- omit from toc -->
 
 > ⚠️ **重要な注意**:
 > Nodeのバージョンは17.5以上を使用する必要があります！これは、認証システムがNextAuthを使用しており、fetchが必要であるためです（v17.5以上で利用可能です）。
@@ -38,9 +34,21 @@ GitHubのREADMEを日本語に翻訳しました。固有名詞はそのまま�
 
 ## インストールとセットアップ 🧪
 
-### 支払いプロバイダの選択
+### Stripeの環境変数の設定
 
-現時点では、Stripeのみが支払いプロバイダとして受け入れられています。利用可能な支扅いプロバイダはバックエンドの[adapter](./src/provider/adapter/)フォルダにあります。将来的には、より多くの支払いプロバイダが追加される予定です。
+現時点では、Stripeのみが支払いプロバイダとして受け入れられています。
+
+backend側の.envファイルに`PAYMENT_KEY`という環境変数がある。
+stripeのsecret keyを入力する必要がある
+
+https://docs.stripe.com/keys
+- StripeのAPIはTest mode, Live modeがある。両方にsecret key, public keyがあるが、envに使うのはsecretのみ
+    - <img width="1712" alt="image" src="https://github.com/dig-dao/simplegrants/assets/45249410/76332cb9-c4ed-492d-815d-b4c50fc584f6">
+    - <img width="1144" alt="image" src="https://github.com/dig-dao/simplegrants/assets/45249410/7708390f-4b5c-4e6f-ba8e-26ff3ae7331f">
+    - 自分がtest modeで作ってみたけど、チェックアウト画面はこんな感じ
+    - test用のクレジットカードで決済フローは確認できる: https://docs.stripe.com/testing#cards
+
+利用可能な支払いプロバイダはバックエンドの[adapter](./src/provider/adapter/)フォルダにあります。将来的には、より多くの支払いプロバイダが追加される予定です。
 支払いプロバイダを設定するには、[`provider.service.ts`](./src/provider/provider.service.ts#L15)で使用したいプロバイダを変更するだけです。
 
 その後、以下のように必要なコンストラクタ値を渡します：
@@ -78,12 +86,11 @@ $ cp .env.example .env
 3. Stripeを使用している場合、**Webhookを設定することを忘れないでください**！
 
 ```bash
-#`/`で実行
-$ npm run start:dev
-
 # Stripeを使用している場合、Stripe経由でのWebhookを受信する
 $ stripe listen --forward-to localhost:3000/checkout/webhook
 ```
+
+実行は[README](../README.md)を参照
 
 **⚠️ 接続エラーが発生した場合 👉 エラー: P1001: データベースサーバーに到達できません `simplegrants-database`:`5432`, 必要なのは一時的に`.env`で`DATABASE_CONTAINER=localhost`に変更し、コマンドを再実行することです。完了したら元に戻すことを忘れないでください！**
 
