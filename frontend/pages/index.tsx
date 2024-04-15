@@ -218,7 +218,7 @@ export default function Home() {
           </p>
           <div className="flex flex-col">
             <p className="font-bold text-4xl mb-5 z-[2] max-w-4xl">
-              マッチング寄付は、より多くの人の価値観を反映するための新たな参加形寄付方式です。
+              マッチングドネーションは、より多くの人の価値観を反映するための新たな参加形寄付方式です。
               <br></br>
               これにより、自治体内での審査プロセスは短縮し、より民主的な方法で資金を分配できるようになりました。
             </p>
