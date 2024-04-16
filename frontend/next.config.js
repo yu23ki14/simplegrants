@@ -28,6 +28,15 @@ const nextConfig = {
         protocol: "https",
         hostname: "**twimg.com",
       },
+      // 以下は追加
+      {
+        protocol: "https",
+        hostname: "www.digdao.jp",
+      },
+      {
+        protocol: "https",
+        hostname: "i.gyazo.com",
+      },
     ],
   },
 };
