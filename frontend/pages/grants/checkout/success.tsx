@@ -23,10 +23,11 @@ export default function CheckoutSuccess() {
     if (typeof window !== undefined && data) {
       return {
         url: window.location.href,
-        message: `I've just donated $${data.donated.toLocaleString("en-US", {
+        message: `#DigDAOマッチングドネーション実験 で${data.numberOfItems}件の公益プロジェクトに $${data.donated.toLocaleString("en-US", {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
-        })} to ${data.numberOfItems} grants! Check it out here!🥳\n`,
+        })} 分の寄付をしました！🥳 #Quadratic_Funding
+        \n`,
       };
     }
   }, [data]);
@@ -77,9 +78,9 @@ export default function CheckoutSuccess() {
         {hasHydrated && data && !loading && (
           <div className="flex flex-col w-full min-h-screen h-full items-center justify-center text-center">
             <Success className="fill-sg-success mb-6" />
-            <h1 className="font-bold text-3xl mb-3">Congratulations!</h1>
+            <h1 className="font-bold text-3xl mb-3">公益的な市民の鑑!</h1>
             <p className="text-2xl max-w-2xl mt-2 mb-10">
-              Your{" "}
+              あなたの{" "}
               <b>
                 $
                 {data.donated.toLocaleString("en-US", {
@@ -87,7 +88,9 @@ export default function CheckoutSuccess() {
                   maximumFractionDigits: 2,
                 })}
               </b>{" "}
-              donation has been processed! The estimated matching amount is{" "}
+              分の寄付を受け取りました。
+              <br></br>
+              この寄付に加え、約{" "}
               <b>
                 $
                 {data.matched.toLocaleString("en-US", {
@@ -95,7 +98,7 @@ export default function CheckoutSuccess() {
                   maximumFractionDigits: 2,
                 })}
               </b>
-              .
+              分の助成金が資金プールから上乗せされてプロジェクトに分配されます。
             </p>
             {shareInformation && (
               <>
@@ -107,7 +110,7 @@ export default function CheckoutSuccess() {
                   className="mb-5"
                 >
                   <Copy className="stroke-sg-secondary mr-2" />
-                  Copy link
+                  リンクをコピー
                 </Button>
                 <div className="flex flex-row items-center justify-center w-full gap-6">
                   <TwitterShareButton
@@ -115,24 +118,25 @@ export default function CheckoutSuccess() {
                     title={shareInformation.message}
                   >
                     <p className="btn font-bold lg:text-lg px-4 md:px-12 py-3 h-max rounded-full normal-case btn-outline btn-secondary w-max">
-                      Share on Twitter
+                      Twitterでつぶやく
                     </p>
                   </TwitterShareButton>
-                  <FacebookShareButton
+                  {/* <FacebookShareButton
                     url={shareInformation.url}
                     quote={shareInformation.message}
                   >
                     <p className="btn font-bold lg:text-lg px-4 md:px-12 py-3 h-max rounded-full normal-case btn-outline btn-secondary w-max">
-                      Share on Facebook
+                      Facebookで広める
                     </p>
-                  </FacebookShareButton>
+                  </FacebookShareButton> */}
+                  {/* 動いていない↑ */}
                 </div>
               </>
             )}
 
             <Link href="/grants">
               <Button className="mt-6" style="secondary">
-                Back To Grants
+                プロジェクトを探す
               </Button>
             </Link>
           </div>
