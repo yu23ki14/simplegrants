@@ -224,7 +224,8 @@ export class StripeProvider implements PaymentProviderAdapter {
                     ? grant.description.slice(0, 80) + '...'
                     : grant.description,
               },
-              unit_amount: Math.round(this.roundNumber(grant.amount) * 100),
+              // unit_amount: Math.round(this.roundNumber(grant.amount) * 100),
+              unit_amount: this.roundNumber(grant.amount), // JPYを扱うのでMath.round()の削除
             },
             quantity: 1,
           };
