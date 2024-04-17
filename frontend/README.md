@@ -1,78 +1,80 @@
 # SimpleGrants Frontend 📱 <!-- omit from toc -->
 
-## Table of Contents 📒 <!-- omit from toc -->
+## 目次 📒 <!-- omit from toc -->
 
-- [Requirements 📝](#requirements-%F0%9F%93%9D)
-- [Installation \& Setup 🧪](#installation--setup-%F0%9F%A7%AA)
-- [Running the app 🚀](#running-the-app-%F0%9F%9A%80)
-  - [Local Development 👨🏻‍💻](#local-development-%F0%9F%91%A8%F0%9F%8F%BB%E2%80%8D%F0%9F%92%BB)
-  - [Production Deployment 🔥](#production-deployment-%F0%9F%94%A5)
-- [Additional Notes 🧠](#additional-notes-%F0%9F%A7%A0)
+- [要件 📝](#requirements-%F0%9F%93%9D)
+- [インストールとセットアップ 🧪](#installation--setup-%F0%9F%A7%AA)
+- [アプリの実行 🚀](#running-the-app-%F0%9F%9A%80)
+  - [ローカル開発 👨🏻‍💻](#local-development-%F0%9F%91%A8%F0%9F%8F%BB%E2%80%8D%F0%9F%92%BB)
+  - [本番環境へのデプロイ 🔥](#production-deployment-%F0%9F%94%A5)
+- [追加のノート 🧠](#additional-notes-%F0%9F%A7%A0)
   - [Prisma Schema](#prisma-schema)
-- [Deployment 🚀](#deployment-%F0%9F%9A%80)
+- [デプロイ 🚀](#deployment-%F0%9F%9A%80)
 
-## Requirements 📝
+## 要件 📝
 
 - NodeJS (v17.5+)
 - yarn
 - Prisma CLI
 
-## Installation & Setup 🧪
+## インストールとセットアップ 🧪
 
-The frontend utilizes NextAuth for authentication. You should update the [authentication providers](./pages/api/auth/[...nextauth].ts) based on your platform requirements.
+フロントエンドは認証のために NextAuth を利用しています。プラットフォームの要件に基づいて [認証プロバイダー](./pages/api/auth/[...nextauth].ts) を更新してください。
 
 ```bash
-# To setup
+# セットアップのために
 $ yarn install
 
-# Copy .env over
+# .envをコピーする
 $ cp .env.example .env.local
 
-# If running for production, use .env.production
+# 本番用に実行する場合、.env.productionを使用
 $ cp .env.example .env.production
 
 ```
 
-⚠️ **Make sure to update the .env.local file with your values!**
+⚠️ **.env.local ファイルを自分の値で更新してください！**
 
-## Running the app 🚀
+## アプリの実行 🚀
 
-> 💡 Before running the frontend, make sure that the backend is already running!
+> 💡 フロントエンドを実行する前に、バックエンドが既に動作していることを確認してください！
 
-### Local Development 👨🏻‍💻
+### ローカル開発 👨🏻‍💻
 
-You should not need to run these commands. See [this section](../README.md#deployment-configuration-%F0%9F%9A%80) for more info.
-If you are running locally for development, there are a few things to take note of:
+これらのコマンドを実行する必要はありません。詳細は [このセクション](../README.md#deployment-configuration-%F0%9F%9A%80) を参照してください。
+開発用にローカルで実行する場合、注意すべきいくつかの点があります：
 
-1. Make sure that your Prisma schema is **always in sync** with the backend. To do this, run `npm run generate`.
-2. Run the command below to get it started
+1. Prismaスキーマがバックエンドと**常に同期**していることを確認してください。これを行うには、`npm run generate` を実行してください。
+2. 以下のコマンドを実行して開始します。
 
 ```bash
-# Development mode
+# 開発モード
 $ yarn dev -p 3001
 ```
 
-### Production Deployment 🔥
+### 本番環境へのデプロイ 🔥
 
-You should not need to run these commands. See [this section](../README.md#deployment-configuration-%F0%9F%9A%80) for more info.
-If you are deploying this application for production, it is slightly easier to setup, but there are still some things to be aware of:
+これらのコマンドを実行する必要はありません。詳細は [このセクション](../README.md#deployment-configuration-%F0%9F%9A%80) を参照してください。
+このアプリケーションを本番環境にデプロイする場合、セットアップは少し簡単ですが、注意すべきいくつかの点があります：
 
-1. Make sure you have a `.env.production` setup as it will be used by the `docker-compose.yml` file.
-2. Your `next.config.js` should include the domains & hostnames of where your image files are hosted.
+1. `.env.production`がセットアップされていることを確認してください。これは `docker-compose.yml` ファイルによって使用されます。
+2. `next.config.js`は画像ファイルがホストされているドメインとホスト名を含むべきです。
 
 ```bash
-# Production mode
+# 本番モード
 $ yarn build && yarn start
 ```
 
-## Additional Notes 🧠
+## 追加のノート 🧠
 
 ### Prisma Schema
 
-The frontend utilizes NextAuth, which shares a schema dependency with the backend. To ensure that the Prisma schemas are always in sync (locally), you should run `npm run generate` in the backend, which will copy the schema here and run Prisma generate. **This is only needed for local development. Make sure to commit this to ensure the production setup uses the up to date schema.**
+フロントエンドは NextAuth を利用して
 
-## Deployment 🚀
+おり、バックエンドとスキーマ依存関係を共有しています。Prismaスキーマがローカルで常に同期していることを確実にするために、バックエンドで `npm run generate` を実行してください。これにより、ここにスキーマがコピーされ、Prisma generateが実行されます。**これはローカル開発のためだけに必要です。本番環境のセットアップが最新のスキーマを使用するように、これをコミットしてください。**
 
-The easiest way to deploy this app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## デプロイ 🚀
 
-Check out the [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details. However, there is a lot more setup that you will need to do to ensure it works with your backend.
+このアプリをデプロイする最も簡単な方法は、Next.js の創設者が提供する [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) を使用することです。
+
+詳細については、[Next.js のデプロイメントドキュメント](https://nextjs.org/docs/deployment)を確認してください。ただし、バックエンドとの連携を確実にするためには、もっと多くのセットアップが必要です。
