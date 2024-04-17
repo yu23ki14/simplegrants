@@ -116,25 +116,14 @@ export default function GrantDetails() {
                     max={data.fundingGoal}
                   />
                   <p className="font-bold text-2xl">
-                    ${" "}
-                    {data.amountRaised.toLocaleString("en-US", {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}
+                    {data.amountRaised.toLocaleString("ja-JP")}円
                   </p>
                   <p className="mb-2">
-                    目標金額 ${" "}
-                    {data.fundingGoal.toLocaleString("en-US", {
-                      minimumFractionDigits: 0,
-                      maximumFractionDigits: 0,
-                    })}{" "}
+                    目標金額 {data.fundingGoal.toLocaleString("ja-JP")}円
                   </p>
 
                   <p className="font-bold text-2xl">
-                    {data.contributions.length.toLocaleString("en-US", {
-                      minimumFractionDigits: 0,
-                      maximumFractionDigits: 0,
-                    })}
+                    {data.contributions.length.toLocaleString("ja-JP")}
                   </p>
                   <p className="mb-4">寄付者</p>
                   {!data.verified && (

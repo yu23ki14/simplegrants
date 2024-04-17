@@ -25,7 +25,7 @@ export default function Navbar({
   const hasHydrated = useHasHydrated();
 
   const subtotal = React.useMemo(
-    () => grants.reduce((acc, grant) => acc + grant.amount, 0).toFixed(2),
+    () => grants.reduce((acc, grant) => acc + grant.amount, 0).toFixed(0),
     [grants]
   );
 
@@ -69,7 +69,7 @@ export default function Navbar({
                       {hasHydrated && grants.length} プロジェクト
                     </span>
                     <span className="text-info">
-                      合計: ${hasHydrated && subtotal}
+                      合計: {hasHydrated && `${parseInt(subtotal).toLocaleString("ja-JP")}円`}
                     </span>
                     <div className="card-actions">
                       <Link

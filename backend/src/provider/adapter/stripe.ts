@@ -224,7 +224,7 @@ export class StripeProvider implements PaymentProviderAdapter {
                     ? grant.description.slice(0, 80) + '...'
                     : grant.description,
               },
-              unit_amount: Math.round(this.roundNumber(grant.amount) * 100),
+              unit_amount: grant.amount, // JPYを扱うのでMath.round()の削除
             },
             quantity: 1,
           };
@@ -237,9 +237,7 @@ export class StripeProvider implements PaymentProviderAdapter {
                   name: 'Stripe Fees',
                   description: 'Processing fees taken by Stripe',
                 },
-                unit_amount: Math.round(
-                  this.getCustomerFee(totalDonation) * 100,
-                ),
+                unit_amount: this.getCustomerFee(totalDonation),
               },
               quantity: 1,
             }
@@ -321,7 +319,7 @@ export class StripeProvider implements PaymentProviderAdapter {
                     ? pool.description.slice(0, 80) + '...'
                     : pool.description || undefined,
               },
-              unit_amount: Math.round(this.roundNumber(pool.amount) * 100),
+              unit_amount: pool.amount, // JPYを扱うのでMath.round()の削除
             },
             quantity: 1,
           };
@@ -334,9 +332,7 @@ export class StripeProvider implements PaymentProviderAdapter {
                   name: 'Stripe Fees',
                   description: 'Processing fees taken by Stripe',
                 },
-                unit_amount: Math.round(
-                  this.getCustomerFee(totalDonation) * 100,
-                ),
+                unit_amount: this.getCustomerFee(totalDonation),
               },
               quantity: 1,
             }
@@ -360,7 +356,7 @@ export class StripeProvider implements PaymentProviderAdapter {
   async initiateTransfer(to: string, amount: number): Promise<any> {
     const provider = await this.getDetails();
     const transfer = await this.stripe.transfers.create({
-      amount: Math.round(this.roundNumber(amount) * 100),
+      amount: amount, // 日本円の場合はそのまま渡す
       currency: provider.denominations[0],
       destination: to,
     });
@@ -466,7 +462,7 @@ export class StripeProvider implements PaymentProviderAdapter {
 
       for await (const checkout of checkoutsToProcess) {
         await this.stripe.transfers.create({
-          amount: Math.round(checkout.amount * 100), // multiply 100 because of the way stripe calculates
+          amount: checkout.amount, // 日本円の場合はそのまま渡す
           currency: checkout.denomination,
           destination: checkout.grant.paymentAccount.recipientAddress,
           transfer_group: transferGroup,
@@ -519,11 +515,10 @@ export class StripeProvider implements PaymentProviderAdapter {
   ): Promise<SuccessfulCheckoutInfo> {
     try {
       const data = await this.stripe.checkout.sessions.listLineItems(sessionId);
-
       const checkoutInfo = data.data.reduce(
         (acc, item) => {
           if (item.description !== 'Stripe Fees') {
-            acc.donated += item.amount_total / 100;
+            acc.donated += item.amount_total;
             acc.numberOfItems += 1;
           }
           return acc;

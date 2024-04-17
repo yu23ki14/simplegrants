@@ -135,8 +135,9 @@ export default function GrantsCheckout() {
                                 updateGrantAmount(grant.id, event.target.value)
                               }
                               className="px-4 py-2 max-w-[144px] lg:max-w-[192px] text-lg"
+                              step="100"  //日本円を100円単位でしか寄付できないようにする
                             />
-                            <p className="text-lg ml-3">USD</p>
+                            <p className="text-lg ml-3">円</p>
                           </div>
                         </div>
                         <p
@@ -172,11 +173,11 @@ export default function GrantsCheckout() {
                           <p className="truncate">{grant.name}</p>
                         </div>
                         <p className="flex flex-1 text-ellipsis truncate justify-end">
-                          {grant.amount.toLocaleString("en-US", {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2,
+                          {grant.amount.toLocaleString("ja-JP", {
+                            minimumFractionDigits: 0,
+                            maximumFractionDigits: 0,
                           })}{" "}
-                          USD
+                          円
                         </p>
                       </div>
                     ))}
@@ -188,11 +189,11 @@ export default function GrantsCheckout() {
                   </p>
                   <p className="flex flex-1 text-ellipsis truncate justify-end">
                     {hasHydrated &&
-                      subtotal.toLocaleString("en-US", {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
+                      subtotal.toLocaleString("ja-JP", {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
                       })}{" "}
-                    USD
+                    円
                   </p>
                 </div>
                 <Button
