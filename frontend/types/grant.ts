@@ -50,30 +50,30 @@ export interface PoolGrantResponse {
 
 export const SortOptions = [
   {
-    label: "Newest",
+    label: "新しいものから",
     value: "newest",
   },
   {
-    label: "Oldest",
+    label: "古いものから",
     value: "oldest",
   },
   {
-    label: "Most funded",
+    label: "寄付額",
     value: "most_funded",
   },
   {
-    label: "Most supporters",
+    label: "支持者数",
     value: "most_backed",
   },
 ];
 
 export const FilterOptions = [
   {
-    label: "Funded",
+    label: "寄付済み",
     value: "funded",
   },
   {
-    label: "Underfunded",
+    label: "未寄付",
     value: "underfunded",
   },
 ];

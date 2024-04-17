@@ -5,7 +5,7 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { InvitesService } from './invites.service';
 import { invitesService, prismaService, users } from 'test/fixtures';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CacheModule } from '@nestjs/common';
+import { CacheModule } from '@nestjs/cache-manager';
 import { UserProfile } from 'src/users/users.interface';
 
 describe('InvitesController', () => {

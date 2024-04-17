@@ -93,12 +93,12 @@ export default function GrantsCheckout() {
       <MainLayout>
         <Navbar className="p-0" location="grants">
           <Link href="/grants/create">
-            <Button>Create Grant</Button>
+            <Button>プロジェクト登録</Button>
           </Link>
         </Navbar>
         <div className="flex flex-col items-start justify-center px-8 my-2 w-full">
-          <BackButton href="/grants">Back to grants</BackButton>
-          <h1 className="font-bold text-2xl my-10 px-4">Checkout Grants</h1>
+          <BackButton href="/grants">プロジェクト一覧へ戻る</BackButton>
+          <h1 className="font-bold text-2xl my-10 px-4">カート内のプロジェクト</h1>
           <div className="w-full flex flex-col md:flex-row gap-y-8">
             <div className="basis-full md:basis-3/5 px-4">
               <div className="flex flex-col bg-white shadow-card py-8 px-6 rounded-xl gap-y-6">
@@ -135,15 +135,16 @@ export default function GrantsCheckout() {
                                 updateGrantAmount(grant.id, event.target.value)
                               }
                               className="px-4 py-2 max-w-[144px] lg:max-w-[192px] text-lg"
+                              step="100"  //日本円を100円単位でしか寄付できないようにする
                             />
-                            <p className="text-lg ml-3">USD</p>
+                            <p className="text-lg ml-3">円</p>
                           </div>
                         </div>
                         <p
                           className="cursor-pointer h-full items-center justify-center text-sg-error"
                           onClick={() => removeFromCart(grant.id)}
                         >
-                          Remove
+                          削除
                         </p>
                       </div>
                       {index !== grants.length - 1 && (
@@ -159,8 +160,8 @@ export default function GrantsCheckout() {
             </div>
             <div className="basis-full md:basis-2/5 px-4 flex flex-col items-center ">
               <div className="flex flex-col w-full bg-white shadow-card py-8 px-6 rounded-xl max-w-sm">
-                <p className="font-bold text-xl mb-8">Summary</p>
-                <p className="font-bold text-lg mb-3">Your Contributions</p>
+                <p className="font-bold text-xl mb-8">合計金額</p>
+                <p className="font-bold text-lg mb-3">カートに入れたプロジェクト</p>
                 <div className="flex flex-col mb-6 gap-y-3">
                   {hasHydrated &&
                     grants.map((grant) => (
@@ -172,11 +173,11 @@ export default function GrantsCheckout() {
                           <p className="truncate">{grant.name}</p>
                         </div>
                         <p className="flex flex-1 text-ellipsis truncate justify-end">
-                          {grant.amount.toLocaleString("en-US", {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2,
+                          {grant.amount.toLocaleString("ja-JP", {
+                            minimumFractionDigits: 0,
+                            maximumFractionDigits: 0,
                           })}{" "}
-                          USD
+                          円
                         </p>
                       </div>
                     ))}
@@ -184,15 +185,15 @@ export default function GrantsCheckout() {
                 <Divider orientation="horizontal" className="bg-sg-700" />
                 <div className="flex flex-row w-full items-center justify-between mt-6 mb-8">
                   <p className="flex flex-1 text-ellipsis truncate justify-start font-bold text-lg">
-                    Total
+                    合計
                   </p>
                   <p className="flex flex-1 text-ellipsis truncate justify-end">
                     {hasHydrated &&
-                      subtotal.toLocaleString("en-US", {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
+                      subtotal.toLocaleString("ja-JP", {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
                       })}{" "}
-                    USD
+                    円
                   </p>
                 </div>
                 <Button
@@ -200,7 +201,7 @@ export default function GrantsCheckout() {
                   width="full"
                   disabled={(hasHydrated && subtotal <= 1) || loading}
                 >
-                  Checkout
+                  寄付する
                 </Button>
               </div>
             </div>

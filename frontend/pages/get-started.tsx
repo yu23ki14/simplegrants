@@ -20,29 +20,29 @@ export default function GetStarted() {
 
       <MainLayout className="items-center justify-center">
         <div className="flex flex-col items-center justify-between h-full text-center">
-          <h1 className="font-bold text-4xl mb-5">Let&apos;s get started</h1>
-          <p className="mb-14">What would you like to do first?</p>
+          <h1 className="font-bold text-4xl mb-5">さあ、始めましょう！</h1>
+          <p className="mb-14">どこから始めますか？</p>
           <div className="flex flex-row flex-wrap items-center justify-center gap-x-9 gap-y-4">
             <Button
               style="outline"
               className="min-w-[180px] text-base"
               onClick={() => router.push("/grants/create")}
             >
-              Create a Grant
+              プロジェクトを追加
             </Button>
             <Button
               style="outline"
               className="min-w-[180px] text-base"
               onClick={() => router.push("/grants/")}
             >
-              Donate to Grants
+              プロジェクトへ寄付
             </Button>
             <Button
               style="outline"
               className="min-w-[180px] text-base"
               onClick={() => router.push("/pools/")}
             >
-              Contribute
+              資金プールを支援
             </Button>
           </div>
         </div>

@@ -11,10 +11,11 @@ RUN apt-get update && \
 WORKDIR /app
 
 # npm install files
-COPY package*.json ./
+COPY package.json ./
+COPY yarn.lock ./
 COPY prisma ./prisma/
 
 # Install app dependencies
-RUN npm install
+RUN yarn install
 
-CMD npm run start:dev
+CMD yarn start:dev

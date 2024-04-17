@@ -1,164 +1,174 @@
-# SimpleGrants Backend 📡 <!-- omit from toc -->
+# Backend 📡 <!-- omit from toc -->
 
-> ⚠️ **Important Note**:
-> You have to use Node version >= 17.5! This is because the authentication system uses NextAuth which will require fetch (which is available above v17.5)
+> ⚠️ **重要な注意**:
+> Node のバージョンは 17.5 以上を使用する必要があります！これは、認証システムが NextAuth を使用しており、fetch が必要であるためです（v17.5 以上で利用可能です）。
 
-## Table of Contents 📒 <!-- omit from toc -->
+## 目次 📒 <!-- omit from toc -->
 
-- [Requirements 📝](#requirements-%F0%9F%93%9D)
-- [Installation \& Setup 🧪](#installation--setup-%F0%9F%A7%AA)
-  - [Choosing your Payment Provider](#choosing-your-payment-provider)
-  - [Setting up environment variables](#setting-up-environment-variables)
-- [Running the app 🚀](#running-the-app-%F0%9F%9A%80)
-  - [Local Development 👨🏻‍💻](#local-development-%F0%9F%91%A8%F0%9F%8F%BB%E2%80%8D%F0%9F%92%BB)
-  - [Production Deployment 🔥](#production-deployment-%F0%9F%94%A5)
-- [Test ✅](#test-%E2%9C%85)
-  - [Unit Tests](#unit-tests)
-  - [Integration Tests](#integration-tests)
-  - [End-to-End (E2E) Tests](#end-to-end-e2e-tests)
-  - [Test Coverage](#test-coverage)
-- [Additional Notes 🧠](#additional-notes-%F0%9F%A7%A0)
-  - [Prisma Schema](#prisma-schema)
-  - [Creating Admins](#creating-admins)
-  - [Payment Providers](#payment-providers)
+- [必要条件 📝](#requirements-%F0%9F%93%9D)
+- [インストールとセットアップ 🧪](#installation--setup-%F0%9F%A7%AA)
+  - [支払いプロバイダの選択](#choosing-your-payment-provider)
+  - [環境変数の設定](#setting-up-environment-variables)
+- [アプリの実行 🚀](#running-the-app-%F0%9F%9A%80)
+  - [ローカル開発 👨🏻‍💻](#local-development-%F0%9F%91%A8%F0%9F%8F%BB%E2%80%8D%F0%9F%92%BB)
+  - [本番環境へのデプロイ 🔥](#production-deployment-%F0%9F%94%A5)
+- [テスト ✅](#test-%E2%9C%85)
+  - [単体テスト](#unit-tests)
+  - [統合テスト](#integration-tests)
+  - [エンドツーエンド（E2E）テスト](#end-to-end-e2e-tests)
+  - [テストカバレッジ](#test-coverage)
+- [追加の注意点 🧠](#additional-notes-%F0%9F%A7%A0)
+  - [Prisma スキーマ](#prisma-schema)
+  - [管理者の作成](#creating-admins)
+  - [支払いプロバイダ](#payment-providers)
     - [Stripe](#stripe)
 
-## Requirements 📝
+## 必要条件 📝
 
 - Docker & `docker compose`
-- NodeJS (v17.5+)
+- NodeJS（v17.5 以上）
 - Prisma CLI
-- Stripe CLI (if using Stripe)
+- Stripe CLI
 
-The backend utilizes Docker for ease of setup & deployment. You should ideally have Docker setup on your machine if you intend to run it locally.
+バックエンドは設定とデプロイの簡素化のために Docker を使用しています。ローカルで実行する予定であれば、Docker がマシンに設定されていることが理想的です。
 
-## Installation & Setup 🧪
+## インストールとセットアップ 🧪
 
-### Choosing your Payment Provider
+### Stripe の環境変数の設定
 
-At this point in time, only Stripe is accepted as a payment provider. The available payment providers can be found in the [adapter](./src/provider/adapter/) folder in the backend. In the future, more payment providers will be added.
-To setup your payment provider, all you need to do is to change the payment provider in [`provider.service.ts`](./src/provider/provider.service.ts#L15) to the provider you want to use.
+現時点では、Stripe のみが支払いプロバイダとして受け入れられています。
 
-Then, pass in the required constructor values as below:
+backend 側の.env ファイルに`PAYMENT_KEY`という環境変数がある。
+stripe の secret key を入力する必要がある
+
+https://docs.stripe.com/keys
+
+- Stripe の API は Test mode, Live mode がある。両方に secret key, public key があるが、env に使うのは secret のみ
+  - <img width="1712" alt="image" src="https://github.com/dig-dao/simplegrants/assets/45249410/76332cb9-c4ed-492d-815d-b4c50fc584f6">
+  - <img width="1144" alt="image" src="https://github.com/dig-dao/simplegrants/assets/45249410/7708390f-4b5c-4e6f-ba8e-26ff3ae7331f">
+  - 自分が test mode で作ってみたけど、チェックアウト画面はこんな感じ
+  - test 用のクレジットカードで決済フローは確認できる: https://docs.stripe.com/testing#cards
+
+利用可能な支払いプロバイダはバックエンドの[adapter](./src/provider/adapter/)フォルダにあります。将来的には、より多くの支払いプロバイダが追加される予定です。
+支払いプロバイダを設定するには、[`provider.service.ts`](./src/provider/provider.service.ts#L15)で使用したいプロバイダを変更するだけです。
+
+その後、以下のように必要なコンストラクタ値を渡します：
 
 ```typescript
 {
     prisma: PrismaService,
-    secret: String, // For Stripe, it would be your secret key
-    country: String, // ISO country code. This is needed for calculating the payment provider fees if any
+    secret: String, // Stripeの場合はあなたの秘密キー
+    country: String, // ISO国コード。これは必要に応じて支払いプロバイダの手数料を計算するために必要です。日本の場合は`JP`
 }
 ```
 
-### Setting up environment variables
+### 環境変数の設定
 
 ```bash
-# To setup
+# セットアップするには
 $ npm install
 
-# Copy .env over
+# .envをコピーする
 $ cp .env.example .env
 ```
 
-**⚠️ Make sure to update the .env file with your values!**
+**⚠️ .env ファイルをあなたの値で更新してください！**
 
-## Running the app 🚀
+## アプリの実行 🚀
 
-There are multiple ways of running this application, each with a slightly different method of setting things up.
+このアプリケーションを実行する方法は複数あり、それぞれ少し異なる設定方法があります。
 
-### Local Development 👨🏻‍💻
+### ローカル開発 👨🏻‍💻
 
-If you are running locally for development, there are a few things to take note of:
+ローカルで開発用に実行する場合、いくつか注意すべき点があります：
 
-1. Because of the way Docker networking works, if you need to run commands like `prisma migrate` or `prisma db seed`, you need to change the `DATABASE_CONTAINER` environment variable to `localhost`. Luckily, there is a simple script that helps you with that in `prisma-helper.sh`. Running `npm run migrate:dev` or `npm run setup` should automatically swap the .env variables for you.
-2. Depending on how you choose to run this application, you may need to update `FRONTEND_URL` and `NEXTAUTH_URL` accordingly. It is important to note that the `NEXTAUTH_URL` has to be `http://host.docker.internal:3001` and **NOT** `http://localhost:3001` if you are running everything locally with Docker.
-3. If you are using Stripe, **remember to configure your webhook**!
+1. Docker のネットワーキングの仕組みにより、`prisma migrate`や`prisma db seed`のようなコマンドを実行する必要がある場合、`DATABASE_CONTAINER`環境変数を`localhost`に変更する必要があります。幸いなことに、それを助ける簡単なスクリプトが`prisma-helper.sh`にあります。`npm run migrate:dev`や`npm run setup`を実行すると、自動的に.env 変数が交換されます。
+2. このアプリケーションの実行方法によっては、`FRONTEND_URL`および`NEXTAUTH_URL`を適切に更新する必要がある場合があります。重要なのは、Docker でローカルですべてを実行している場合、`NEXTAUTH_URL`は`http://host.docker.internal:3001`である必要があり、**`http://localhost:3001`ではない**という点です。
+3. Stripe を使用している場合、**Webhook を設定することを忘れないでください**！
 
 ```bash
-# Development mode
-$ npm run docker:dev:up
-
-# Run the seed and migration
-$ npm run setup
-
-# Listen for incoming webhooks via Stripe (if you are using Stripe)
+# Stripeを使用している場合、Stripe経由でのWebhookを受信する
 $ stripe listen --forward-to localhost:3000/checkout/webhook
 ```
 
-**⚠️ If you get a connection error 👉 Error: P1001: Can't reach database server at `simplegrants-database`:`5432`, all you need to do is to temporarily change `DATABASE_CONTAINER=localhost` in the .env and rerun the command. Make sure to remember to change it back once you are done!**
+実行は[README](../README.md)を参照
 
-### Production Deployment 🔥
+**⚠️ 接続エラーが発生した場合 👉 エラー: P1001: データベースサーバーに到達できません `simplegrants-database`:`5432`, 必要なのは一時的に`.env`で`DATABASE_CONTAINER=localhost`に変更し、コマンドを再実行することです。完了したら元に戻すことを忘れないでください！**
 
-If you are deploying this application for production, it is slightly easier to setup, but there are still some things to be aware of:
+### 本番環境へのデプロイ 🔥
 
-1. The current `docker-compose.yml` assumes that you may be running a database locally. However, this is most likely not the case and you would be connecting to a database that is deployed separately. To achieve this configuration, remove the `simplegrants-database` entry in the `docker-compose.yml` and change `DATABASE_CONTAINER` in your .env to the database's URL.
-2. Your `FRONTEND_URL` and `NEXTAUTH_URL` should point to a registered domain that matches your callback URLs that you configured in your OAuth providers.
-3. If you are using Stripe, **remember to configure your webhook**!
+このアプリケーションを本番環境にデプロイする場合、設定は少し簡単ですが、注意すべき点がいくつかあります：
+
+1. 現在の`docker-compose.yml`は、データベースをローカルで実行している可能性があると想定しています。しかし、これはほとんどの場合ではなく、別途デプロイされたデータベースに接続することになるでしょう。この設定を実現するために、`docker-compose.yml`から`simplegrants-database`エントリを削除し、`.env`の`DATABASE_CONTAINER`をデータベースの URL に変更します。
+2. `FRONTEND_URL`および`NEXTAUTH_URL`は、OAuth プロバイダーで設定したコールバック URL と一致する登録済みドメインを指すべきです。
+3. Stripe を使用している場合、**Webhook を設定することを忘れないでください**！
 
 ```bash
-# Production mode
+# 本番モード
 $ npm run docker:up
 
-# Run the seed and migration
+# シードとマイグレーションを実行
 $ npm run setup
 ```
 
-## Test ✅
+## テスト ✅
 
-Testing is an essential part of software development, and this project includes several types of tests to ensure that the application is working as expected.
+テストはソフトウェア開発の不可欠な部分であり、このプロジェクトにはアプリケーションが期待通りに動作していることを確認するための複数のテストタイプが含まれています。
 
-### Unit Tests
+### 単体テスト
 
-Unit tests are used to test the individual components and functions of the application. These tests are focused on the implementation details of the code and ensure that the code is working as expected.
+単体テストは、アプリケーションの個々のコンポーネントと機能をテストするために使用されます。これらのテストはコードの実装詳細に焦点を当て、コードが期待通りに機能していることを保証します。
 
-To run unit tests, use the following command:
+単体テストを実行するには、次のコマンドを使用します：
 
 ```bash
 $ npm run test
 ```
 
-### Integration Tests
+### 統合テスト
 
-Integration tests are used to test how different components and functions of the application work together. These tests ensure that the application is working as expected when all the different parts are put together.
+統合テストは、アプリケーションの異なるコンポーネントと機能がどのように連携して動作するかをテストするために使用されます。これらのテストは、異なる部分がすべて組み合わされたときにアプリケーションが期待通りに動作していることを保証します。
 
-To run integration tests, use the following command:
+統合テストを実行するには、次のコマンドを使用します：
 
 ```bash
 $ npm run test:integration
 ```
 
-### End-to-End (E2E) Tests
+### エンドツーエンド（E2E）テスト
 
-E2E tests are used to test the application as a whole, simulating how a user would interact with the application. These tests ensure that the application is working as expected from the user's perspective.
+E2E テストは、アプリケーション全体をテストし、ユーザーがアプリケーションとどのように対話するかをシミュレートするために使用されます。これらのテストは、ユーザーの視点からアプリケーションが期待通りに動作していることを保証します。
 
-To run e2e tests, use the following command:
+e2e テストを実行するには、次のコマンドを使用します：
 
 ```bash
 $ npm run test:e2e
 ```
 
-### Test Coverage
+### テストカバレッジ
 
-Test coverage is a measure of how much of the code is being tested. It helps to identify areas of the code that are not being tested and need more coverage.
+テストカバレッジは、コードのどの程度がテストされているかを測定する指標です。これは、テストされていないコードの領域を特定し、より多くのカバレッジが必要であることを明らかにするのに役立ちます。
 
-To check test coverage, use the following command:
+テストカバレッジを確認するには、次のコマンドを使用します：
 
 ```bash
 $ npm run test:cov
 ```
 
-## Additional Notes 🧠
+## 追加の注意点 🧠
 
-### Prisma Schema
+### Prisma スキーマ
 
-The backend utilizes NextAuth, which is dependent on the frontend. To ensure that the Prisma schemas are always in sync (locally), you should run `npm run generate`, which will copy the schema to the frontend folder and run Prisma generate there. **This is only needed for local development.**
+バックエンドは NextAuth を利用しており、これはフロントエンドに依存しています。Prisma スキーマを常に同期状態に保つために（ローカルで）、`npm run generate`を実行する必要があります。これにより、スキーマがフロントエンドフォルダにコピーされ、そこで Prisma generate が実行されます。**これはローカル開発でのみ必要です。**
 
-### Creating Admins
+### 管理者の作成
 
-Because authentication relies on NextAuth, users will only be created when someone has logged in to the platform. Therefore, the best way to create the first admin is to login to the platform for the first time, and manually change the `Role` for the specific user to an `Admin`.
-Subsequent admin changes can be done using the API, which is documented in Swagger.
+認証は NextAuth に依存しているため、ユーザーはプラットフォームにログインした人が初めて作成されます。したがって、最初の管理者を作成する最良の方法は、プラットフォームに初めてログインし、特定のユーザーの`Role`を`Admin`に手動で変更することです。
+その後の管理者変更は API を使用して行うことができ、Swagger で文書化されています。
+http://localhost:3000/api#/
 
-### Payment Providers
+### 支払いプロバイダ
 
 #### Stripe
 
-If you are using Stripe, it is **extremely important that you remember to configure your webhook**! If you do not do so, your backend will not detect any successful payments being made by your users.
+Stripe を使用している場合、**Webhook を設定することを忘れないでください**！そうしないと、バックエンドはユーザーによる成功した支払いを検出できません。

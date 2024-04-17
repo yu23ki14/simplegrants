@@ -69,11 +69,11 @@ export default function GrantDetails() {
       <MainLayout>
         <Navbar className="p-0" location="grants">
           <Link href="/grants/create">
-            <Button>Create Grant</Button>
+            <Button>プロジェクト登録</Button>
           </Link>
         </Navbar>
         <div className="flex flex-col items-start justify-center px-4 md:px-8 my-2 w-full">
-          <BackButton href="/grants">Back to grants</BackButton>
+          <BackButton href="/grants">プロジェクト一覧へ戻る</BackButton>
           {data ? (
             <div className="w-full flex flex-col md:flex-row my-10 gap-y-8">
               <div className="basis-full md:basis-3/5 md:px-4">
@@ -116,31 +116,19 @@ export default function GrantDetails() {
                     max={data.fundingGoal}
                   />
                   <p className="font-bold text-2xl">
-                    ${" "}
-                    {data.amountRaised.toLocaleString("en-US", {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}
+                    {data.amountRaised.toLocaleString("ja-JP")}円
                   </p>
                   <p className="mb-2">
-                    raised of ${" "}
-                    {data.fundingGoal.toLocaleString("en-US", {
-                      minimumFractionDigits: 0,
-                      maximumFractionDigits: 0,
-                    })}{" "}
-                    goal
+                    目標金額 {data.fundingGoal.toLocaleString("ja-JP")}円
                   </p>
 
                   <p className="font-bold text-2xl">
-                    {data.contributions.length.toLocaleString("en-US", {
-                      minimumFractionDigits: 0,
-                      maximumFractionDigits: 0,
-                    })}
+                    {data.contributions.length.toLocaleString("ja-JP")}
                   </p>
-                  <p className="mb-4">contributors</p>
+                  <p className="mb-4">寄付者</p>
                   {!data.verified && (
                     <div className="badge badge-error mb-4">
-                      Unverified Grant
+                      認証されていないプロジェクト
                     </div>
                   )}
                   {grants.find((grant) => grant.id === id) ? (
@@ -149,7 +137,7 @@ export default function GrantDetails() {
                       className="btn-error"
                       onClick={() => removeFromCart(id as string)}
                     >
-                      Remove from cart
+                      カードから削除
                     </Button>
                   ) : (
                     <div
@@ -162,35 +150,35 @@ export default function GrantDetails() {
                       {!data.team.some(
                         (team) => team.email === session?.user?.email
                       ) && (
-                        <Button
-                          width="full"
-                          className=""
-                          disabled={!data.verified}
-                          onClick={() => addToCart(data)}
-                        >
-                          Add to cart
-                        </Button>
-                      )}
+                          <Button
+                            width="full"
+                            className=""
+                            disabled={!data.verified}
+                            onClick={() => addToCart(data)}
+                          >
+                            カートに入れる
+                          </Button>
+                        )}
                     </div>
                   )}
                 </div>
                 {data.team.some(
                   (team) => team.id === (session?.user as any).id
                 ) && (
-                  <div className="flex flex-col w-full bg-white shadow-card py-8 px-6 rounded-xl max-w-sm">
-                    <p className="font-bold mb-4">Looking to make changes?</p>
-                    <Link href={`/grants/${id}/edit`}>
-                      <Button width="full" className="">
-                        Edit Grant
-                      </Button>
-                    </Link>
-                  </div>
-                )}
+                    <div className="flex flex-col w-full bg-white shadow-card py-8 px-6 rounded-xl max-w-sm">
+                      <p className="font-bold mb-4">Looking to make changes?</p>
+                      <Link href={`/grants/${id}/edit`}>
+                        <Button width="full" className="">
+                          プロジェクトを編集する
+                        </Button>
+                      </Link>
+                    </div>
+                  )}
               </div>
             </div>
           ) : (
             <div className="w-full flex flex-col md:flex-row my-10 gap-y-8 items-center justify-center">
-              <p className="font-bold text-xl text-center">Grant not found</p>
+              <p className="font-bold text-xl text-center">プロジェクトが見つかりません</p>
             </div>
           )}
         </div>

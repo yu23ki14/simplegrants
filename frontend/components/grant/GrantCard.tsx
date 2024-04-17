@@ -74,12 +74,12 @@ const GrantCard = ({
                 className="mb-3"
               />
               <p className="font-bold text-lg mb-3">
-                ${" "}
-                {grant.amountRaised.toLocaleString("en-US", {
+                {" "}
+                {grant.amountRaised.toLocaleString("ja-JP", {
                   maximumFractionDigits: 0,
-                })}{" "}
+                })}円{" "}
                 / {((grant.amountRaised / grant.fundingGoal) * 100).toFixed(0)}%
-                funded
+                達成済み
               </p>
             </>
           )}
@@ -113,7 +113,7 @@ const GrantCard = ({
                       : false
                   }
                 >
-                  Add to cart
+                  カートに入れる
                 </Button>
               )}
             </>
