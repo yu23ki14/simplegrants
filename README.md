@@ -4,6 +4,9 @@ GitcoinのGrants Stack, clr.fundなどがWeb3（仮想通貨）での寄付を�
 
 このプロジェクトはOwockiが率いるSupermodulerチームが「Simple Grant」という名で開発されていたが、[頓挫](https://github.com/supermodularxyz/simplegrants)。[現在はGitcoinの下でWeb2 QFツールが開発されているが、途中。](https://github.com/gitcoinco/simplegrants.xyz) この状況により、DigDAO マッチングドネーションでは元々のツールを使うことにした。
 
+## リストにプロジェクトを掲載したい人へ
+- https://scrapbox.io/public-goods-funding/%E5%85%AC%E7%9B%8A%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%A8%E3%81%97%E3%81%A6%E6%8E%B2%E8%BC%89%E3%81%97%E3%81%9F%E3%81%84%E4%BA%BA%E3%81%B8 をご覧ください
+
 ## 主な構造 📄
 
 - [バックエンド](./backend/)
