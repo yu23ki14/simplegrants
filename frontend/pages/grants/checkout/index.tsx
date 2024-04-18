@@ -57,7 +57,12 @@ export default function GrantsCheckout() {
           withCredentials: true,
         }
       )
-      .then((res) => setData(res.data))
+      .then((res) => {
+        setData(res.data);
+        // successページでQF式で試算した上乗せ金額を表示するために、プロジェクトIDをセッションストレージに保存
+        const projectIds = grants.map(grant => grant.id);
+        sessionStorage.setItem('projectIds', JSON.stringify(projectIds));
+      })
       .catch((err) => {
         console.error({ err });
         toast.error(

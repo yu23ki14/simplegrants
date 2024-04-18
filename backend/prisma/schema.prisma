@@ -76,6 +76,7 @@ model User {
   checkoutSessions Checkout[]
 }
 
+// Grant = 公益プロジェクトのこと
 model Grant {
   id               String          @id @default(cuid())
   name             String
@@ -139,6 +140,7 @@ model PaymentProvider {
   updatedAt         DateTime         @updatedAt
 }
 
+// contribution = プロジェクトへ寄付すること
 model Contribution {
   id              String         @id @default(cuid())
   userId          String
@@ -220,7 +222,7 @@ model Checkout {
   grant           Grant?         @relation(fields: [grantId], references: [id])
   matchingRoundId String?
   matchingRound   MatchingRound? @relation(fields: [matchingRoundId], references: [id])
-  groupId         String //transfer_group for Stripe or tx ID or any other 
+  groupId         String //transfer_group for Stripe or tx ID or any other
   createdAt       DateTime       @default(now())
   updatedAt       DateTime       @updatedAt
 }
