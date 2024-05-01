@@ -130,7 +130,7 @@ export default function CheckoutSuccess() {
 
             <Link href="/grants">
               <Button className="mt-6" style="secondary">
-                プロジェクトを探す
+                プロジェクト一覧へ戻る
               </Button>
             </Link>
           </div>

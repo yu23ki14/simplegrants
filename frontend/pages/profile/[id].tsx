@@ -79,53 +79,60 @@ export default function Home() {
                   </p>
                   <p className="text-xl">{data.email}</p>
                   <p className="mt-4 my-12 line-clamp-4">{data.bio}</p>
+
                   <p className="font-bold text-xl text-sg-accent">
-                    寄付の額
+                    プロジェクトへの寄付
                   </p>
                   <p className="text-xl mb-5">
-                    ${" "}
-                    {data.totalDonated.toLocaleString("en-US", {
-                      maximumFractionDigits: 2,
+                    {" "}
+                    {data.totalDonated.toLocaleString("ja-JP", {
+                      maximumFractionDigits: 0,
                     })}{" "}
-                    USD
+                    円
                   </p>
+
+                    {data.totalContributed ? (
+                      <>
+                        <p className="font-bold text-xl text-sg-accent">
+                          資金プールへの寄付
+                        </p>
+                        <p className="text-xl mb-5">
+                          {" "}
+                          {data.totalContributed.toLocaleString("ja-JP", {
+                            maximumFractionDigits: 0,
+                          })}{" "}
+                          円
+                        </p>
+                      </>
+                    ) : (
+                      <></>
+                    )}
+
+
                   <p className="font-bold text-xl text-sg-accent">
-                    受け取った額
+                    自分のプロジェクトが受け取った寄付
                   </p>
                   <p className="text-xl mb-5">
-                    ${" "}
-                    {data.totalRaised.toLocaleString("en-US", {
-                      maximumFractionDigits: 2,
+                    {" "}
+                    {data.totalRaised.toLocaleString("ja-JP", {
+                      maximumFractionDigits: 0,
                     })}{" "}
-                    USD
+                    円
                   </p>
-                  {data.totalContributed ? (
-                    <>
-                      <p className="font-bold text-xl text-sg-accent">
-                        資金プールへの寄付
-                      </p>
-                      <p className="text-xl mb-5">
-                        ${" "}
-                        {data.totalContributed.toLocaleString("en-US", {
-                          maximumFractionDigits: 2,
-                        })}{" "}
-                        USD
-                      </p>
-                    </>
-                  ) : (
-                    <></>
-                  )}
+
+
+
                   {data.totalPooled ? (
                     <>
                       <p className="font-bold text-xl text-sg-accent">
-                        総受取額
+                        総受取額（寄付+QF上乗せ）
                       </p>
                       <p className="text-xl mb-5">
-                        ${" "}
-                        {data.totalPooled.toLocaleString("en-US", {
-                          maximumFractionDigits: 2,
+                        {" "}
+                        {data.totalPooled.toLocaleString("ja-JP", {
+                          maximumFractionDigits: 0,
                         })}{" "}
-                        USD
+                        円
                       </p>
                     </>
                   ) : (
@@ -145,7 +152,7 @@ export default function Home() {
                         className="data-[state=active]:text-sg-accent data-[state=active]:underline"
                         value="donations"
                       >
-                        資金プールへの寄付
+                        プロジェクトへの寄付
                       </Tabs.Trigger>
                       <Tabs.Trigger
                         className="data-[state=active]:text-sg-accent data-[state=active]:underline"
@@ -158,7 +165,7 @@ export default function Home() {
                           className="data-[state=active]:text-sg-accent data-[state=active]:underline"
                           value="contributions"
                         >
-                          プロジェクトへの寄付
+                          資金プールへの寄付
                         </Tabs.Trigger>
                       )}
                       {data.pools && data.pools.length > 0 && (

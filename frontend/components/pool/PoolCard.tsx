@@ -49,7 +49,7 @@ const PoolCard = ({
     if (diff < 0) return <b>Ended</b>;
     return (
       <>
-        Ends in{" "}
+        残り{" "}
         <b>
           {diff} {diff > 1 ? unit : unit?.slice(0, -1)}
         </b>
@@ -82,12 +82,12 @@ const PoolCard = ({
           </p>
           <p className="my-2">
             <b className="font-bold text-xl">
-              ~USD${" "}
-              {pool.amountRaised?.toLocaleString("en-US", {
+              {" "}
+              {pool.amountRaised?.toLocaleString("ja-JP", {
                 maximumFractionDigits: 0,
-              }) || 0}
+              }) || 0}円
             </b>{" "}
-            raised
+            受け取り済み
           </p>
           <p>
             {timeRemaining} <br /> on{" "}
@@ -106,7 +106,7 @@ const PoolCard = ({
                     removeFromCart(pool.id);
                   }}
                 >
-                  Remove from cart
+                  カートから削除
                 </Button>
               ) : (
                 <Button

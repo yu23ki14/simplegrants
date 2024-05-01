@@ -172,11 +172,11 @@ export default function PoolsCheckout() {
                           <p className="truncate">{pool.name}</p>
                         </div>
                         <p className="flex flex-1 text-ellipsis truncate justify-end">
-                          {pool.amount.toLocaleString("en-US", {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2,
+                          {pool.amount.toLocaleString("ja-JP", {
+                            minimumFractionDigits: 0,
+                            maximumFractionDigits: 0,
                           })}{" "}
-                          USD
+                          円
                         </p>
                       </div>
                     ))}
@@ -188,11 +188,11 @@ export default function PoolsCheckout() {
                   </p>
                   <p className="flex flex-1 text-ellipsis truncate justify-end">
                     {hasHydrated &&
-                      subtotal.toLocaleString("en-US", {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
+                      subtotal.toLocaleString("ja-JP", {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
                       })}{" "}
-                    USD
+                    円
                   </p>
                 </div>
                 <Button

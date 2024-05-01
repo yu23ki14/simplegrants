@@ -71,8 +71,8 @@ const PoolList = ({ pool, onClick }: IPoolListProps) => {
           </p>
           <p className="my-2">
             <b className="font-bold text-xl">
-              ~USD${" "}
-              {pool.amountRaised.toLocaleString("en-US", {
+              ~円{" "}
+              {pool.amountRaised.toLocaleString("ja-JP", {
                 maximumFractionDigits: 0,
               })}
             </b>{" "}

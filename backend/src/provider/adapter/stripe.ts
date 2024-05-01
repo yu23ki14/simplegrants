@@ -189,7 +189,7 @@ export class StripeProvider implements PaymentProviderAdapter {
 
     for await (const grant of grantWithFunding) {
       if (grant.amount > 0) {
-        await this.prisma.checkout.create({
+        const checkout = await this.prisma.checkout.create({
           data: {
             user: {
               connect: {
@@ -204,6 +204,21 @@ export class StripeProvider implements PaymentProviderAdapter {
               },
             },
             groupId: transferGroup,
+          },
+        });
+
+        // Contribution テーブルにデータを保存
+        await this.prisma.contribution.create({
+          data: {
+            userId: user.id,
+            amount: grantAmountLookup[grant.id],
+            denomination: provider.denominations[0],
+            amountUsd: grantAmountLookup[grant.id], // USD換算が必要な場合は変換ロジックを追加
+            grantId: grant.id,
+            flagged: false, // デフォルトは false, 特定の条件で true に設定
+            paymentMethodId: 'clg3bs740000kx6s51e9fe8lu', // PaymentMethodId は Checkout の ID として仮置き
+            createdAt: new Date(),
+            updatedAt: new Date(),
           },
         });
       }
