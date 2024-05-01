@@ -47,8 +47,8 @@ const GrantList = ({ grant, onClick }: IGrantListProps) => {
             className="mb-3"
           />
           <p className="font-bold text-lg">
-            ${" "}
-            {grant.amountRaised.toLocaleString("en-US", {
+            円enn{" "}
+            {grant.amountRaised.toLocaleString("ja-JP", {
               maximumFractionDigits: 0,
             })}{" "}
             / {((grant.amountRaised / grant.fundingGoal) * 100).toFixed(0)}%

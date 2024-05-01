@@ -9,7 +9,7 @@ import {
   Body,
   Param,
 } from '@nestjs/common';
-import { CacheInterceptor } from '@nestjs/cache-manager';
+// import { CacheInterceptor } from '@nestjs/cache-manager';
 import { NextAuthGuard } from 'src/auth/guards/nextauth.guard';
 import { UsersService } from './users.service';
 import { RequestWithUser, UpdateUserDto, UserProfile } from './users.interface';
@@ -22,7 +22,8 @@ import {
 
 @ApiTags('User')
 @Controller('users')
-@UseInterceptors(CacheInterceptor, ClassSerializerInterceptor)
+// @UseInterceptors(CacheInterceptor, ClassSerializerInterceptor)
+@UseInterceptors(ClassSerializerInterceptor)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 

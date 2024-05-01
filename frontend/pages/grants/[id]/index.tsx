@@ -137,7 +137,7 @@ export default function GrantDetails() {
                       className="btn-error"
                       onClick={() => removeFromCart(id as string)}
                     >
-                      カードから削除
+                      カートから削除
                     </Button>
                   ) : (
                     <div

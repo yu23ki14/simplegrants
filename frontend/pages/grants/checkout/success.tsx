@@ -15,7 +15,7 @@ import { toast } from "react-toastify";
 
 export default function CheckoutSuccess() {
   const [loading, setLoading] = React.useState(false);
-  const [data, setData] = React.useState<any>();
+  const [data, setData] = React.useState<any>(null); // Updated initial state to null
   const hasHydrated = useHasHydrated();
   const router = useRouter();
   const { clearCart } = useGrantCartStore();
@@ -29,19 +29,34 @@ export default function CheckoutSuccess() {
     }
   }, [data]);
 
+  const fetchMatchingAmountEstimate = async (donationAmount: number, grantId: string) => {
+    try {
+      const response = await axios.get(`http://localhost:3000/qf/estimate?donationAmount=${donationAmount}&grantId=${grantId}`);
+      return response.data; // マッチング金額の見積もりが返される
+    } catch (error) {
+      console.error('マッチング金額の見積もり取得エラー:', error);
+      return 0; // エラーが発生した場合は0を返す
+    }
+  };
+
   React.useEffect(() => {
     // If we have a session ID, we can make a call to the backend
     if (router.query.session_id) {
       setLoading(true);
       axios
         .get(`/checkout/${router.query.session_id}`)
-        .then((res) => {
-          setData(res.data);
-          // TODO: Ensure that this only runs if your checkout succeeds, not when you hit this page
-          clearCart();
+        .then(async (res) => {
+          const projectIds = JSON.parse(sessionStorage.getItem('projectIds') || '[]');
+          if (projectIds.length > 0) {
+            const projectId = projectIds[0];
+            const matchedAmount = await fetchMatchingAmountEstimate(res.data.donated, projectId); // 上乗せ金額の見積もりを取得
+            setData({...res.data, matched: matchedAmount});
+            // TODO: Ensure that this only runs if your checkout succeeds, not when you hit this page
+            clearCart();
+          }
         })
         .catch((err) => {
-          console.log(err);
+          console.error('APIエラー:', err);
           toast.error(
             err.response?.data?.message ||
               err.message ||
@@ -84,7 +99,7 @@ export default function CheckoutSuccess() {
               <br></br>
               この寄付に加え、約{" "}
               <b>
-                {data.matched.toLocaleString("ja-JP")}円
+                {data.matched.toLocaleString("ja-JP", {minimumFractionDigits: 0, maximumFractionDigits: 0})}円
               </b>
               分の助成金が資金プールから上乗せされてプロジェクトに分配されます。
             </p>
@@ -109,22 +124,13 @@ export default function CheckoutSuccess() {
                       Twitterでつぶやく
                     </p>
                   </TwitterShareButton>
-                  {/* <FacebookShareButton
-                    url={shareInformation.url}
-                    quote={shareInformation.message}
-                  >
-                    <p className="btn font-bold lg:text-lg px-4 md:px-12 py-3 h-max rounded-full normal-case btn-outline btn-secondary w-max">
-                      Facebookで広める
-                    </p>
-                  </FacebookShareButton> */}
-                  {/* 動いていない↑ */}
                 </div>
               </>
             )}
 
             <Link href="/grants">
               <Button className="mt-6" style="secondary">
-                プロジェクトを探す
+                プロジェクト一覧へ戻る
               </Button>
             </Link>
           </div>

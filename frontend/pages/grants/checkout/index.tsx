@@ -57,7 +57,30 @@ export default function GrantsCheckout() {
           withCredentials: true,
         }
       )
-      .then((res) => setData(res.data))
+      .then((res) => {
+        setData(res.data);
+        // successページでQF式で試算した上乗せ金額を表示するために、プロジェクトIDをセッションストレージに保存
+        const projectIds = grants.map(grant => grant.id);
+        sessionStorage.setItem('projectIds', JSON.stringify(projectIds));
+        // // Contributionテーブルにも寄付情報を保存する処理を追加
+        // grants.forEach(grant => {
+        //   if (session && session.user) { // この行を追加
+        //     axios.post("/contributions", {
+        //       userId: session.user.id,
+        //       grantId: grant.id,
+        //       amount: grant.amount,
+        //       denomination: "JPY" // 通貨単位はJPY(日本円)に設定
+        //     }).then(res => {
+        //       console.log("Contribution saved", res.data);
+        //     }).catch(err => {
+        //       console.error("Error saving contribution", err);
+        //       toast.error("Contribution save failed", {
+        //         toastId: "contribution-save-error",
+        //       });
+        //     });
+        //   }
+        // });
+      })
       .catch((err) => {
         console.error({ err });
         toast.error(

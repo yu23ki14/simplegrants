@@ -134,8 +134,8 @@ export default function ReviewPool() {
                   <div className="flex flex-col col-span-1">
                     <p className="">
                       <b className="text-2xl">
-                        $
-                        {data.amountRaised.toLocaleString("en-US", {
+                        円
+                        {data.amountRaised.toLocaleString("ja-JP", {
                           maximumFractionDigits: 0,
                         })}
                       </b>

@@ -23,9 +23,9 @@ export default function CheckoutSuccess() {
     if (typeof window !== undefined && data) {
       return {
         url: window.location.href,
-        message: `I've just donated $${data.donated.toLocaleString("en-US", {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
+        message: `I've just donated $${data.donated.toLocaleString("ja-JP", {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0,
         })} to ${data.numberOfItems} pools! Check it out here!🥳\n`,
       };
     }
@@ -82,7 +82,7 @@ export default function CheckoutSuccess() {
               Your{" "}
               <b>
                 $
-                {data.donated.toLocaleString("en-US", {
+                {data.donated.toLocaleString("ja-JP", {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
                 })}

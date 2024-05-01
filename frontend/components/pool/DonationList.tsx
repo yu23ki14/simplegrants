@@ -35,13 +35,13 @@ const DonationList = ({ contribution, onClick }: IDonationListProps) => {
         </div>
         <div className="flex flex-row gap-x-4 md:gap-x-10 basis-full md:basis-1/3">
           <div className="flex flex-col whitespace-nowrap basis-1/2">
-            <p className="text-base md:text-xl font-bold">Donated</p>
+            <p className="text-base md:text-xl font-bold">寄付済み</p>
             <p>
-              ${" "}
-              {contribution.amountUsd.toLocaleString("en-US", {
+              {" "}
+              {contribution.amountUsd.toLocaleString("ja-JP", {
                 maximumFractionDigits: 0,
               })}{" "}
-              USD
+              円
             </p>
           </div>
         </div>

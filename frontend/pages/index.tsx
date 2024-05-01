@@ -81,7 +81,7 @@ export default function Home() {
         <div className="flex flex-col w-full items-center justify-center min-h-[60vh] text-center bg-sg-primary px-2">
           <Fade bottom distance="15px">
             <h1 className="font-bold text-3xl md:text-5xl max-w-2xl md:leading-snug">
-              助成金の分配先を自分たちの投票で決める!
+              助成金の分配先を自分たちの寄付で決める!
             </h1>
             <p className="mt-3 text-lg md:text-xl">
               マッチングドネーション（Quadratic Funding）でお気に入りのプロジェクトに寄付して、公共財を支援しよう
@@ -99,7 +99,7 @@ export default function Home() {
         </div>
         <section className="px-8 md:px-18 lg:px-36">
           <h2 className="font-bold text-3xl md:text-5xl mt-12 lg:mt-0 mb-5">
-          100円の寄付が1万円を動かす理由
+            100円の寄付が1万円を動かす理由
           </h2>
           <p className="mb-28 max-w-3xl">
             デジタル庁から派生したDigDAOは、DeSci Tokyoの支援を受け、"公益プロジェクトへの資金提供"の新しい仕組みを模索しています。「マッチングドネーション」という仕組みは、政府が用意した資金プールからどのプロジェクトに分配するかを市民による寄付に応じて決定するものです。
@@ -196,10 +196,10 @@ export default function Home() {
                     className="object-contain scale-150"
                   />
                 </div>
-                  <div className="flex flex-col flex-1">
-                    <p className="font-bold text-2xl">90億円以上の分配実績を持つメカニズム</p>
-                    <p>QFは民主的な資金分配の方法として、すでに十分な実績を持っています。Ethereum上の公共財プロジェクトに$60M+の資金分配をしたり、UNICEFからNGOへ資金分配する方法として選ばれています。</p>
-                  </div>
+                <div className="flex flex-col flex-1">
+                  <p className="font-bold text-2xl">90億円以上の分配実績を持つメカニズム</p>
+                  <p>QFは民主的な資金分配の方法として、すでに十分な実績を持っています。Ethereum上の公共財プロジェクトに$60M+の資金分配をしたり、UNICEFからNGOへ資金分配する方法として選ばれています。</p>
+                </div>
               </div>
             </div>
           </div>
