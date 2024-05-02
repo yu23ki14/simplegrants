@@ -219,17 +219,18 @@ export class GrantsService {
 
     const id = cuid();
 
-    // First, we need to upload this to AWS
-    const image = await this.awsService.uploadFile(data.image, id);
+    // 画像のアップロード処理を削除
+    // // First, we need to upload this to AWS
+    // const image = await this.awsService.uploadFile(data.image, id);
 
     // After getting back the url, we create an entry in our database
     return await this.prisma.grant.create({
       data: {
         ...data,
         id,
-        image,
+        // image: data.image,  // 直接URLを保存
         twitter: data.twitter || '',
-        verified: false,
+        verified: true, //デフォルトでpostされたらverifiedにする
         team: {
           connect: {
             id: user.id,

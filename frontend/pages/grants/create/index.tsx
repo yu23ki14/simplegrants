@@ -11,7 +11,6 @@ import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import BackButton from "../../../components/BackButton";
-import ImageInput from "../../../components/input/ImageInput";
 import clsx from "clsx";
 import TextAreaInput from "../../../components/input/TextAreaInput";
 import axios from "../../../utils/axios";
@@ -27,9 +26,8 @@ const validationSchema = z.object({
     .min(1, { message: "Website link is required" })
     .url("Must be a valid link"),
   image: z
-    .any()
-    .refine((file) => !!file, "Image is required")
-    .refine((file) => file?.size <= 2000000, `Max file size is 20MB.`),
+    .string()
+    .url("Must be a valid URL"),  // Updated to validate image as URL
   description: z.string().min(1, { message: "Grant description is required" }),
   fundingGoal: z
     .number()
@@ -63,12 +61,14 @@ export default function CreateGrant() {
     setLoading(true);
 
     const formData = new FormData();
-    for (const key in data) {
-      formData.set(key, data[key as keyof ValidationSchema]);
-    }
+    Object.keys(data).forEach(key => {
+      const value = data[key as keyof ValidationSchema];
+      if (value !== undefined) { // Ensure value is not undefined
+        formData.set(key, value.toString()); // Convert all values to string
+      }
+    });
 
-    axios
-      .post("/grants", formData)
+    axios.post("/grants", formData)
       .then((res) => {
         saveGrant(res.data);
         toast.success("Grant created successfully!");
@@ -108,15 +108,16 @@ export default function CreateGrant() {
               <h1 className="font-bold text-subtitle-1 mb-8">Create Grant</h1>
               <div className="flex flex-col md:flex-row w-full gap-11">
                 <div className="relative h-full basis-[2/5] w-full">
-                  <ImageInput
-                    className={clsx(
-                      "aspect-[3/2] object-cover w-full h-full border"
-                    )}
-                    id="image"
+                  <label className="label">
+                    <span className="label-text font-bold text-lg">Image URL</span>
+                  </label>
+                  <TextInput
+                    className={clsx("w-full")}
                     errors={errors}
-                    onChange={(value: any) => {
-                      setValue("image", value, { shouldValidate: true });
-                    }}
+                    id="image"
+                    type="text"
+                    register={register}
+                    placeholder="Enter image URL here"
                   />
                 </div>
                 <div className="flex flex-col basis-[3/5] w-full gap-y-6">
@@ -195,7 +196,6 @@ export default function CreateGrant() {
                   errors={errors}
                 />
               </div>
-              {/* <p className="mt-12">{data.description}</p> */}
             </div>
             <div className=" bg-white shadow-card py-8 px-6 rounded-xl w-full flex flex-col md:flex-row gap-8">
               <div className="flex flex-col flex-1 w-full gap-y-8">
