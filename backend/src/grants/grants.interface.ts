@@ -205,12 +205,20 @@ export class CreateGrantDto {
   @IsUrl()
   website: string;
 
+  // @ApiProperty({
+  //   type: MemoryStoredFile,
+  // })
+  // @IsFile()
+  // @HasMimeType(['image/jpeg', 'image/jpg', 'image/png'])
+  // image: any;
+  // @ApiProperty()
+  // image: string;  // 画像のバイナリデータの代わりにURLを受け取る
+
   @ApiProperty({
-    type: MemoryStoredFile,
+    type: String,
   })
-  @IsFile()
-  @HasMimeType(['image/jpeg', 'image/jpg', 'image/png'])
-  image: any;
+  @IsString()
+  image: string;
 
   @ApiProperty({
     type: String,
