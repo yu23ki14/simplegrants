@@ -193,6 +193,10 @@ export class StripeProvider implements PaymentProviderAdapter {
     //  'grantWithFunding'は、資金提供を受ける各助成金の詳細情報を含む配列です。この関数は、それに対応するマッチングラウンドIDを取得します。
     const matchingRoundId = await this.getMatchingRoundIdForGrants(grantWithFunding); //getMatchingRoundIdForGrants関数を呼び出して、与えられた'getwithFunding'に対応するマッチングラウンドIDを取得
 
+
+
+
+
     // const qfAmounts = await this.qfService.calculateQuadraticFundingAmount(matchingRoundId);
 
     // // MatchedFundテーブルに上乗せ金額を保存
@@ -200,23 +204,23 @@ export class StripeProvider implements PaymentProviderAdapter {
 
     for await (const grant of grantWithFunding) {
       if (grant.amount > 0) {
-        const checkout = await this.prisma.checkout.create({
-          data: {
-            user: {
-              connect: {
-                id: user.id,
-              },
-            },
-            amount: grantAmountLookup[grant.id],
-            denomination: provider.denominations[0],
-            grant: {
-              connect: {
-                id: grant.id,
-              },
-            },
-            groupId: transferGroup,
-          },
-        });
+        // const checkout = await this.prisma.checkout.create({
+        //   data: {
+        //     user: {
+        //       connect: {
+        //         id: user.id,
+        //       },
+        //     },
+        //     amount: grantAmountLookup[grant.id],
+        //     denomination: provider.denominations[0],
+        //     grant: {
+        //       connect: {
+        //         id: grant.id,
+        //       },
+        //     },
+        //     groupId: transferGroup,
+        //   },
+        // });
 
         // Contribution テーブルにデータを保存
         await this.prisma.contribution.create({
@@ -233,17 +237,43 @@ export class StripeProvider implements PaymentProviderAdapter {
           },
         });
 
-        //上記を踏襲して、MatchedFundテーブルにデータを保存する関数を作る
-        await this.prisma.matchedFund.create({
-          data: {
-            matchingRoundId: matchingRoundId, //matchingRoundId関数は寄付したプロジェクトが属しているマッチングラウンドのIDを返す
-            grantId: grant.id, // 寄付したプロジェクトのgrantId
-            amount: 10000, //本来は、上乗せ金額を計算して入れる
-            denomination: "JPY", //固定
-            amountUsd: 10000, //
-            payoutAt: new Date(),
+
+        // `MatchedFund`テーブルを検索し、すでに同じgrantIdがあるかどうかを判定
+        const existingMatchedFund = await this.prisma.matchedFund.findUnique({
+          where: {
+            matchingRoundId_grantId: {
+              matchingRoundId: matchingRoundId, // このマッチングラウンドIDを取得する必要があります
+              grantId: grant.id,
+            },
           },
         });
+
+        if (existingMatchedFund) {
+          // 既存のレコードが見つかった場合、amountを更新
+          await this.prisma.matchedFund.update({
+            where: {
+              id: existingMatchedFund.id,
+            },
+            data: {
+              amount: existingMatchedFund.amount + 10,
+              amountUsd: existingMatchedFund.amount + 10,
+            },
+          });
+        } else {
+          // レコードが存在しない場合、MatchedFundテーブルにデータを保存する
+          await this.prisma.matchedFund.create({
+            data: {
+              matchingRoundId: matchingRoundId, //matchingRoundId関数は寄付したプロジェクトが属しているマッチングラウンドのIDを返す
+              grantId: grant.id, // 寄付したプロジェクトのgrantId
+              amount: 10000, //本来は、上乗せ金額を計算して入れる
+              denomination: "JPY", //固定
+              amountUsd: 10000, //
+              payoutAt: new Date(),
+            },
+          });
+        }
+
+
 
       }
     }
