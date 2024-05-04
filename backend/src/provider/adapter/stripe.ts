@@ -12,13 +12,14 @@ import {
   HttpStatus,
   Logger,
   LoggerService,
+  Injectable,
 } from '@nestjs/common';
 import {
   FeeAllocationMethod,
   SuccessfulCheckoutInfo,
 } from '../provider.interface';
 import { PoolWithFunding } from 'src/pool/pool.interface';
-import { QfService } from 'src/qf/qf.service';
+import { QfService } from 'src/qf/qf.service'; // QfServiceをインポート
 
 export interface PaymentIntentEventWebhookBody {
   id: string;
@@ -87,24 +88,29 @@ export interface PaymentIntentEventWebhookBody {
   type: string;
 }
 
+@Injectable()
 export class StripeProvider implements PaymentProviderAdapter {
+
+  // private qfService: QfService; // QfServiceのプロパティを追加
+
   constructor(constructorProps: PaymentProviderConstructorProps) {
-    const { prisma, secret, country } = constructorProps;
+    const { prisma, secret, country, qfService } = constructorProps;
 
     this.prisma = prisma;
     this.country = country;
     this.stripe = new Stripe(secret, {
       apiVersion: '2022-11-15',
     });
-    this.qfService = this.qfService;  // QfService を初期化
+    this.qfService = qfService; // QfServiceを初期化
   }
+
   private prisma: PrismaService;
   private country: string;
   private stripe: Stripe;
   private logger: LoggerService = new Logger(StripeProvider.name);
   // Technically a payment provider should never be updated during runtime
   // so we can save and cache information about the payment provider in the class itself
-  private qfService: QfService;  // QfService を追加
+  private qfService: QfService;
 
   /**
    * Rounds a number to two decimal places
@@ -196,7 +202,6 @@ export class StripeProvider implements PaymentProviderAdapter {
 
 
 
-
     // const qfAmounts = await this.qfService.calculateQuadraticFundingAmount(matchingRoundId);
 
     // // MatchedFundテーブルに上乗せ金額を保存
@@ -204,23 +209,6 @@ export class StripeProvider implements PaymentProviderAdapter {
 
     for await (const grant of grantWithFunding) {
       if (grant.amount > 0) {
-        // const checkout = await this.prisma.checkout.create({
-        //   data: {
-        //     user: {
-        //       connect: {
-        //         id: user.id,
-        //       },
-        //     },
-        //     amount: grantAmountLookup[grant.id],
-        //     denomination: provider.denominations[0],
-        //     grant: {
-        //       connect: {
-        //         id: grant.id,
-        //       },
-        //     },
-        //     groupId: transferGroup,
-        //   },
-        // });
 
         // Contribution テーブルにデータを保存
         await this.prisma.contribution.create({
@@ -237,42 +225,46 @@ export class StripeProvider implements PaymentProviderAdapter {
           },
         });
 
+        // const qfAmount = await this.qfService.calculateQuadraticFundingAmount(matchingRoundId);
 
-        // `MatchedFund`テーブルを検索し、すでに同じgrantIdがあるかどうかを判定
-        const existingMatchedFund = await this.prisma.matchedFund.findUnique({
-          where: {
-            matchingRoundId_grantId: {
-              matchingRoundId: matchingRoundId, // このマッチングラウンドIDを取得する必要があります
-              grantId: grant.id,
-            },
-          },
-        });
 
-        if (existingMatchedFund) {
-          // 既存のレコードが見つかった場合、amountを更新
-          await this.prisma.matchedFund.update({
-            where: {
-              id: existingMatchedFund.id,
-            },
-            data: {
-              amount: existingMatchedFund.amount + 10,
-              amountUsd: existingMatchedFund.amount + 10,
-            },
-          });
-        } else {
-          // レコードが存在しない場合、MatchedFundテーブルにデータを保存する
-          await this.prisma.matchedFund.create({
-            data: {
-              matchingRoundId: matchingRoundId, //matchingRoundId関数は寄付したプロジェクトが属しているマッチングラウンドのIDを返す
-              grantId: grant.id, // 寄付したプロジェクトのgrantId
-              amount: 10000, //本来は、上乗せ金額を計算して入れる
-              denomination: "JPY", //固定
-              amountUsd: 10000, //
-              payoutAt: new Date(),
-            },
-          });
-        }
+        // // `MatchedFund`テーブルを検索し、すでに同じgrantIdがあるかどうかを判定
+        // const existingMatchedFund = await this.prisma.matchedFund.findUnique({
+        //   where: {
+        //     matchingRoundId_grantId: {
+        //       matchingRoundId: matchingRoundId, // このマッチングラウンドIDを取得する必要があります
+        //       grantId: grant.id,
+        //     },
+        //   },
+        // });
 
+        // if (existingMatchedFund) {
+        //   // 既存のレコードが見つかった場合、amountを更新
+        //   await this.prisma.matchedFund.update({
+        //     where: {
+        //       id: existingMatchedFund.id,
+        //     },
+        //     data: {
+        //       amount: qfAmount.grants[grant.id].qfAmount,
+        //       amountUsd: qfAmount.grants[grant.id].qfAmount,
+        //     },
+        //   });
+        // } else {
+        //   // レコードが存在しない場合、MatchedFundテーブルにデータを保存する
+        //   await this.prisma.matchedFund.create({
+        //     data: {
+        //       matchingRoundId: matchingRoundId, //matchingRoundId関数は寄付したプロジェクトが属しているマッチングラウンドのIDを返す
+        //       grantId: grant.id, // 寄付したプロジェクトのgrantId
+        //       amount: qfAmount.grants[grant.id].qfAmount, //本来は、上乗せ金額を計算して入れる
+        //       denomination: "JPY", //固定
+        //       amountUsd: qfAmount.grants[grant.id].qfAmount, //
+        //       payoutAt: new Date(),
+        //     },
+        //   });
+        // }
+
+        // 寄付が行われた際に呼び出される関数内で以下の処理を追加
+        await this.qfService.handleMatchedFunds(matchingRoundId, grant.id); //Cannot read properties of undefined (reading 'handleMatchedFunds')というエラーが出てる
 
 
       }
@@ -327,21 +319,6 @@ export class StripeProvider implements PaymentProviderAdapter {
     return session;
   }
 
-  // // 上乗せ金額をMatchedFundテーブルに保存するメソッド
-  // async saveMatchedFunds(qfAmounts, matchingRoundId) {
-  //   const matchedFundsData = qfAmounts.map((amount, grantId) => ({
-  //     matchingRoundId: matchingRoundId,
-  //     grantId: grantId,
-  //     amount: amount,
-  //     denomination: 'JPY', // 通貨はJPYに固定
-  //     amountUsd: amount, // USD換算が必要な場合はここを調整
-  //     payoutAt: new Date(), // 支払われる日付、必要に応じて調整
-  //   }));
-
-  //   await this.prisma.matchedFund.createMany({
-  //     data: matchedFundsData,
-  //   });
-  // }
 
   // // 与えられたグラントに対応するマッチングラウンドIDを取得するメソッド
   async getMatchingRoundIdForGrants(grantWithFunding: GrantWithFunding[]): Promise<string> {
@@ -364,6 +341,7 @@ export class StripeProvider implements PaymentProviderAdapter {
     }
     throw new Error('No grants provided');
   }
+
 
 
   /**

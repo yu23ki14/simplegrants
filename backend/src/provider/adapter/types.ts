@@ -6,12 +6,14 @@ import {
   SuccessfulCheckoutInfo,
 } from '../provider.interface';
 import { PoolWithFunding } from 'src/pool/pool.interface';
+import { QfService } from 'src/qf/qf.service'; // この行を追加
 
 export interface PaymentProviderConstructorProps {
   prisma: PrismaService;
   secret: string;
   /** ISO country code */
   country: string;
+  qfService: QfService; // この行を追加
 }
 
 export interface PaymentProviderAdapter {

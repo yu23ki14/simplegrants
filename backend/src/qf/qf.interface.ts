@@ -70,3 +70,7 @@ export interface PoolMatchInformation {
   sumOfQfValues: number;
   totalFundsInPool: number;
 }
+
+export interface handleMatchedFunds {
+  matchedFunds: MatchedFund[];
+}

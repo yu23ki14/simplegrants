@@ -1,8 +1,11 @@
 import { Injectable, Logger, LoggerService } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { PoolMatchInformation, PoolQfInformation } from './qf.interface';
+import { PoolMatchInformation, PoolQfInformation, handleMatchedFunds } from './qf.interface';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { ProviderService } from 'src/provider/provider.service';
+// import { ProviderModule } from 'src/provider/provider.module';
+// import { PrismaModule } from 'src/prisma/prisma.module';
+
 
 @Injectable()
 export class QfService {
@@ -261,6 +264,43 @@ export class QfService {
             this.logger.error(failed.reason),
           );
       }
+    }
+  }
+
+  async handleMatchedFunds(matchingRoundId: string, grantId: string) {
+    const qfResult = await this.calculateQuadraticFundingAmount(matchingRoundId); //MatchingRoundのデータを渡すと、それぞれのプロジェクトに対する上乗せ金額を計算して返す
+    const matchedAmount = qfResult.grants[grantId].qfAmount;// 上で計算した「qfRest」の中から、特定のプロジェクトの上乗せ金額だけを取得
+
+    const existingMatchedFund = await this.prismaService.matchedFund.findUnique({
+      where: {
+        matchingRoundId_grantId: {
+          matchingRoundId: matchingRoundId,
+          grantId: grantId,
+        },
+      },
+    });
+
+    if (existingMatchedFund) {
+      await this.prismaService.matchedFund.update({
+        where: {
+          id: existingMatchedFund.id,
+        },
+        data: {
+          amount: matchedAmount,
+          amountUsd: matchedAmount,
+        },
+      });
+    } else {
+      await this.prismaService.matchedFund.create({
+        data: {
+          matchingRoundId: matchingRoundId,
+          grantId: grantId,
+          amount: matchedAmount,
+          denomination: "JPY",
+          amountUsd: matchedAmount,
+          payoutAt: new Date(),
+        },
+      });
     }
   }
 }

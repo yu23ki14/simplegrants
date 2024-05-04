@@ -6,14 +6,16 @@ import { StripeProvider } from './adapter/stripe';
 import { PaymentProviderAdapter } from './adapter/types';
 import { PoolWithFunding } from 'src/pool/pool.interface';
 import { CheckoutType, FeeAllocationMethod } from './provider.interface';
+import { QfService } from 'src/qf/qf.service'; // この行を追加
 
 @Injectable()
 export class ProviderService {
-  constructor(private readonly prisma: PrismaService) {
+  constructor(private readonly prisma: PrismaService, private readonly qfService: QfService) {
     this.paymentProvider = new StripeProvider({
       prisma,
       secret: process.env.PAYMENT_KEY,
       country: 'JP',
+      qfService, // この行を追加
     });
   }
   private paymentProvider: PaymentProviderAdapter;
