@@ -90,18 +90,14 @@ export interface PaymentIntentEventWebhookBody {
 
 @Injectable()
 export class StripeProvider implements PaymentProviderAdapter {
-
-  // private qfService: QfService; // QfServiceのプロパティを追加
-
   constructor(constructorProps: PaymentProviderConstructorProps) {
-    const { prisma, secret, country, qfService } = constructorProps;
+    const { prisma, secret, country } = constructorProps;
 
     this.prisma = prisma;
     this.country = country;
     this.stripe = new Stripe(secret, {
       apiVersion: '2022-11-15',
     });
-    this.qfService = qfService; // QfServiceを初期化
   }
 
   private prisma: PrismaService;
@@ -110,7 +106,6 @@ export class StripeProvider implements PaymentProviderAdapter {
   private logger: LoggerService = new Logger(StripeProvider.name);
   // Technically a payment provider should never be updated during runtime
   // so we can save and cache information about the payment provider in the class itself
-  private qfService: QfService;
 
   /**
    * Rounds a number to two decimal places
@@ -196,12 +191,6 @@ export class StripeProvider implements PaymentProviderAdapter {
       totalDonation,
     );
 
-    //  'grantWithFunding'は、資金提供を受ける各助成金の詳細情報を含む配列です。この関数は、それに対応するマッチングラウンドIDを取得します。
-    const matchingRoundId = await this.getMatchingRoundIdForGrants(grantWithFunding); //getMatchingRoundIdForGrants関数を呼び出して、与えられた'getwithFunding'に対応するマッチングラウンドIDを取得
-
-
-
-
     // const qfAmounts = await this.qfService.calculateQuadraticFundingAmount(matchingRoundId);
 
     // // MatchedFundテーブルに上乗せ金額を保存
@@ -209,7 +198,6 @@ export class StripeProvider implements PaymentProviderAdapter {
 
     for await (const grant of grantWithFunding) {
       if (grant.amount > 0) {
-
         // Contribution テーブルにデータを保存
         await this.prisma.contribution.create({
           data: {
@@ -226,7 +214,6 @@ export class StripeProvider implements PaymentProviderAdapter {
         });
 
         // const qfAmount = await this.qfService.calculateQuadraticFundingAmount(matchingRoundId);
-
 
         // // `MatchedFund`テーブルを検索し、すでに同じgrantIdがあるかどうかを判定
         // const existingMatchedFund = await this.prisma.matchedFund.findUnique({
@@ -264,9 +251,8 @@ export class StripeProvider implements PaymentProviderAdapter {
         // }
 
         // 寄付が行われた際に呼び出される関数内で以下の処理を追加
-        await this.qfService.handleMatchedFunds(matchingRoundId, grant.id); //Cannot read properties of undefined (reading 'handleMatchedFunds')というエラーが出てる
-
-
+        // ここで実行するのではなく、GrantServiceで実行するように変更
+        // await this.qfService.handleMatchedFunds(matchingRoundId, grant.id); //Cannot read properties of undefined (reading 'handleMatchedFunds')というエラーが出てる
       }
     }
 
@@ -318,31 +304,6 @@ export class StripeProvider implements PaymentProviderAdapter {
 
     return session;
   }
-
-
-  // // 与えられたグラントに対応するマッチングラウンドIDを取得するメソッド
-  async getMatchingRoundIdForGrants(grantWithFunding: GrantWithFunding[]): Promise<string> {
-    if (grantWithFunding.length > 0) {
-      const grantId = grantWithFunding[0].id;
-      const matchingRound = await this.prisma.matchingRound.findFirst({
-        where: {
-          grants: {
-            some: {
-              id: grantId,
-            },
-          },
-        },
-      });
-      if (matchingRound) {
-        return matchingRound.id;
-      } else {
-        throw new Error('Matching round not found for the provided grant');
-      }
-    }
-    throw new Error('No grants provided');
-  }
-
-
 
   /**
    * Initiate a payment process with Stripe for pools

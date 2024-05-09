@@ -10,12 +10,11 @@ import { QfService } from 'src/qf/qf.service'; // この行を追加
 
 @Injectable()
 export class ProviderService {
-  constructor(private readonly prisma: PrismaService, private readonly qfService: QfService) {
+  constructor(private readonly prisma: PrismaService) {
     this.paymentProvider = new StripeProvider({
       prisma,
       secret: process.env.PAYMENT_KEY,
       country: 'JP',
-      qfService, // この行を追加
     });
   }
   private paymentProvider: PaymentProviderAdapter;
