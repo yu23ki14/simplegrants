@@ -270,7 +270,9 @@ export class QfService {
     const qfResult = await this.calculateQuadraticFundingAmount(
       matchingRoundId,
     ); //MatchingRoundのデータを渡すと、それぞれのプロジェクトに対する上乗せ金額を計算して返す
-    const matchedAmount = qfResult.grants[grantId].qfAmount; // 上で計算した「qfRest」の中から、特定のプロジェクトの上乗せ金額だけを取得
+    // const matchedAmount = qfResult.grants[grantId].qfAmount; // 上で計算した「qfRest」の中から、特定のプロジェクトの上乗せ金額だけを取得
+    const grantInfo = qfResult.grants[grantId];
+    const matchedAmount = grantInfo ? grantInfo.qfAmount : 0; // grantInfoがundefinedの場合、0を返す
 
     const existingMatchedFund = await this.prismaService.matchedFund.findUnique(
       {
