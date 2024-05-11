@@ -45,15 +45,13 @@ export default function CheckoutSuccess() {
       setLoading(true);
       axios
         .get(`/checkout/${router.query.session_id}`)
-        .then(async (res) => {
-          const projectIds = JSON.parse(sessionStorage.getItem('projectIds') || '[]');
-          if (projectIds.length > 0) {
-            const projectId = projectIds[0];
-            const matchedAmount = await fetchMatchingAmountEstimate(res.data.donated, projectId); // 上乗せ金額の見積もりを取得
-            setData({...res.data, matched: matchedAmount});
-            // TODO: Ensure that this only runs if your checkout succeeds, not when you hit this page
-            clearCart();
-          }
+        .then((res) => {
+          const totalMatchingAmount = sessionStorage.getItem('totalMatchingAmount') || '0';
+          setData({
+            ...res.data,
+            matched: parseInt(totalMatchingAmount, 10)
+          });
+          clearCart();
         })
         .catch((err) => {
           console.error('APIエラー:', err);

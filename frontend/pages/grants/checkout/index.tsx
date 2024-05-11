@@ -17,7 +17,7 @@ import { toast } from "react-toastify";
 import BackButton from "../../../components/BackButton";
 
 import React, { useState, useEffect } from 'react';
-// import fetchMatchingAmountEstimate from "./success" //consoleで推定上乗せ額を表示するためにimport
+// import fetchMatchingAmountEstimate from "./success" //consoleで推定マッチング額を表示するためにimport
 // import { number } from "zod";
 
 import { Line } from 'react-chartjs-2';
@@ -118,6 +118,8 @@ export default function GrantsCheckout() {
       }, { withCredentials: true });
       setCheckoutData(response.data);
       sessionStorage.setItem('projectIds', JSON.stringify(grants.map(grant => grant.id)));
+      // マッチング金額をセッションストレージに保存
+      sessionStorage.setItem('totalMatchingAmount', totalMatchingAmount.toString());
     } catch (err) {
       console.error('Checkout error:', err);
     } finally {
@@ -156,7 +158,7 @@ export default function GrantsCheckout() {
       y: {
         title: {
           display: true,
-          text: '上乗せ額'
+          text: 'マッチング'
         }
       }
     },
@@ -182,7 +184,7 @@ export default function GrantsCheckout() {
 
             // const roundedY = Math.round(context.parsed.y).toLocaleString('ja-JP');
             // const formattedX = context.parsed.x.toLocaleString('ja-JP');
-            // return `¥${formattedX}寄付すると、¥${roundedY}上乗せされます`;
+            // return `¥${formattedX}寄付すると、¥${roundedY}マッチングされます`;
             let label = context.dataset.label || '';
             if (label) {
               label += ': ';
@@ -213,12 +215,12 @@ export default function GrantsCheckout() {
   //   // ];
   //   return {
   //     datasets: [{
-  //       label: '上乗せ金額のシミュレーション',
+  //       label: 'マッチング金額のシミュレーション',
   //       // data: sampleDataPoints,
   //       data: dataPoints,
   //       pointRadius: 5,
 
-  //       pointBackgroundColor: dataPoints.map(dp => dp.x === num ? 'red' : 'rgba(0, 0, 255, 0.5)'), // 寄付額と一致する点を赤色にする
+  //       pointBackgroundColor: dataPoints.map(dp => dp.x === num ? 'red' : 'rgba(0, 0, 255, 0.5)'), // 寄付額と一致する��を赤色にする
   //     }]
   //   };
   // }
@@ -250,6 +252,14 @@ export default function GrantsCheckout() {
     '#FFF100', // 鮮やかな黄
     '#000000'  // 漆黒の黒色
   ];
+
+  //推定マッチングがくの合計
+  const totalMatchingAmount = React.useMemo(() => {
+    return grants.reduce((acc, grant) => {
+      const matchingAmount = chartData[grant.id]?.find(data => data.x === grant.amount)?.y || 0;
+      return acc + matchingAmount;
+    }, 0);
+  }, [grants, chartData]);
 
   return (
     <div>
@@ -312,11 +322,12 @@ export default function GrantsCheckout() {
                             />
                             <p className="text-lg ml-3">円</p>
                           <div className="flex flex-col">
-                            <p className="text-sm text-gray-600">上乗せ金額:</p>
+                            <p className="text-sm text-gray-600">マッチング金額:</p>
                             <p className="text-lg font-bold">
                               {chartData[grant.id] ? Math.round(chartData[grant.id].find(data => data.x === grant.amount)?.y || 0).toLocaleString() : '計算中...'} 円
                             </p>
                           </div>
+
                           </div>
                           {/* <Line data={generateChartData(grant.id, grant.amount.toString())} options={chartOptions} /> */}
                         </div>
@@ -341,9 +352,9 @@ export default function GrantsCheckout() {
             <div className="basis-full md:basis-2/5 px-4 flex flex-col items-center ">
               {/* <div className="flex flex-col w-full bg-white shadow-card py-8 px-6 rounded-xl max-w-sm"> */}
               <div className="flex-1 bg-white shadow-card py-8 px-6 rounded-xl mb-4 chart-container">
-                {/* <h2 className="font-bold text-xl mb-8">推定上乗せ金額</h2>
+                {/* <h2 className="font-bold text-xl mb-8">推定マッチング金額</h2>
                 <Line data={generateCombinedChartData()} options={chartOptions} /> */}
-                <h2 className="font-bold text-xl mb-4">推定上乗せ金額</h2>
+                <h2 className="font-bold text-xl mb-4">推定マッチング金額</h2>
                 <Line data={generateCombinedChartData()} options={{ ...chartOptions, aspectRatio: 2 }} />
               </div>
               <br></br>
@@ -371,13 +382,29 @@ export default function GrantsCheckout() {
                     ))}
                 </div>
                 <Divider orientation="horizontal" className="bg-sg-700" />
-                <div className="flex flex-row w-full items-center justify-between mt-6 mb-8">
+                <div className="flex flex-row w-full items-center justify-between mt-6 mb-3">
                   <p className="flex flex-1 text-ellipsis truncate justify-start font-bold text-lg">
                     合計
                   </p>
+
+
                   <p className="flex flex-1 text-ellipsis truncate justify-end">
                     {hasHydrated &&
                       subtotal.toLocaleString("ja-JP", {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                      })}{" "}
+                    円
+                  </p>
+                </div>
+                <div className="flex flex-row w-full items-center justify-between mb-8">
+                  <p className="flex text-ellipsis truncate justify-start text-lg">
+                    資金プールからのマッチング
+                  </p>
+                  <p className="flex flex-1 text-ellipsis truncate justify-end">
+                    +
+                    {hasHydrated &&
+                      totalMatchingAmount.toLocaleString("ja-JP", {
                         minimumFractionDigits: 0,
                         maximumFractionDigits: 0,
                       })}{" "}
