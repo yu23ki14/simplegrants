@@ -212,47 +212,6 @@ export class StripeProvider implements PaymentProviderAdapter {
             updatedAt: new Date(),
           },
         });
-
-        // const qfAmount = await this.qfService.calculateQuadraticFundingAmount(matchingRoundId);
-
-        // // `MatchedFund`テーブルを検索し、すでに同じgrantIdがあるかどうかを判定
-        // const existingMatchedFund = await this.prisma.matchedFund.findUnique({
-        //   where: {
-        //     matchingRoundId_grantId: {
-        //       matchingRoundId: matchingRoundId, // このマッチングラウンドIDを取得する必要があります
-        //       grantId: grant.id,
-        //     },
-        //   },
-        // });
-
-        // if (existingMatchedFund) {
-        //   // 既存のレコードが見つかった場合、amountを更新
-        //   await this.prisma.matchedFund.update({
-        //     where: {
-        //       id: existingMatchedFund.id,
-        //     },
-        //     data: {
-        //       amount: qfAmount.grants[grant.id].qfAmount,
-        //       amountUsd: qfAmount.grants[grant.id].qfAmount,
-        //     },
-        //   });
-        // } else {
-        //   // レコードが存在しない場合、MatchedFundテーブルにデータを保存する
-        //   await this.prisma.matchedFund.create({
-        //     data: {
-        //       matchingRoundId: matchingRoundId, //matchingRoundId関数は寄付したプロジェクトが属しているマッチングラウンドのIDを返す
-        //       grantId: grant.id, // 寄付したプロジェクトのgrantId
-        //       amount: qfAmount.grants[grant.id].qfAmount, //本来は、上乗せ金額を計算して入れる
-        //       denomination: "JPY", //固定
-        //       amountUsd: qfAmount.grants[grant.id].qfAmount, //
-        //       payoutAt: new Date(),
-        //     },
-        //   });
-        // }
-
-        // 寄付が行われた際に呼び出される関数内で以下の処理を追加
-        // ここで実行するのではなく、GrantServiceで実行するように変更
-        // await this.qfService.handleMatchedFunds(matchingRoundId, grant.id); //Cannot read properties of undefined (reading 'handleMatchedFunds')というエラーが出てる
       }
     }
 
