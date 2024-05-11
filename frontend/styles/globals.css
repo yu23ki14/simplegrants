@@ -21,3 +21,22 @@
   --toastify-text-color-light: #413a34;
   --toastify-text-color-dark: #fff;
 }
+
+
+/* @media (max-width: 768px) {
+  .chart-container {
+    minHeight: 300px;
+  }
+} */
+
+/* .chart-container canvas {
+  width: 100% !important;
+  height: 200px !important;
+  /* min-height: 600px; */
+/* } */
+
+.chart-container {
+  position: relative;
+  height: 100%;
+  width: 40vw;
+}

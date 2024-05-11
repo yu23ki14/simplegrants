@@ -29,7 +29,7 @@ export default function CheckoutSuccess() {
     }
   }, [data]);
 
-  const fetchMatchingAmountEstimate = async (donationAmount: number, grantId: string) => {
+ const fetchMatchingAmountEstimate = async (donationAmount: number, grantId: string) => {
     try {
       const response = await axios.get(`http://localhost:3000/qf/estimate?donationAmount=${donationAmount}&grantId=${grantId}`);
       return response.data; // マッチング金額の見積もりが返される
