@@ -55,10 +55,10 @@ export default function LandingNavbar({ className }: ILandingNavbarProps) {
             className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-              <Link href="/sign-in">Sign In</Link>
+              <Link href="/sign-in">サインイン</Link>
             </li>
             <li>
-              <Link href="/sign-in">Sign Up</Link>
+              <Link href="/sign-in">サインアップ</Link>
             </li>
           </ul>
         </div>
