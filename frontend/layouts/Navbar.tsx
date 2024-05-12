@@ -48,7 +48,7 @@ export default function Navbar({
           {session ? (
             children
           ) : (
-            <Button onClick={() => signIn()}>サインイン</Button>
+            <Button onClick={() => signIn()}>ログイン</Button>
           )}
         </div>
         {session && (

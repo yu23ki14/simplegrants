@@ -168,7 +168,7 @@ export default function PoolDetails() {
                       className="btn-error col-span-2"
                       onClick={() => removeFromCart(id as string)}
                     >
-                      Remove from cart
+                      カートから削除 cart
                     </Button>
                   ) : (
                     <div

@@ -92,7 +92,7 @@ const PoolList = ({ pool, onClick }: IPoolListProps) => {
             removeFromCart(pool.id);
           }}
         >
-          Remove from cart
+          カートから削除 cart
         </Button>
       ) : (
         <Button

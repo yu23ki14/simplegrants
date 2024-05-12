@@ -26,9 +26,9 @@ export default function LandingNavbar({ className }: ILandingNavbarProps) {
       </div>
       <div className="navbar-end flex-grow">
         <div className="flex-none gap-x-7 hidden lg:flex">
-          <Button style="ghost" onClick={() => signIn()}>
+          {/* <Button style="ghost" onClick={() => signIn()}>
             サインイン
-          </Button>
+          </Button> */}
           <Button className="bg-white border-none" onClick={() => signIn()}>
             ログイン
           </Button>
@@ -55,11 +55,11 @@ export default function LandingNavbar({ className }: ILandingNavbarProps) {
             className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-              <Link href="/sign-in">サインイン</Link>
+              <Link href="/sign-in">ログイン</Link>
             </li>
-            <li>
+            {/* <li>
               <Link href="/sign-in">サインアップ</Link>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>

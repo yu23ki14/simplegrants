@@ -13,6 +13,7 @@ import axios from "../utils/axios";
 import { toast } from "react-toastify";
 import Fade from "react-reveal/Fade";
 import Github from "../components/icons/Github";
+import Twitter from "../components/icons/Twitter";
 import Link from "next/link";
 
 export default function Home() {
@@ -130,8 +131,9 @@ export default function Home() {
             </div>
           </div>
           <div className="flex w-full items-center justify-center mt-16 mb-28">
-            <Button onClick={() => router.push("/get-started")}>
-              公益プロジェクトを見る
+            {/* <Button onClick={() => router.push("/get-started")}> */}
+            <Button onClick={() => router.push("/grants")}>
+              プロジェクト一覧を見る
             </Button>
           </div>
         </section>
@@ -206,7 +208,7 @@ export default function Home() {
           <div className="flex w-full justify-end mt-14 mb-28">
             <Button
               style="ghost"
-              onClick={() => router.push("https://mirror.xyz/0xFEd3A62567FCEDfD10f56467EA6Db8c39c313606/sI97HdGBKr0ROPouXT5iKMJZHlrDm2TB45Ti4VkmLo8")}
+              onClick={() => window.open("https://mirror.xyz/0xFEd3A62567FCEDfD10f56467EA6Db8c39c313606/sI97HdGBKr0ROPouXT5iKMJZHlrDm2TB45Ti4VkmLo8", "_blank")}
             >
               Quadratic Fundingについてより詳しく <ArrowTopRightIcon className="ml-2" />
             </Button>
@@ -248,7 +250,8 @@ export default function Home() {
           <p className="mt-3 mb-10 text-lg md:text-xl">
             100円からでもプロジェクトに資金を提供できます。
           </p>
-          <Button onClick={() => router.push("/get-started")}>
+          {/* <Button onClick={() => router.push("/get-started")}> */}
+          <Button onClick={() => router.push("/grants")}>
             プロジェクト一覧を見る
           </Button>
         </section>
@@ -270,28 +273,44 @@ export default function Home() {
               height={50}
               className="mb-8"
             />
-            <Link
-              href={"https://github.com/dig-dao/simplegrants"}
-              target="_blank"
-            >
-              <Github className="w-8 fill-sg-secondary cursor-pointer" />
-            </Link>
+            <div className="flex space-x-4">
+              <Link
+                href={"https://github.com/dig-dao/simplegrants"}
+                target="_blank"
+              >
+                <Github className="w-8 fill-sg-secondary cursor-pointer" />
+              </Link>
+              <Link
+                href={"https://twitter.com/digdaox"}
+                target="_blank"
+              >
+                <Twitter className="w-8 fill-sg-secondary cursor-pointer" />
+              </Link>
+            </div>
           </div>
           <div className="flex flex-row flex-wrap lg:flex-nowrap gap-x-8 w-full justify-between">
             <div className="flex flex-col gap-y-3 mb-6">
-              <p className="font-bold text-xl">プロジェクトについて</p>
+              <Link href="https://scrapbox.io/public-goods-funding/DigDAO_%E3%83%9E%E3%83%83%E3%83%81%E3%83%B3%E3%82%B0%E3%83%89%E3%83%8D%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6" target="_blank">
+                <p className="font-bold text-xl cursor-pointer">プロジェクトについて</p>
+              </Link>
               <p className="font-sm">プレスリリース</p>
-              <p className="font-sm">DigDAOとは</p>
+              <Link href="https://www.digdao.jp/" target="_blank">
+                <p className="font-sm cursor-pointer">DigDAOとは</p>
+              </Link>
             </div>
             <div className="flex flex-col gap-y-3 mb-6">
               <p className="font-bold text-xl">連絡先</p>
-              <p className="font-sm">プロジェクトを掲載したい</p>
-              <p className="font-sm">資金を提供したい</p>
+              <Link href="https://scrapbox.io/public-goods-funding/%E5%85%AC%E7%9B%8A%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%A8%E3%81%97%E3%81%A6%E6%8E%B2%E8%BC%89%E3%81%97%E3%81%9F%E3%81%84%E4%BA%BA%E3%81%B8" target="_blank">
+                <p className="font-sm cursor-pointer">プロジェクトを掲載したい</p>
+              </Link>
+              <Link href="https://scrapbox.io/public-goods-funding/%E3%83%9E%E3%83%83%E3%83%81%E3%83%B3%E3%82%B0%E3%83%89%E3%83%8D%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%82%92%E4%BC%81%E7%94%BB%E3%81%97%E3%81%A6%E3%80%81%E3%82%A8%E3%82%B3%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%92%E8%82%B2%E3%81%A6%E3%81%9F%E3%81%84%E4%BA%BA%E3%81%B8" target="_blank">
+                <p className="font-sm cursor-pointer">資金を提供したい</p>
+              </Link>
             </div>
             <div className="flex flex-col gap-y-3 mb-6">
               <p className="font-bold text-xl">法に関すること</p>
               <p className="font-sm">利用規約</p>
-              <p className="font-sm">プライバシー</p>
+              <p className="font-sm">プライバシーポリシー</p>
             </div>
           </div>
         </footer>

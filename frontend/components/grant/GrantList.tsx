@@ -64,7 +64,7 @@ const GrantList = ({ grant, onClick }: IGrantListProps) => {
             removeFromCart(grant.id);
           }}
         >
-          Remove from cart
+          カートから削除 cart
         </Button>
       ) : (
         <Button
