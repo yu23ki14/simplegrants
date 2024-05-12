@@ -16,10 +16,10 @@ export default function SignIn({
   return (
     <div>
       <Head>
-        <title>SimpleGrants</title>
+        <title>DigDAO マッチングドネーション</title>
         <meta
           name="description"
-          content="Join us in making an impact through quadratic funding."
+          content="私たちと一緒に、Quadratic Fundingを通じてインパクトを与えましょう。"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>

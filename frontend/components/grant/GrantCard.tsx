@@ -95,7 +95,7 @@ const GrantCard = ({
                     removeFromCart(grant.id);
                   }}
                 >
-                  Remove from cart
+                  カートから削除
                 </Button>
               ) : (
                 <Button
@@ -108,8 +108,8 @@ const GrantCard = ({
                   disabled={
                     "team" in grant
                       ? grant.team.some(
-                          (team) => team.email === session?.user?.email
-                        )
+                        (team) => team.email === session?.user?.email
+                      )
                       : false
                   }
                 >

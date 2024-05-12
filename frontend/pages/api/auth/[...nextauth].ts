@@ -8,19 +8,19 @@ import prisma from "../../../lib/prismadb";
 export const authOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
-    TwitterProvider({
-      clientId: process.env.TWITTER_CLIENT_ID || "",
-      clientSecret: process.env.TWITTER_CLIENT_SECRET || "",
-      version: "2.0", // opt-in to Twitter OAuth 2.0
-    }),
+    // TwitterProvider({
+    //   clientId: process.env.TWITTER_CLIENT_ID || "",
+    //   clientSecret: process.env.TWITTER_CLIENT_SECRET || "",
+    //   version: "2.0", // opt-in to Twitter OAuth 2.0
+    // }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
     }),
-    FacebookProvider({
-      clientId: process.env.FACEBOOK_CLIENT_ID || "",
-      clientSecret: process.env.FACEBOOK_CLIENT_SECRET || "",
-    }),
+    // FacebookProvider({
+    //   clientId: process.env.FACEBOOK_CLIENT_ID || "",
+    //   clientSecret: process.env.FACEBOOK_CLIENT_SECRET || "",
+    // }),
   ],
   callbacks: {
     async session({ session, token, user }: any) {
