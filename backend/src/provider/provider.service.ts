@@ -6,6 +6,7 @@ import { StripeProvider } from './adapter/stripe';
 import { PaymentProviderAdapter } from './adapter/types';
 import { PoolWithFunding } from 'src/pool/pool.interface';
 import { CheckoutType, FeeAllocationMethod } from './provider.interface';
+import { QfService } from 'src/qf/qf.service'; // この行を追加
 
 @Injectable()
 export class ProviderService {

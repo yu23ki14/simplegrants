@@ -9,6 +9,7 @@ import {
   GrantFilterOptions,
   GrantResponseWithTeam,
   GrantSortOptions,
+  GrantWithFunding,
   ResubmitGrantDto,
   UpdateGrantDto,
 } from './grants.interface';
@@ -19,6 +20,7 @@ import {
   CheckoutType,
   FeeAllocationMethod,
 } from 'src/provider/provider.interface';
+import { QfService } from 'src/qf/qf.service';
 
 @Injectable()
 export class GrantsService {
@@ -26,6 +28,7 @@ export class GrantsService {
     private readonly prisma: PrismaService,
     private readonly providerService: ProviderService,
     private readonly awsService: AwsService,
+    private readonly qfService: QfService,
   ) {}
 
   private paymentProvider = this.providerService.getProvider();
@@ -434,6 +437,13 @@ export class GrantsService {
       };
     });
 
+    const matchingRoundId = await this.getMatchingRoundIdForGrants(
+      grantWithFunding,
+    );
+    for (const grant of grantWithFunding) {
+      await this.qfService.handleMatchedFunds(matchingRoundId, grant.id);
+    }
+
     // Pass to the payment provider to create a payment session
     return await this.providerService.createPaymentSession(
       grantWithFunding,
@@ -441,5 +451,29 @@ export class GrantsService {
       user,
       CheckoutType.GRANT,
     );
+  }
+
+  // // 与えられたグラントに対応するマッチングラウンドIDを取得するメソッド
+  async getMatchingRoundIdForGrants(
+    grantWithFunding: GrantWithFunding[],
+  ): Promise<string> {
+    if (grantWithFunding.length > 0) {
+      const grantId = grantWithFunding[0].id;
+      const matchingRound = await this.prisma.matchingRound.findFirst({
+        where: {
+          grants: {
+            some: {
+              id: grantId,
+            },
+          },
+        },
+      });
+      if (matchingRound) {
+        return matchingRound.id;
+      } else {
+        throw new Error('Matching round not found for the provided grant');
+      }
+    }
+    throw new Error('No grants provided');
   }
 }

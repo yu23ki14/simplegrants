@@ -334,7 +334,7 @@ const invitesService = {
 const qfService = {
   getActiveMatchingRoundByGrant: jest.fn().mockResolvedValue(matchingRound),
   // estimateMatchedAmount: jest.fn().mockResolvedValue(), // TODO
-  // calculateQuadraticFundingAmount: jest.fn().mockResolvedValue(), // TODO
+  calculateQuadraticFundingAmount: jest.fn().mockResolvedValue(matchingRound), // TODO
   // distributeMatchedFunds: jest.fn().mockResolvedValue(null), // TODO
 };
 

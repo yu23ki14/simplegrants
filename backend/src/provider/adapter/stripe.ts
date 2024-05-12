@@ -12,12 +12,14 @@ import {
   HttpStatus,
   Logger,
   LoggerService,
+  Injectable,
 } from '@nestjs/common';
 import {
   FeeAllocationMethod,
   SuccessfulCheckoutInfo,
 } from '../provider.interface';
 import { PoolWithFunding } from 'src/pool/pool.interface';
+import { QfService } from 'src/qf/qf.service'; // QfServiceをインポート
 
 export interface PaymentIntentEventWebhookBody {
   id: string;
@@ -86,6 +88,7 @@ export interface PaymentIntentEventWebhookBody {
   type: string;
 }
 
+@Injectable()
 export class StripeProvider implements PaymentProviderAdapter {
   constructor(constructorProps: PaymentProviderConstructorProps) {
     const { prisma, secret, country } = constructorProps;
@@ -96,6 +99,7 @@ export class StripeProvider implements PaymentProviderAdapter {
       apiVersion: '2022-11-15',
     });
   }
+
   private prisma: PrismaService;
   private country: string;
   private stripe: Stripe;
@@ -187,26 +191,13 @@ export class StripeProvider implements PaymentProviderAdapter {
       totalDonation,
     );
 
+    // const qfAmounts = await this.qfService.calculateQuadraticFundingAmount(matchingRoundId);
+
+    // // MatchedFundテーブルに上乗せ金額を保存
+    // await this.saveMatchedFunds(qfAmounts, matchingRoundId);
+
     for await (const grant of grantWithFunding) {
       if (grant.amount > 0) {
-        const checkout = await this.prisma.checkout.create({
-          data: {
-            user: {
-              connect: {
-                id: user.id,
-              },
-            },
-            amount: grantAmountLookup[grant.id],
-            denomination: provider.denominations[0],
-            grant: {
-              connect: {
-                id: grant.id,
-              },
-            },
-            groupId: transferGroup,
-          },
-        });
-
         // Contribution テーブルにデータを保存
         await this.prisma.contribution.create({
           data: {
