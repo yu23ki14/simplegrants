@@ -48,7 +48,7 @@ export default function Navbar({
           {session ? (
             children
           ) : (
-            <Button onClick={() => signIn()}>Sign In</Button>
+            <Button onClick={() => signIn()}>サインイン</Button>
           )}
         </div>
         {session && (
@@ -135,7 +135,7 @@ export default function Navbar({
                     href={`/${location}/checkout`}
                     className="justify-between"
                   >
-                    View Cart
+                    カートの中身を見る
                   </Link>
                 </li>
                 <li>
@@ -143,14 +143,14 @@ export default function Navbar({
                     className="justify-between"
                     href={`/profile/${(session.user as any).id}`}
                   >
-                    Profile
+                    プロフィール
                   </Link>
                 </li>
+                {/* <li>
+                  <a>設定</a>
+                </li> */}
                 <li>
-                  <a>Settings</a>
-                </li>
-                <li>
-                  <a onClick={() => signOut()}>Logout</a>
+                  <a onClick={() => signOut()}>ログアウト</a>
                 </li>
               </ul>
             </div>
