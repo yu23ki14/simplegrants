@@ -1,9 +1,9 @@
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import NextAuth from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
-import FacebookProvider from "next-auth/providers/facebook";
-import TwitterProvider from "next-auth/providers/twitter";
-import prisma from "../../../lib/prismadb";
+import { PrismaAdapter } from "@next-auth/prisma-adapter"
+import NextAuth from "next-auth"
+import GoogleProvider from "next-auth/providers/google"
+import FacebookProvider from "next-auth/providers/facebook"
+import TwitterProvider from "next-auth/providers/twitter"
+import prisma from "../../../lib/prismadb"
 
 export const authOptions = {
   adapter: PrismaAdapter(prisma),
@@ -25,9 +25,9 @@ export const authOptions = {
   callbacks: {
     async session({ session, token, user }: any) {
       // Adding the user ID here so we can retrieve the user in the backend
-      session.user.id = user?.id;
+      session.user.id = user?.id
 
-      return session;
+      return session
     },
   },
   pages: {
@@ -43,7 +43,7 @@ export const authOptions = {
               sameSite: "None",
               path: "/",
               secure: true,
-              domain: ".simplegrants.xyz",
+              domain: process.env.COOKIE_DOMAIN || "localhost",
             },
           },
           callbackUrl: {
@@ -52,7 +52,7 @@ export const authOptions = {
               sameSite: "None",
               path: "/",
               secure: true,
-              domain: ".simplegrants.xyz",
+              domain: process.env.COOKIE_DOMAIN || "localhost",
             },
           },
           csrfToken: {
@@ -62,11 +62,11 @@ export const authOptions = {
               sameSite: "None",
               path: "/",
               secure: true,
-              domain: ".simplegrants.xyz",
+              domain: process.env.COOKIE_DOMAIN || "localhost",
             },
           },
         }
       : undefined,
-};
+}
 
-export default NextAuth(authOptions);
+export default NextAuth(authOptions)

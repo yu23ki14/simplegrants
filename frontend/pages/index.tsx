@@ -1,27 +1,27 @@
-import Head from "next/head";
-import { useSession } from "next-auth/react";
-import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-react";
-import React from "react";
-import Image from "next/image";
-import LandingNavbar from "../layouts/landing/LandingNavbar";
-import Button from "../components/Button";
-import { useRouter } from "next/router";
-import { ArrowTopRightIcon } from "@radix-ui/react-icons";
-import GrantCard from "../components/grant/GrantCard";
-import { GrantResponse } from "../types/grant";
-import axios from "../utils/axios";
-import { toast } from "react-toastify";
-import Fade from "react-reveal/Fade";
-import Github from "../components/icons/Github";
-import Twitter from "../components/icons/Twitter";
-import Link from "next/link";
+import Head from "next/head"
+import { useSession } from "next-auth/react"
+import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-react"
+import React from "react"
+import Image from "next/image"
+import LandingNavbar from "../layouts/landing/LandingNavbar"
+import Button from "../components/Button"
+import { useRouter } from "next/router"
+import { ArrowTopRightIcon } from "@radix-ui/react-icons"
+import GrantCard from "../components/grant/GrantCard"
+import { GrantResponse } from "../types/grant"
+import axios from "../utils/axios"
+import { toast } from "react-toastify"
+import Fade from "react-reveal/Fade"
+import Github from "../components/icons/Github"
+import Twitter from "../components/icons/Twitter"
+import Link from "next/link"
 
 export default function Home() {
-  const { data: session } = useSession();
-  const router = useRouter();
-  const [data, setData] = React.useState<GrantResponse[]>([]);
-  const [loading, setLoading] = React.useState(false);
-  const { getData } = useVisitorData({ tag: "signin" }, { immediate: false });
+  const { data: session } = useSession()
+  const router = useRouter()
+  const [data, setData] = React.useState<GrantResponse[]>([])
+  const [loading, setLoading] = React.useState(false)
+  const { getData } = useVisitorData({ tag: "signin" }, { immediate: false })
 
   React.useEffect(() => {
     const saveFingerprintData = async () => {
@@ -35,36 +35,36 @@ export default function Home() {
           body: JSON.stringify({
             user: res.visitorId,
           }),
-        });
-      });
-    };
+        })
+      })
+    }
 
     if (session) {
-      saveFingerprintData();
+      saveFingerprintData()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session]);
+  }, [session])
 
   const getGrants = () => {
-    setLoading(true);
+    setLoading(true)
     axios
       .get("/grants")
       .then((res) => setData(res.data))
       .catch((err) => {
-        console.error({ err });
+        console.error({ err })
         toast.error(
           err.response?.data?.message || err.message || "Something went wrong",
           {
             toastId: "retrieve-grants-error",
           }
-        );
+        )
       })
-      .finally(() => setLoading(false));
-  };
+      .finally(() => setLoading(false))
+  }
 
   React.useEffect(() => {
-    getGrants();
-  }, []);
+    getGrants()
+  }, [])
 
   return (
     <div>
@@ -85,7 +85,8 @@ export default function Home() {
               助成金の分配先を自分たちの寄付で決める!
             </h1>
             <p className="mt-3 text-lg md:text-xl">
-              マッチングドネーション（Quadratic Funding）でお気に入りのプロジェクトに寄付して、公共財を支援しよう
+              マッチングドネーション（Quadratic
+              Funding）でお気に入りのプロジェクトに寄付して、公共財を支援しよう
             </p>
           </Fade>
         </div>
@@ -103,7 +104,7 @@ export default function Home() {
             100円の寄付が1万円を動かす理由
           </h2>
           <p className="mb-28 max-w-3xl">
-            デジタル庁から派生したDigDAOは、DeSci Tokyoの支援を受け、"公益プロジェクトへの資金提供"の新しい仕組みを模索しています。「マッチングドネーション」という仕組みは、政府が用意した資金プールからどのプロジェクトに分配するかを市民による寄付に応じて決定するものです。
+            {`デジタル庁から派生したDigDAOは、DeSci Tokyoの支援を受け、"公益プロジェクトへの資金提供"の新しい仕組みを模索しています。「マッチングドネーション」という仕組みは、政府が用意した資金プールからどのプロジェクトに分配するかを市民による寄付に応じて決定するものです。`}
           </p>
 
           <div className="flex flex-wrap w-full items-center justify-center gap-x-12 gap-y-8">
@@ -153,9 +154,12 @@ export default function Home() {
                   />
                 </div>
                 <div className="flex flex-col flex-1">
-                  <p className="font-bold text-2xl">Quadratic Fundingによる分配</p>
+                  <p className="font-bold text-2xl">
+                    Quadratic Fundingによる分配
+                  </p>
                   <p>
-                    マッチングドネーションの計算にQuadratic Fundingメカニズムを用いることで、幅広いコミュニティから支持されているプロジェクトが多くの助成金を受け取ることができます。
+                    マッチングドネーションの計算にQuadratic
+                    Fundingメカニズムを用いることで、幅広いコミュニティから支持されているプロジェクトが多くの助成金を受け取ることができます。
                   </p>
                 </div>
               </div>
@@ -171,7 +175,9 @@ export default function Home() {
                 <div className="flex flex-col flex-1">
                   <p className="font-bold text-2xl">民主的な資金分配</p>
 
-                  <p>政府や自治体が分配先を決める従来の助成金とは違い、Quadratic Fundingでは資金プールの分配先・額はあなたたちの寄付によって決定されます。
+                  <p>
+                    政府や自治体が分配先を決める従来の助成金とは違い、Quadratic
+                    Fundingでは資金プールの分配先・額はあなたたちの寄付によって決定されます。
                   </p>
                 </div>
               </div>
@@ -185,8 +191,12 @@ export default function Home() {
                   />
                 </div>
                 <div className="flex flex-col flex-1">
-                  <p className="font-bold text-2xl">多くの人に愛されるプロジェクトが報われる</p>
-                  <p>「あるプロジェクトへ寄付した人の数」は、各個人の寄付額より分配金額に大きな影響を与えるように設計されています。</p>
+                  <p className="font-bold text-2xl">
+                    多くの人に愛されるプロジェクトが報われる
+                  </p>
+                  <p>
+                    「あるプロジェクトへ寄付した人の数」は、各個人の寄付額より分配金額に大きな影響を与えるように設計されています。
+                  </p>
                 </div>
               </div>
               <div className="flex flex-col md:flex-row h-full w-full px-8 py-14 md:items-center rounded-2xl bg-white border border-[#D9A596] gap-6">
@@ -199,8 +209,12 @@ export default function Home() {
                   />
                 </div>
                 <div className="flex flex-col flex-1">
-                  <p className="font-bold text-2xl">90億円以上の分配実績を持つメカニズム</p>
-                  <p>QFは民主的な資金分配の方法として、すでに十分な実績を持っています。Ethereum上の公共財プロジェクトに$60M+の資金分配をしたり、UNICEFからNGOへ資金分配する方法として選ばれています。</p>
+                  <p className="font-bold text-2xl">
+                    90億円以上の分配実績を持つメカニズム
+                  </p>
+                  <p>
+                    QFは民主的な資金分配の方法として、すでに十分な実績を持っています。Ethereum上の公共財プロジェクトに$60M+の資金分配をしたり、UNICEFからNGOへ資金分配する方法として選ばれています。
+                  </p>
                 </div>
               </div>
             </div>
@@ -208,9 +222,15 @@ export default function Home() {
           <div className="flex w-full justify-end mt-14 mb-28">
             <Button
               style="ghost"
-              onClick={() => window.open("https://mirror.xyz/0xFEd3A62567FCEDfD10f56467EA6Db8c39c313606/sI97HdGBKr0ROPouXT5iKMJZHlrDm2TB45Ti4VkmLo8", "_blank")}
+              onClick={() =>
+                window.open(
+                  "https://mirror.xyz/0xFEd3A62567FCEDfD10f56467EA6Db8c39c313606/sI97HdGBKr0ROPouXT5iKMJZHlrDm2TB45Ti4VkmLo8",
+                  "_blank"
+                )
+              }
             >
-              Quadratic Fundingについてより詳しく <ArrowTopRightIcon className="ml-2" />
+              Quadratic Fundingについてより詳しく{" "}
+              <ArrowTopRightIcon className="ml-2" />
             </Button>
           </div>
         </section>
@@ -246,7 +266,9 @@ export default function Home() {
           </div>
         </section>
         <section className="flex flex-col w-full items-center justify-center text-center mt-40">
-          <h3 className="font-bold text-3xl lg:text-5xl">あなたの寄付が公益プロジェクトを支える</h3>
+          <h3 className="font-bold text-3xl lg:text-5xl">
+            あなたの寄付が公益プロジェクトを支える
+          </h3>
           <p className="mt-3 mb-10 text-lg md:text-xl">
             100円からでもプロジェクトに資金を提供できます。
           </p>
@@ -280,18 +302,20 @@ export default function Home() {
               >
                 <Github className="w-8 fill-sg-secondary cursor-pointer" />
               </Link>
-              <Link
-                href={"https://twitter.com/digdaox"}
-                target="_blank"
-              >
+              <Link href={"https://twitter.com/digdaox"} target="_blank">
                 <Twitter className="w-8 fill-sg-secondary cursor-pointer" />
               </Link>
             </div>
           </div>
           <div className="flex flex-row flex-wrap lg:flex-nowrap gap-x-8 w-full justify-between">
             <div className="flex flex-col gap-y-3 mb-6">
-              <Link href="https://scrapbox.io/public-goods-funding/DigDAO_%E3%83%9E%E3%83%83%E3%83%81%E3%83%B3%E3%82%B0%E3%83%89%E3%83%8D%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6" target="_blank">
-                <p className="font-bold text-xl cursor-pointer">プロジェクトについて</p>
+              <Link
+                href="https://scrapbox.io/public-goods-funding/DigDAO_%E3%83%9E%E3%83%83%E3%83%81%E3%83%B3%E3%82%B0%E3%83%89%E3%83%8D%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6"
+                target="_blank"
+              >
+                <p className="font-bold text-xl cursor-pointer">
+                  プロジェクトについて
+                </p>
               </Link>
               <p className="font-sm">プレスリリース</p>
               <Link href="https://www.digdao.jp/" target="_blank">
@@ -300,10 +324,18 @@ export default function Home() {
             </div>
             <div className="flex flex-col gap-y-3 mb-6">
               <p className="font-bold text-xl">連絡先</p>
-              <Link href="https://scrapbox.io/public-goods-funding/%E5%85%AC%E7%9B%8A%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%A8%E3%81%97%E3%81%A6%E6%8E%B2%E8%BC%89%E3%81%97%E3%81%9F%E3%81%84%E4%BA%BA%E3%81%B8" target="_blank">
-                <p className="font-sm cursor-pointer">プロジェクトを掲載したい</p>
+              <Link
+                href="https://scrapbox.io/public-goods-funding/%E5%85%AC%E7%9B%8A%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%A8%E3%81%97%E3%81%A6%E6%8E%B2%E8%BC%89%E3%81%97%E3%81%9F%E3%81%84%E4%BA%BA%E3%81%B8"
+                target="_blank"
+              >
+                <p className="font-sm cursor-pointer">
+                  プロジェクトを掲載したい
+                </p>
               </Link>
-              <Link href="https://scrapbox.io/public-goods-funding/%E3%83%9E%E3%83%83%E3%83%81%E3%83%B3%E3%82%B0%E3%83%89%E3%83%8D%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%82%92%E4%BC%81%E7%94%BB%E3%81%97%E3%81%A6%E3%80%81%E3%82%A8%E3%82%B3%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%92%E8%82%B2%E3%81%A6%E3%81%9F%E3%81%84%E4%BA%BA%E3%81%B8" target="_blank">
+              <Link
+                href="https://scrapbox.io/public-goods-funding/%E3%83%9E%E3%83%83%E3%83%81%E3%83%B3%E3%82%B0%E3%83%89%E3%83%8D%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%82%92%E4%BC%81%E7%94%BB%E3%81%97%E3%81%A6%E3%80%81%E3%82%A8%E3%82%B3%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%92%E8%82%B2%E3%81%A6%E3%81%9F%E3%81%84%E4%BA%BA%E3%81%B8"
+                target="_blank"
+              >
                 <p className="font-sm cursor-pointer">資金を提供したい</p>
               </Link>
             </div>
@@ -316,5 +348,5 @@ export default function Home() {
         </footer>
       </main>
     </div>
-  );
+  )
 }
