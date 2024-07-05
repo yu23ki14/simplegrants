@@ -79,7 +79,7 @@ export default function GrantsCheckout() {
       const allChartData: Record<string, { x: number; y: number }[]> = {};
       for (const grant of grants) {
         const dataPoints: { x: number; y: number }[] = [];
-        for (let amount = 0; amount <= 2000; amount += 100) {
+        for (let amount = 0; amount <= 10000; amount += 100) {
           const matchingAmount = await fetchMatchingAmountEstimate(amount, grant.id);
           dataPoints.push({ x: amount, y: matchingAmount });
         }
