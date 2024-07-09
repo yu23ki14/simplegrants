@@ -77,10 +77,10 @@ export default function Pools() {
   return (
     <div>
       <Head>
-        <title>Pools | SimpleGrants</title>
+        <title>マッチングファンド | DigDAO マッチングドネーション</title>
         <meta
           name="description"
-          content="Join us in making an impact through quadratic funding."
+          content="マッチングドネーション（Quadratic Funding）でお気に入りのプロジェクトに寄付して、公共財を支援しよう."
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>

@@ -58,10 +58,10 @@ export default function GrantDetails() {
   return (
     <div>
       <Head>
-        <title>{data?.name || "Grant not found"} | SimpleGrants</title>
+        <title>{data?.name || "Grant not found"} | DigDAO マッチングドネーション</title>
         <meta
           name="description"
-          content="Join us in making an impact through quadratic funding."
+          content="マッチングドネーション（Quadratic Funding）でお気に入りのプロジェクトに寄付して、公共財を支援しよう"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>

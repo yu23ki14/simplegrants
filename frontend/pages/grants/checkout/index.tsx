@@ -80,13 +80,10 @@ export default function GrantsCheckout() {
     const fetchInitialData = async () => {
       const allChartData: Record<string, { x: number; y: number }[]> = {}
       for (const grant of grants) {
-        const dataPoints: { x: number; y: number }[] = []
-        for (let amount = 0; amount <= 2000; amount += 100) {
-          const matchingAmount = await fetchMatchingAmountEstimate(
-            amount,
-            grant.id
-          )
-          dataPoints.push({ x: amount, y: matchingAmount })
+        const dataPoints: { x: number; y: number }[] = [];
+        for (let amount = 0; amount <= 10000; amount += 100) {
+          const matchingAmount = await fetchMatchingAmountEstimate(amount, grant.id);
+          dataPoints.push({ x: amount, y: matchingAmount });
         }
         allChartData[grant.id] = dataPoints
       }
@@ -189,9 +186,9 @@ export default function GrantsCheckout() {
       legend: {
         labels: {
           font: {
-            size: 12, // ラベルのフォントサイズを小さく設定
-          },
-        },
+            size: 12 // ラベルのフォントサイズを小さく設定
+          }
+        }
       },
       tooltip: {
         enabled: true,
@@ -287,10 +284,10 @@ export default function GrantsCheckout() {
   return (
     <div>
       <Head>
-        <title>Checkout | SimpleGrantsCheckout</title>
+        <title>カートの中身 | DigDAO マッチングドネーション</title>
         <meta
           name="description"
-          content="Join us in making an impact through quadratic funding."
+          content="マッチングドネーション（Quadratic Funding）でお気に入りのプロジェクトに寄付して、公共財を支援しよう."
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -314,7 +311,8 @@ export default function GrantsCheckout() {
           </h1>
           <div className="w-full flex flex-col md:flex-row gap-y-8">
             <div className="basis-full md:basis-3/5 px-4">
-              <div className="flex flex-col bg-white shadow-card py-8 px-6 rounded-xl gap-y-6">
+
+              {/* <div className="flex flex-col bg-white shadow-card py-8 px-6 rounded-xl gap-y-6">
                 {hasHydrated &&
                   grants.map((grant, index) => (
                     <React.Fragment key={grant.id}>
@@ -369,6 +367,72 @@ export default function GrantsCheckout() {
                             </div>
                           </div>
                           {/* <Line data={generateChartData(grant.id, grant.amount.toString())} options={chartOptions} /> */}
+              {/* </div>
+                        <p
+                          className="cursor-pointer h-full items-center justify-center text-sg-error"
+                          onClick={() => removeFromCart(grant.id)}
+                        >
+                          削除
+                        </p>
+                      </div>
+                      {index !== grants.length - 1 && (
+                        <Divider
+                          orientation="horizontal"
+                          className="bg-sg-500"
+                          key={index}
+                        />
+                      )}
+                    </React.Fragment>
+                  ))} */}
+              <div className="flex flex-col bg-white shadow-card py-8 px-6 rounded-xl gap-y-6">
+                {hasHydrated &&
+                  grants.map((grant, index) => (
+                    <React.Fragment key={grant.id}>
+                      <div
+                        className="flex flex-col md:flex-row w-full h-full items-center justify-between gap-y-6 md:gap-x-6"
+                        key={grant.id}
+                      >
+                        <div className="overflow-hidden rounded-lg flex-none">
+                          <Image
+                            src={grant.image}
+                            width={132}
+                            height={98}
+                            className="aspect-[5/4] object-cover"
+                            alt={grant.name}
+                          />
+                        </div>
+                        <div className="flex flex-col h-full justify-between flex-auto gap-y-6">
+                          <p className="font-bold text-lg h-full">
+                            {grant.name}
+                          </p>
+                          <div className="flex flex-col md:flex-row items-center">
+                            <div className="flex flex-row items-center">
+                              <TextInput
+                                value={grant.amount
+                                  .toString()
+                                  .replace(/^0(?=\d)/, "")}
+                                type="number"
+                                placeholder="Amount"
+                                onChange={(
+                                  event: React.ChangeEvent<HTMLInputElement>
+                                ) =>
+                                  // updateGrantAmount(grant.id, event.target.value)
+                                  handleAmountChange(grant.id, event.target.value)
+                                }
+                                className="px-4 py-2 max-w-[144px] lg:max-w-[192px] text-lg"
+                                step="100"  //日本円を100円単位でしか寄付できないようにする
+                              />
+                              <p className="text-lg ml-3">円</p>
+                            </div>
+                            <div className="flex flex-col">
+                              <p className="text-sm text-gray-600">マッチング金額:</p>
+                              <p className="text-lg font-bold">
+                                {chartData[grant.id] ? Math.round(chartData[grant.id].find(data => data.x === grant.amount)?.y || 0).toLocaleString() : '計算中...'} 円
+                              </p>
+                            </div>
+
+                          </div>
+                          {/* <Line data={generateChartData(grant.id, grant.amount.toString())} options={chartOptions} /> */}
                         </div>
                         <p
                           className="cursor-pointer h-full items-center justify-center text-sg-error"
@@ -388,11 +452,8 @@ export default function GrantsCheckout() {
                   ))}
               </div>
             </div>
-            <div className="basis-full md:basis-2/5 px-4 flex flex-col items-center ">
-              {/* <div className="flex flex-col w-full bg-white shadow-card py-8 px-6 rounded-xl max-w-sm"> */}
-              <div className="flex-1 bg-white shadow-card py-8 px-6 rounded-xl mb-4 chart-container">
-                {/* <h2 className="font-bold text-xl mb-8">推定マッチング金額</h2>
-                <Line data={generateCombinedChartData()} options={chartOptions} /> */}
+            <div className="basis-full md:basis-3/5 px-4">
+              <div className="flex flex-col bg-white shadow-card py-8 px-6 rounded-xl gap-y-6">
                 <h2 className="font-bold text-xl mb-4">推定マッチング金額</h2>
                 <Line
                   data={generateCombinedChartData()}
@@ -469,3 +530,9 @@ export default function GrantsCheckout() {
     </div>
   )
 }
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> main

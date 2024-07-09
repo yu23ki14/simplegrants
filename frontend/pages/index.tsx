@@ -69,10 +69,10 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>SimpleGrants</title>
+        <title>DigDAOマッチングドネーション</title>
         <meta
           name="description"
-          content="Join us in making an impact through quadratic funding."
+          content="マッチングドネーション（Quadratic Funding）でお気に入りのプロジェクトに寄付して、公共財を支援しよう"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -99,13 +99,44 @@ export default function Home() {
             className="scale-200 md:scale-150 lg:scale-125 w-screen"
           />
         </div>
-        <section className="px-8 md:px-18 lg:px-36">
+        <div className="relative flex flex-col items-center w-full md:-translate-y-[30%] translate-y-10">
+          <h2 className="font-bold text-3xl md:text-5xl mb-8">運営パートナー</h2>
+          <div className="flex flex-wrap justify-center">
+            <div className="flex justify-center items-center m-8">
+              <Image
+                src="/assets/cfj.png"
+                width={200}
+                height={100}
+                alt="Code for Japan"
+              />
+            </div>
+            <div className="flex justify-center items-center m-8">
+              <Image
+                src="/assets/shibuya.png"
+                width={200}
+                height={100}
+                alt="渋谷区"
+              />
+            </div>
+            <div className="flex justify-center items-center m-8">
+              <Image
+                src="/assets/descitokyo_no_BG_black.png"
+                width={150}
+                height={75}
+                alt="DeSci Tokyo"
+              />
+            </div>
+          </div>
+        </div>
+        <section className="px-8 md:px-18 lg:px-36 mt-16">
           <h2 className="font-bold text-3xl md:text-5xl mt-12 lg:mt-0 mb-5">
             100円の寄付が1万円を動かす理由
           </h2>
           <p className="mb-28 max-w-3xl">
             {`デジタル庁から派生したDigDAOは、DeSci Tokyoの支援を受け、"公益プロジェクトへの資金提供"の新しい仕組みを模索しています。「マッチングドネーション」という仕組みは、政府が用意した資金プールからどのプロジェクトに分配するかを市民による寄付に応じて決定するものです。`}
           </p>
+        </section>
+        <section className="px-8 md:px-18 lg:px-36">
 
           <div className="flex flex-wrap w-full items-center justify-center gap-x-12 gap-y-8">
             <div className="flex flex-col h-full w-full max-w-[350px] px-9 py-12 bg-[linear-gradient(90deg,_#E4F3DD_17.22%,_#FFE0DB_96.29%)] rounded-2xl border border-[#D9A596]">
@@ -290,7 +321,7 @@ export default function Home() {
           <div className="w-full flex-col">
             <Image
               src="/logo.png"
-              alt="SimpleGrants"
+              alt="DigDAOマッチングドネーション"
               width={162}
               height={50}
               className="mb-8"
