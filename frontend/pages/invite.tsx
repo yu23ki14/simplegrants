@@ -73,10 +73,10 @@ export default function GetStarted() {
   return (
     <div>
       <Head>
-        <title>Be an Ecosystem Builder | SimpleGrants</title>
+        <title>マッチングファンドへの寄付 | DigDAOマッチングドネーション</title>
         <meta
           name="description"
-          content="Join us in making an impact through quadratic funding."
+          content="マッチングドネーション（Quadratic Funding）でお気に入りのプロジェクトに寄付して、公共財を支援しよう"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>

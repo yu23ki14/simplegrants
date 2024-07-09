@@ -23,8 +23,8 @@ export default function CreateGrantSuccess() {
     if (typeof window !== undefined && createdGrant) {
       return {
         url: `${process.env.NODE_ENV === "production"
-            ? "https://simplegrants.xyz"
-            : "http://localhost:3001"
+          ? "https://donation.digdao.jp"
+          : "http://localhost:3001"
           }/grants/${createdGrant.id}`,
         message: `Check out my grant - ${createdGrant.name}!\n`,
       };
@@ -48,10 +48,10 @@ export default function CreateGrantSuccess() {
   return (
     <div>
       <Head>
-        <title>Grant Created | SimpleGrants</title>
+        <title>プロジェクトの作成完了 | DigDAO マッチングドネーション</title>
         <meta
           name="description"
-          content="Join us in making an impact through quadratic funding."
+          content="マッチングドネーション（Quadratic Funding）でお気に入りのプロジェクトに寄付して、公共財を支援しよう."
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -67,14 +67,14 @@ export default function CreateGrantSuccess() {
           <Link className="btn btn-ghost" href="/">
             <Image
               src="/logo.png"
-              alt="SimpleGrants"
+              alt="DigDAO マッチングドネーション"
               width={103.55}
               height={32}
             />
           </Link>
           <Link className="flex flex-row items-center" href="/grants">
             <ArrowLeftIcon className="mr-2" />
-            <p className="font-bold">Back to Home</p>
+            <p className="font-bold">ホームに戻る</p>
           </Link>
         </div>
         {createdGrant && shareInformation && (

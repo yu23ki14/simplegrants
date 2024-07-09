@@ -98,7 +98,7 @@ export default function ReviewPool() {
         <title>{data?.name || "Pool not found"} | SimpleGrants</title>
         <meta
           name="description"
-          content="Join us in making an impact through quadratic funding."
+          content="マッチングドネーション（Quadratic Funding）でお気に入りのプロジェクトに寄付して、公共財を支援しよう."
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>

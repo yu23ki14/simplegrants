@@ -1,44 +1,33 @@
 import { DefaultSeoProps } from "next-seo";
 
 const config: DefaultSeoProps = {
-  defaultTitle: "SimpleGrants",
+  defaultTitle: "DigDAO マッチングドネーション",
   additionalMetaTags: [
     {
       property: "keywords",
       content:
-        "simplegrants, quadratic, funding, quadratic funding, fundraising, raise, grants",
+        "DigDAO, quadratic, funding, quadratic funding, fundraising, raise, grants",
     },
   ],
-  canonical: "https://simplegrants.xyz/",
+  canonical: "https://donation.digdao.jp/",
   openGraph: {
     type: "website",
-    title: "SimpleGrants",
-    description: "Join us in making an impact through quadratic funding.",
-    url: "https://simplegrants.xyz/",
+    title: "DigDAO マッチングドネーション",
+    description: "マッチングドネーション（Quadratic Funding）でお気に入りのプロジェクトに寄付して、公共財を支援しよう",
+    url: "https://donation.digdao.jp/",
     images: [
       {
-        url: "https://simplegrants.xyz/og-images/og-image.png",
+        url: "https://i.gyazo.com/0a84e70567833243895c2eb25277a7b6.png",
+        // 画像は仮
         width: 1200,
-        height: 627,
-        alt: "Og Image Alt",
-      },
-      {
-        url: "https://simplegrants.xyz/og-images/og-image-2.png",
-        width: 800,
-        height: 600,
-        alt: "Og Image Alt 2",
-      },
-      {
-        url: "https://simplegrants.xyz/og-images/og-image-3.png",
-        width: 640,
-        height: 640,
-        alt: "Og Image Alt 3",
-      },
+        height: 630,
+        alt: "DigDAO マッチングドネーション - サムネイル画像",
+      }
     ],
   },
   twitter: {
-    handle: "@supermodularxyz",
-    site: "@supermodularxyz",
+    handle: "@digdaox",
+    site: "@digdaox",
     cardType: "summary_large_image",
   },
 };
