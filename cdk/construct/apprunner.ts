@@ -60,7 +60,7 @@ export class BackendAppRunner extends Construct {
       `${props.config.stage}-${props.config.appName}-AppRunner-VpcConnector`,
       {
         subnets: vpc.selectSubnets({
-          subnetType: ec2.SubnetType.PUBLIC,
+          subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS,
         }).subnetIds,
         securityGroups: [appRunnerSecurityGroup.securityGroupId],
         vpcConnectorName: `${
@@ -179,26 +179,26 @@ export class BackendAppRunner extends Construct {
   }
 }
 
-export class FrameAppRunner extends Construct {
+export class FrontendAppRunner extends Construct {
   constructor(scope: Construct, id: string, props: AppRunnerProps) {
     super(scope, id)
 
-    const { vpc, appRunnerSecurityGroup } = props
+    const { vpc, appRunnerSecurityGroup, config } = props
 
     const instanceRole = new iam.Role(
       scope,
-      `${props.config.stage}-${props.config.appName}-Frame-AppRunner-Role`,
+      `${props.config.stage}-${props.config.appName}-FrontAppRunner-Role`,
       {
-        roleName: `${props.config.stage}-${props.config.appName}-Frame-AppRunner-Role`,
+        roleName: `${props.config.stage}-${props.config.appName}-FrontAppRunner-Role`,
         assumedBy: new iam.ServicePrincipal("tasks.apprunner.amazonaws.com"),
       }
     )
 
     const accessRole = new iam.Role(
       scope,
-      `${props.config.stage}-${props.config.appName}-Frame-AppRunner-AccessRole`,
+      `${props.config.stage}-${props.config.appName}-FrontAppRunner-AccessRole`,
       {
-        roleName: `${props.config.stage}-${props.config.appName}-Frame-AppRunner-AccessRole`,
+        roleName: `${props.config.stage}-${props.config.appName}-FrontAppRunner-AccessRole`,
         assumedBy: new iam.ServicePrincipal("build.apprunner.amazonaws.com"),
       }
     )
@@ -208,9 +208,23 @@ export class FrameAppRunner extends Construct {
       )
     )
 
+    const secretsDB = secretsmanager.Secret.fromSecretNameV2(
+      scope,
+      `${
+        props.config.stage
+      }${props.config.appName.toLowerCase()}Rds-db-secret-${
+        props.config.database.secret_suffix
+      }`,
+      `${
+        props.config.stage
+      }${props.config.appName.toLowerCase()}Rds-db-secret-${
+        props.config.database.secret_suffix
+      }`
+    )
+
     const vpcConnector = new apprunner.CfnVpcConnector(
       scope,
-      `${props.config.stage}-${props.config.appName}-Frame-AppRunner-VpcConnector`,
+      `${props.config.stage}-${props.config.appName}-FrontAppRunner-VpcConnector`,
       {
         subnets: vpc.selectSubnets({
           subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS,
@@ -218,23 +232,30 @@ export class FrameAppRunner extends Construct {
         securityGroups: [appRunnerSecurityGroup.securityGroupId],
         vpcConnectorName: `${
           props.config.stage
-        }-${props.config.appName.toLowerCase()}-frame-apprunner-vpc-connector`,
+        }-${props.config.appName.toLowerCase()}-frontapprunner-vpc-connector`,
       }
     )
 
-    const secretsDB = secretsmanager.Secret.fromSecretNameV2(
-      scope,
-      `${props.config.stage}-${props.config.appName.toLowerCase()}-db-secret-${
-        props.config.database.secret_suffix
-      }`,
-      `${props.config.stage}-${props.config.appName.toLowerCase()}-db-secret-${
-        props.config.database.secret_suffix
-      }`
-    )
+    const DATABASE_URL = `postgresql://${secretsDB
+      .secretValueFromJson("username")
+      .unsafeUnwrap()
+      .toString()}:${secretsDB
+      .secretValueFromJson("password")
+      .unsafeUnwrap()
+      .toString()}@${secretsDB
+      .secretValueFromJson("host")
+      .unsafeUnwrap()
+      .toString()}:${secretsDB
+      .secretValueFromJson("port")
+      .unsafeUnwrap()
+      .toString()}/${secretsDB
+      .secretValueFromJson("dbname")
+      .unsafeUnwrap()
+      .toString()}?schema=public&connect_timeout=300`
 
     new apprunner.CfnService(
       scope,
-      `${props.config.stage}-${props.config.appName}-Frame-AppRunner`,
+      `${props.config.stage}-${props.config.appName}-FrontAppRunner`,
       {
         sourceConfiguration: {
           authenticationConfiguration: {
@@ -247,45 +268,41 @@ export class FrameAppRunner extends Construct {
               props.config.aws.region
             }.amazonaws.com/${
               props.config.stage
-            }-${props.config.appName.toLowerCase()}-frame:latest`,
+            }-${props.config.appName.toLowerCase()}-frontend:latest`,
             imageConfiguration: {
               port: "3000",
               runtimeEnvironmentVariables: [
                 {
-                  name: "DB_HOST",
-                  value: secretsDB
-                    .secretValueFromJson("host")
-                    .unsafeUnwrap()
-                    .toString(),
+                  name: "GOOGLE_CLIENT_ID",
+                  value: config.google.clientId,
                 },
                 {
-                  name: "DB_PORT",
-                  value: secretsDB
-                    .secretValueFromJson("port")
-                    .unsafeUnwrap()
-                    .toString(),
+                  name: "GOOGLE_CLIENT_SECRET",
+                  value: config.secrets.google_client_secret,
                 },
                 {
-                  name: "DB_USER",
-                  value: secretsDB
-                    .secretValueFromJson("username")
-                    .unsafeUnwrap()
-                    .toString(),
+                  name: "DATABASE_URL",
+                  value: DATABASE_URL,
                 },
                 {
-                  name: "DB_PASSWORD",
-                  value: secretsDB
-                    .secretValueFromJson("password")
-                    .unsafeUnwrap()
-                    .toString(),
+                  name: "NEXT_PUBLIC_API_URL",
+                  value: config.frontend.api_url,
                 },
                 {
-                  name: "DB_DATABASE",
-                  value: "card_frame",
+                  name: "NEXT_PUBLIC_FINGERPRINT_KEY",
+                  value: config.frontend.fingerprint_key,
                 },
                 {
-                  name: "PORT",
-                  value: "3000",
+                  name: "NEXTAUTH_URL",
+                  value: "http://localhost:3000",
+                },
+                {
+                  name: "NEXTAUTH_SECRET",
+                  value: config.frontend.nextauth_secret,
+                },
+                {
+                  name: "COOKIE_DOMAIN",
+                  value: config.frontend.cookie_domain,
                 },
               ],
             },
@@ -309,7 +326,7 @@ export class FrameAppRunner extends Construct {
 
         serviceName: `${
           props.config.stage
-        }-${props.config.appName.toLowerCase()}-frame-apprunner`,
+        }-${props.config.appName.toLowerCase()}-front-apprunner`,
       }
     )
   }

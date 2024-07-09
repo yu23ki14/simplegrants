@@ -14,7 +14,18 @@ export class NextAuthGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     // Retrieving user sesion
     const req = context.switchToHttp().getRequest();
-    const session = await getSession({ req });
+
+    // const session = await getSession({ req });
+    const getSession = await fetch(
+      `${process.env.NEXTAUTH_URL}/api/auth/session`,
+      {
+        method: 'GET',
+        headers: {
+          cookie: req.headers.cookie,
+        },
+      },
+    );
+    const session = await getSession.json();
 
     // Checking for required roles
     const requiredRoles = this.reflector.getAllAndOverride<Role[]>(ROLES_KEY, [
@@ -29,7 +40,7 @@ export class NextAuthGuard implements CanActivate {
     ]);
 
     let user;
-    if (session) {
+    if (session && session.user) {
       // Get user data based on session
       user = await this.prisma.user.findUnique({
         where: {

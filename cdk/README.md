@@ -47,8 +47,8 @@ DB のシークレット情報を secret manager に保存しているが、ARN 
 #### Frontend
 
 1. `aws ecr get-login-password --region ap-northeast-1 --profile cfj_pgf | docker login --username AWS --password-stdin 905418185537.dkr.ecr.ap-northeast-1.amazonaws.com`
-2. `docker build -t card-frame:latest -f ./Dockerfile .`
-3. `docker tag card-frame:latest 905418185537.dkr.ecr.ap-northeast-1.amazonaws.com/stg-web2qf-frontend:latest`
+2. `docker build -t web2qf-frontend:latest -f ./Dockerfile .`
+3. `docker tag web2qf-frontend:latest 905418185537.dkr.ecr.ap-northeast-1.amazonaws.com/stg-web2qf-frontend:latest`
 4. `docker push 905418185537.dkr.ecr.ap-northeast-1.amazonaws.com/stg-web2qf-frontend:latest`
 
 ### Backend
