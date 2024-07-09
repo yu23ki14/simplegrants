@@ -21,8 +21,26 @@ export class VpcStack extends Stack {
 
     const { config } = appProps
 
-    this.vpc = ec2.Vpc.fromLookup(this, "Default", {
-      vpcId: config.aws.vpcId,
+    this.vpc = new ec2.Vpc(this, `${config.appName}-VPC`, {
+      maxAzs: 2,
+      cidr: "10.250.0.0/16",
+      subnetConfiguration: [
+        {
+          cidrMask: 24,
+          name: `${config.appName}-Public`,
+          subnetType: ec2.SubnetType.PUBLIC,
+        },
+        {
+          cidrMask: 24,
+          name: `${config.appName}-Protected`,
+          subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS,
+        },
+        {
+          cidrMask: 24,
+          name: `${config.appName}-Private`,
+          subnetType: ec2.SubnetType.PRIVATE_ISOLATED,
+        },
+      ],
     })
 
     this.ec2BastionSecurityGroup = new ec2.SecurityGroup(

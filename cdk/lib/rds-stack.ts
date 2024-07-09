@@ -101,7 +101,7 @@ export class RdsStack extends Stack {
       maxAllocatedStorage: 16,
       vpc,
       vpcSubnets: {
-        subnetType: ec2.SubnetType.PUBLIC,
+        subnetType: ec2.SubnetType.PRIVATE_ISOLATED,
       },
       credentials: this.rdsCredentials,
       securityGroups: [this.dbSG],

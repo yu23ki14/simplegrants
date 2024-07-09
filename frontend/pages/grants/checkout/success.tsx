@@ -1,60 +1,71 @@
-import Head from "next/head";
-import React from "react";
-import { useRouter } from "next/router";
-import axios from "../../../utils/axios";
-import MainLayout from "../../../layouts/MainLayout";
-import { useHasHydrated } from "../../../utils/useHydrated";
-import Success from "../../../components/icons/Success";
-import Button from "../../../components/Button";
-import Link from "next/link";
-import { useGrantCartStore } from "../../../utils/store";
-import Image from "next/image";
-import Copy from "../../../components/icons/Copy";
-import { FacebookShareButton, TwitterShareButton } from "react-share";
-import { toast } from "react-toastify";
+import Head from "next/head"
+import React from "react"
+import { useRouter } from "next/router"
+import axios from "../../../utils/axios"
+import MainLayout from "../../../layouts/MainLayout"
+import { useHasHydrated } from "../../../utils/useHydrated"
+import Success from "../../../components/icons/Success"
+import Button from "../../../components/Button"
+import Link from "next/link"
+import { useGrantCartStore } from "../../../utils/store"
+import Image from "next/image"
+import Copy from "../../../components/icons/Copy"
+import { FacebookShareButton, TwitterShareButton } from "react-share"
+import { toast } from "react-toastify"
+import instance from "../../../utils/axios"
 
 export default function CheckoutSuccess() {
-  const [loading, setLoading] = React.useState(false);
-  const [data, setData] = React.useState<any>(null); // Updated initial state to null
-  const hasHydrated = useHasHydrated();
-  const router = useRouter();
-  const { clearCart } = useGrantCartStore();
+  const [loading, setLoading] = React.useState(false)
+  const [data, setData] = React.useState<any>(null) // Updated initial state to null
+  const hasHydrated = useHasHydrated()
+  const router = useRouter()
+  const { clearCart } = useGrantCartStore()
   const shareInformation = React.useMemo(() => {
     if (typeof window !== undefined && data) {
       return {
         url: window.location.href,
-        message: `#DigDAOマッチングドネーション実験 で${data.numberOfItems}件の公益プロジェクトに ${data.donated.toLocaleString("ja-JP")}円 分の寄付をしました！🥳 #Quadratic_Funding
+        message: `#DigDAOマッチングドネーション実験 で${
+          data.numberOfItems
+        }件の公益プロジェクトに ${data.donated.toLocaleString(
+          "ja-JP"
+        )}円 分の寄付をしました！🥳 #Quadratic_Funding
         \n`,
-      };
+      }
     }
-  }, [data]);
+  }, [data])
 
- const fetchMatchingAmountEstimate = async (donationAmount: number, grantId: string) => {
+  const fetchMatchingAmountEstimate = async (
+    donationAmount: number,
+    grantId: string
+  ) => {
     try {
-      const response = await axios.get(`http://localhost:3000/qf/estimate?donationAmount=${donationAmount}&grantId=${grantId}`);
-      return response.data; // マッチング金額の見積もりが返される
+      const response = await instance.get(
+        `/qf/estimate?donationAmount=${donationAmount}&grantId=${grantId}`
+      )
+      return response.data // マッチング金額の見積もりが返される
     } catch (error) {
-      console.error('マッチング金額の見積もり取得エラー:', error);
-      return 0; // エラーが発生した場合は0を返す
+      console.error("マッチング金額の見積もり取得エラー:", error)
+      return 0 // エラーが発生した場合は0を返す
     }
-  };
+  }
 
   React.useEffect(() => {
     // If we have a session ID, we can make a call to the backend
     if (router.query.session_id) {
-      setLoading(true);
+      setLoading(true)
       axios
         .get(`/checkout/${router.query.session_id}`)
         .then((res) => {
-          const totalMatchingAmount = sessionStorage.getItem('totalMatchingAmount') || '0';
+          const totalMatchingAmount =
+            sessionStorage.getItem("totalMatchingAmount") || "0"
           setData({
             ...res.data,
-            matched: parseInt(totalMatchingAmount, 10)
-          });
-          clearCart();
+            matched: parseInt(totalMatchingAmount, 10),
+          })
+          clearCart()
         })
         .catch((err) => {
-          console.error('APIエラー:', err);
+          console.error("APIエラー:", err)
           toast.error(
             err.response?.data?.message ||
               err.message ||
@@ -62,13 +73,13 @@ export default function CheckoutSuccess() {
             {
               toastId: "retrieve-grant-error",
             }
-          );
-          router.push("/pools");
+          )
+          router.push("/pools")
         })
-        .finally(() => setLoading(false));
+        .finally(() => setLoading(false))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.query, hasHydrated, router]);
+  }, [router.query, hasHydrated, router])
 
   return (
     <div>
@@ -89,15 +100,16 @@ export default function CheckoutSuccess() {
             <Success className="fill-sg-success mb-6" />
             <h1 className="font-bold text-3xl mb-3">公益的な市民の鑑!</h1>
             <p className="text-2xl max-w-2xl mt-2 mb-10">
-              あなたの{" "}
-              <b>
-                {data.donated.toLocaleString("ja-JP")}円
-              </b>{" "}
+              あなたの <b>{data.donated.toLocaleString("ja-JP")}円</b>{" "}
               分の寄付を受け取りました。
               <br></br>
               この寄付に加え、約{" "}
               <b>
-                {data.matched.toLocaleString("ja-JP", {minimumFractionDigits: 0, maximumFractionDigits: 0})}円
+                {data.matched.toLocaleString("ja-JP", {
+                  minimumFractionDigits: 0,
+                  maximumFractionDigits: 0,
+                })}
+                円
               </b>
               分の助成金が資金プールから上乗せされてプロジェクトに分配されます。
             </p>
@@ -106,7 +118,7 @@ export default function CheckoutSuccess() {
                 <Button
                   style="ghost"
                   onClick={() => {
-                    navigator.clipboard.writeText(window.location.href);
+                    navigator.clipboard.writeText(window.location.href)
                   }}
                   className="mb-5"
                 >
@@ -135,5 +147,5 @@ export default function CheckoutSuccess() {
         )}
       </MainLayout>
     </div>
-  );
+  )
 }

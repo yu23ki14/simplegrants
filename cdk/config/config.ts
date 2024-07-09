@@ -15,7 +15,6 @@ export function getConfig(stage: string) {
     aws: {
       account: process.env.AWS_ACCOUNT,
       region: process.env.AWS_REGION,
-      vpcId: process.env.AWS_VPC_ID,
       bastionKeypairId: process.env.AWS_BASTION_KEYPAIR_ID,
       bastionKeypairName: process.env.AWS_BASTION_KEYPAIR_NAME,
     },
@@ -28,10 +27,10 @@ export function getConfig(stage: string) {
     frontend: {
       url: process.env.FRONTEND_URL,
       nextauth_url: process.env.NEXTAUTH_URL,
-    },
-
-    github: {
-      repository: process.env.GITHUB_REPOSITORY,
+      nextauth_secret: process.env.NEXTAUTH_SECRET,
+      fingerprint_key: process.env.FINGERPRINT_KEY,
+      cookie_domain: process.env.COOKIE_DOMAIN,
+      api_url: process.env.API_URL,
     },
 
     google: {
@@ -39,7 +38,6 @@ export function getConfig(stage: string) {
     },
 
     secrets: {
-      github: process.env.GITHUB_TOKEN,
       google_client_secret: process.env.GOOGLE_CLIENT_SECRET,
       stripe_sk: process.env.STRIPE_SK,
       stripe_pk: process.env.STRIPE_PK,
