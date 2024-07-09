@@ -69,10 +69,10 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>SimpleGrants</title>
+        <title>DigDAOマッチングドネーション</title>
         <meta
           name="description"
-          content="Join us in making an impact through quadratic funding."
+          content="マッチングドネーション（Quadratic Funding）でお気に入りのプロジェクトに寄付して、公共財を支援しよう"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -321,7 +321,7 @@ export default function Home() {
           <div className="w-full flex-col">
             <Image
               src="/logo.png"
-              alt="SimpleGrants"
+              alt="DigDAOマッチングドネーション"
               width={162}
               height={50}
               className="mb-8"

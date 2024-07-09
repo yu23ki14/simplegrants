@@ -169,12 +169,12 @@ export default function GrantsCheckout() {
 
     plugins: {
       legend: {
-      labels: {
-        font: {
-          size: 12 // ラベルのフォントサイズを小さく設定
+        labels: {
+          font: {
+            size: 12 // ラベルのフォントサイズを小さく設定
+          }
         }
-      }
-    },
+      },
       tooltip: {
         enabled: true,
         intersect: false,
@@ -264,10 +264,10 @@ export default function GrantsCheckout() {
   return (
     <div>
       <Head>
-        <title>Checkout | SimpleGrantsCheckout</title>
+        <title>カートの中身 | DigDAO マッチングドネーション</title>
         <meta
           name="description"
-          content="Join us in making an impact through quadratic funding."
+          content="マッチングドネーション（Quadratic Funding）でお気に入りのプロジェクトに寄付して、公共財を支援しよう."
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -334,7 +334,7 @@ export default function GrantsCheckout() {
 
                           </div>
                           {/* <Line data={generateChartData(grant.id, grant.amount.toString())} options={chartOptions} /> */}
-                        {/* </div>
+              {/* </div>
                         <p
                           className="cursor-pointer h-full items-center justify-center text-sg-error"
                           onClick={() => removeFromCart(grant.id)}

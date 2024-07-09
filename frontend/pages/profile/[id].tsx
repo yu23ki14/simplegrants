@@ -49,10 +49,10 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>{data ? data.name : "User Profile"} | SimpleGrants</title>
+        <title>{data ? data.name : "User Profile"} | DigDAO マッチングドネーション</title>
         <meta
           name="description"
-          content="Join us in making an impact through quadratic funding."
+          content="マッチングドネーション（Quadratic Funding）でお気に入りのプロジェクトに寄付して、公共財を支援しよう."
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -94,22 +94,22 @@ export default function Home() {
                     円
                   </p>
 
-                    {data.totalContributed ? (
-                      <>
-                        <p className="font-bold text-xl text-sg-accent">
-                          資金プールへの寄付
-                        </p>
-                        <p className="text-xl mb-5">
-                          {" "}
-                          {data.totalContributed.toLocaleString("ja-JP", {
-                            maximumFractionDigits: 0,
-                          })}{" "}
-                          円
-                        </p>
-                      </>
-                    ) : (
-                      <></>
-                    )}
+                  {data.totalContributed ? (
+                    <>
+                      <p className="font-bold text-xl text-sg-accent">
+                        資金プールへの寄付
+                      </p>
+                      <p className="text-xl mb-5">
+                        {" "}
+                        {data.totalContributed.toLocaleString("ja-JP", {
+                          maximumFractionDigits: 0,
+                        })}{" "}
+                        円
+                      </p>
+                    </>
+                  ) : (
+                    <></>
+                  )}
 
 
                   <p className="font-bold text-xl text-sg-accent">

@@ -88,10 +88,10 @@ export default function CreateGrant() {
   return (
     <div>
       <Head>
-        <title>Create Grant | SimpleGrants</title>
+        <title>プロジェクト作成 | DigDAO マッチングドネーション</title>
         <meta
           name="description"
-          content="Join us in making an impact through quadratic funding."
+          content="マッチングドネーション（Quadratic Funding）でお気に入りのプロジェクトに寄付して、公共財を支援しよう."
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>

@@ -23,8 +23,8 @@ export default function CreatePoolSuccess() {
     if (typeof window !== undefined && createdPool) {
       return {
         url: `${process.env.NODE_ENV === "production"
-            ? "https://simplegrants.xyz"
-            : "http://localhost:3001"
+          ? "https://donation.digdao.jp"
+          : "http://localhost:3001"
           }/pools/${createdPool.id}`,
         message: `Check out my pool - ${createdPool.name}!\n`,
       };
@@ -49,10 +49,10 @@ export default function CreatePoolSuccess() {
   return (
     <div>
       <Head>
-        <title>Pool Created | SimpleGrants</title>
+        <title>マッチングファンドの作成 | DigDAO マッチングドネーション</title>
         <meta
           name="description"
-          content="Join us in making an impact through quadratic funding."
+          content="マッチングドネーション（Quadratic Funding）でお気に入りのプロジェクトに寄付して、公共財を支援しよう."
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -68,7 +68,7 @@ export default function CreatePoolSuccess() {
           <Link className="btn btn-ghost" href="/">
             <Image
               src="/logo.png"
-              alt="SimpleGrants"
+              alt="DigDAO マッチングドネーション"
               width={103.55}
               height={32}
             />
