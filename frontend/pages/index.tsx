@@ -372,8 +372,18 @@ export default function Home() {
             </div>
             <div className="flex flex-col gap-y-3 mb-6">
               <p className="font-bold text-xl">法に関すること</p>
-              <p className="font-sm">利用規約</p>
-              <p className="font-sm">プライバシーポリシー</p>
+              <Link
+                href="https://github.com/dig-dao/simplegrants/blob/main/terms.md"
+                target="_blank"
+              >
+                <p className="font-sm cursor-pointer">利用規約</p>
+              </Link>
+              <Link
+                href="https://github.com/dig-dao/simplegrants/blob/main/policy.md"
+                target="_blank"
+              >
+                <p className="font-sm cursor-pointer">プライバシーポリシー</p>
+              </Link>
             </div>
           </div>
         </footer>
