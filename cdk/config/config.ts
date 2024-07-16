@@ -17,6 +17,7 @@ export function getConfig(stage: string) {
       region: process.env.AWS_REGION,
       bastionKeypairId: process.env.AWS_BASTION_KEYPAIR_ID,
       bastionKeypairName: process.env.AWS_BASTION_KEYPAIR_NAME,
+      bastionSshPort: Number(process.env.AWS_BASTION_SSH_PORT || 22),
     },
 
     database: {

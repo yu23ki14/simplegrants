@@ -1,21 +1,21 @@
-import { create } from "zustand";
-import { devtools, persist } from "zustand/middleware";
-import { BasicGrantInfo } from "../../../types/grant";
+import { create } from "zustand"
+import { devtools, persist } from "zustand/middleware"
+import { BasicGrantInfo } from "../../../types/grant"
 
 // The info about a grant that will be checked out
-interface GrantCheckoutItem {
-  id: string;
-  image: string;
-  name: string;
-  amount: number;
+export interface GrantCheckoutItem {
+  id: string
+  image: string
+  name: string
+  amount: number
 }
 
 interface GrantCartState {
-  grants: GrantCheckoutItem[];
-  addToCart: (grant: BasicGrantInfo) => void;
-  updateCart: (id: string, amount: number) => void;
-  removeFromCart: (grantId: string) => void;
-  clearCart: () => void;
+  grants: GrantCheckoutItem[]
+  addToCart: (grant: BasicGrantInfo) => void
+  updateCart: (id: string, amount: number) => void
+  removeFromCart: (grantId: string) => void
+  clearCart: () => void
 }
 
 export const useGrantCartStore = create<GrantCartState>()(
@@ -48,8 +48,8 @@ export const useGrantCartStore = create<GrantCartState>()(
           })),
         removeFromCart: (grantId) =>
           set((state) => {
-            const grants = state.grants.filter((grant) => grant.id !== grantId);
-            return { grants: grants };
+            const grants = state.grants.filter((grant) => grant.id !== grantId)
+            return { grants: grants }
           }),
         clearCart: () => set(() => ({ grants: [] })),
       }),
@@ -58,4 +58,4 @@ export const useGrantCartStore = create<GrantCartState>()(
       }
     )
   )
-);
+)
