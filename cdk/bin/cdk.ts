@@ -20,7 +20,7 @@ const config = getConfig(stage)
 
 const vpc = new VpcStack(
   app,
-  `${stage}${config.appName}Vpc`,
+  `${config.appName}Vpc`,
   {
     description: "VPC for the application",
     env: {

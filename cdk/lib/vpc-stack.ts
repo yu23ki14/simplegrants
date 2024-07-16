@@ -55,7 +55,7 @@ export class VpcStack extends Stack {
 
     this.ec2BastionSecurityGroup.addIngressRule(
       ec2.Peer.anyIpv4(),
-      ec2.Port.tcp(22),
+      ec2.Port.tcp(config.aws.bastionSshPort),
       "Allow SSH from anywhere"
     )
 

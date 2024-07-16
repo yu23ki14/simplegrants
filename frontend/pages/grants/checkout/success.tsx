@@ -103,15 +103,19 @@ export default function CheckoutSuccess() {
               あなたの <b>{data.donated.toLocaleString("ja-JP")}円</b>{" "}
               分の寄付を受け取りました。
               <br></br>
-              この寄付に加え、約{" "}
-              <b>
-                {data.matched.toLocaleString("ja-JP", {
-                  minimumFractionDigits: 0,
-                  maximumFractionDigits: 0,
-                })}
-                円
-              </b>
-              分の助成金が資金プールから上乗せされてプロジェクトに分配されます。
+              {Math.round(data.matched) > 0 && (
+                <>
+                  この寄付に加え、約{" "}
+                  <b>
+                    {data.matched.toLocaleString("ja-JP", {
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 0,
+                    })}
+                    円
+                  </b>
+                  分の助成金が資金プールから上乗せされてプロジェクトに分配されます。
+                </>
+              )}
             </p>
             {shareInformation && (
               <>
