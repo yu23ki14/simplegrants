@@ -1,38 +1,38 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Head from "next/head";
-import { useSession, signIn } from "next-auth/react";
-import React from "react";
-import MainLayout from "../../layouts/MainLayout";
-import Navbar from "../../layouts/Navbar";
-import Button from "../../components/Button";
-import axios from "../../utils/axios";
-import Link from "next/link";
-import { toast } from "react-toastify";
-import { FilterOptions, GrantResponse, SortOptions } from "../../types/grant";
-import * as ToggleGroup from "@radix-ui/react-toggle-group";
-import Select from "../../components/input/Select";
-import Divider from "../../components/Divider";
-import GrantCard from "../../components/grant/GrantCard";
-import { useRouter } from "next/router";
-import TextInput from "../../components/input/TextInput";
-import Search from "../../components/icons/Search";
-import Grid from "../../components/icons/Grid";
-import List from "../../components/icons/List";
-import GrantList from "../../components/grant/GrantList";
-import { debounce as debouncer } from "lodash";
+import Head from "next/head"
+import { useSession, signIn } from "next-auth/react"
+import React from "react"
+import MainLayout from "../../layouts/MainLayout"
+import Navbar from "../../layouts/Navbar"
+import Button from "../../components/Button"
+import axios from "../../utils/axios"
+import Link from "next/link"
+import { toast } from "react-toastify"
+import { FilterOptions, GrantResponse, SortOptions } from "../../types/grant"
+import * as ToggleGroup from "@radix-ui/react-toggle-group"
+import Select from "../../components/input/Select"
+import Divider from "../../components/Divider"
+import GrantCard from "../../components/grant/GrantCard"
+import { useRouter } from "next/router"
+import TextInput from "../../components/input/TextInput"
+import Search from "../../components/icons/Search"
+import Grid from "../../components/icons/Grid"
+import List from "../../components/icons/List"
+import GrantList from "../../components/grant/GrantList"
+import { debounce as debouncer } from "lodash"
 
 export default function Grants() {
-  const router = useRouter();
-  const { data: session } = useSession();
-  const [data, setData] = React.useState<GrantResponse[]>([]);
-  const [sort, setSort] = React.useState<string | undefined>(undefined);
-  const [filter, setFilter] = React.useState<string | undefined>(undefined);
-  const [search, setSearch] = React.useState<string | undefined>(undefined);
-  const [view, setView] = React.useState<"grid" | "list">("grid");
-  const [loading, setLoading] = React.useState(false);
+  const router = useRouter()
+  const { data: session } = useSession()
+  const [data, setData] = React.useState<GrantResponse[]>([])
+  const [sort, setSort] = React.useState<string | undefined>(undefined)
+  const [filter, setFilter] = React.useState<string | undefined>(undefined)
+  const [search, setSearch] = React.useState<string | undefined>(undefined)
+  const [view, setView] = React.useState<"grid" | "list">("grid")
+  const [loading, setLoading] = React.useState(false)
 
   const getGrants = () => {
-    setLoading(true);
+    setLoading(true)
     axios
       .get("/grants", {
         params: {
@@ -41,38 +41,43 @@ export default function Grants() {
           search,
         },
       })
-      .then((res) => setData(res.data))
+      .then((res) => {
+        const grants = res.data
+        setData(
+          data.length > 0 ? grants : grants.sort(() => Math.random() - 0.5)
+        )
+      })
       .catch((err) => {
-        console.error({ err });
+        console.error({ err })
         toast.error(
           err.response?.data?.message || err.message || "Something went wrong",
           {
             toastId: "retrieve-grants-error",
           }
-        );
+        )
       })
-      .finally(() => setLoading(false));
-  };
+      .finally(() => setLoading(false))
+  }
 
   React.useEffect(() => {
-    getGrants();
-  }, []);
+    getGrants()
+  }, [])
 
   React.useEffect(() => {
-    getGrants();
-  }, [sort, filter, search]);
+    getGrants()
+  }, [sort, filter, search])
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedOnChange = React.useCallback(
     debouncer((value) => {
-      setSearch(value);
+      setSearch(value)
     }, 500),
     [setSearch]
-  );
+  )
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    debouncedOnChange(event.target.value);
-  };
+    debouncedOnChange(event.target.value)
+  }
 
   return (
     <div>
@@ -88,7 +93,10 @@ export default function Grants() {
       <MainLayout>
         <Navbar className="p-0" location="grants">
           {/* <Link href="/grants/create"> */}
-          <Link href="https://scrapbox.io/public-goods-funding/%E5%85%AC%E7%9B%8A%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%A8%E3%81%97%E3%81%A6%E6%8E%B2%E8%BC%89%E3%81%97%E3%81%9F%E3%81%84%E4%BA%BA%E3%81%B8" target="_blank">
+          <Link
+            href="https://scrapbox.io/public-goods-funding/%E5%85%AC%E7%9B%8A%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%A8%E3%81%97%E3%81%A6%E6%8E%B2%E8%BC%89%E3%81%97%E3%81%9F%E3%81%84%E4%BA%BA%E3%81%B8"
+            target="_blank"
+          >
             <Button>プロジェクト登録</Button>
           </Link>
         </Navbar>
@@ -127,7 +135,7 @@ export default function Grants() {
                 value={view}
                 aria-label="Text alignment"
                 onValueChange={(value: "grid" | "list") => {
-                  if (value) setView(value);
+                  if (value) setView(value)
                 }}
               >
                 <ToggleGroup.Item
@@ -182,5 +190,5 @@ export default function Grants() {
         </div>
       </MainLayout>
     </div>
-  );
+  )
 }
