@@ -49,12 +49,6 @@ export default function GrantDetails() {
     }
   }, [id])
 
-  React.useEffect(() => {
-    if (status === "unauthenticated") {
-      router.replace("/sign-in")
-    }
-  }, [status])
-
   return (
     <div>
       <Head>
@@ -113,7 +107,14 @@ export default function GrantDetails() {
                       </Link>
                     </div>
                   </div>
-                  <p className="mt-12">{data.description}</p>
+                  <p className="mt-12">
+                    {data.description.split("\n").map((line, index) => (
+                      <React.Fragment key={index}>
+                        {line}
+                        <br />
+                      </React.Fragment>
+                    ))}
+                  </p>
                 </div>
               </div>
               <div className="basis-full md:basis-2/5 px-4 flex flex-col items-center gap-4">
@@ -161,8 +162,7 @@ export default function GrantDetails() {
                         <Button
                           width="full"
                           className=""
-                          // disabled={!data.verified}
-                          disabled={true}
+                          disabled={!data.verified}
                           onClick={() => addToCart(data)}
                         >
                           カートに入れる
@@ -172,7 +172,7 @@ export default function GrantDetails() {
                   )}
                 </div>
                 {data.team.some(
-                  (team) => team.id === (session?.user as any).id
+                  (team) => team?.id === (session?.user as any)?.id
                 ) && (
                   <div className="flex flex-col w-full bg-white shadow-card py-8 px-6 rounded-xl max-w-sm">
                     <p className="font-bold mb-4">Looking to make changes?</p>

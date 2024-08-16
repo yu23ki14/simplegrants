@@ -100,7 +100,9 @@ export default function Home() {
           />
         </div>
         <div className="relative flex flex-col items-center w-full md:-translate-y-[30%] translate-y-10">
-          <h2 className="font-bold text-3xl md:text-5xl mb-8">運営パートナー</h2>
+          <h2 className="font-bold text-3xl md:text-5xl mb-8">
+            運営パートナー
+          </h2>
           <div className="flex flex-wrap justify-center">
             <div className="flex justify-center items-center m-8">
               <Image
@@ -137,7 +139,6 @@ export default function Home() {
           </p>
         </section>
         <section className="px-8 md:px-18 lg:px-36">
-
           <div className="flex flex-wrap w-full items-center justify-center gap-x-12 gap-y-8">
             <div className="flex flex-col h-full w-full max-w-[350px] px-9 py-12 bg-[linear-gradient(90deg,_#E4F3DD_17.22%,_#FFE0DB_96.29%)] rounded-2xl border border-[#D9A596]">
               <p className="font-bold text-3xl mb-10">寄付</p>
@@ -158,7 +159,7 @@ export default function Home() {
             <div className="flex flex-col h-full w-full max-w-[350px] px-9 py-12 bg-[linear-gradient(90deg,_#FFE1A7_0.79%,_#E5F4DE_97.08%)] rounded-2xl border border-[#D9A596]">
               <p className="font-bold text-3xl mb-10">公益プロジェクト</p>
               <p>
-                私たちは、社会的意義のあるn個のプロジェクトを公募の上、選定しました。これらのプロジェクトが寄付先の選択肢となり、マッチングプールからの資金分配を受け取ることができます。
+                私たちは、社会的意義のあるプロジェクトを公募の上、選定しました。これらのプロジェクトが寄付先の選択肢となり、マッチングプールからの資金分配を受け取ることができます。
               </p>
             </div>
           </div>
@@ -285,6 +286,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row gap-12">
             {data &&
               data
+                .sort(() => Math.random() - 0.5)
                 .slice(0, 3)
                 .map((grant) => (
                   <GrantCard
