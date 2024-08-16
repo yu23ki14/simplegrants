@@ -159,7 +159,7 @@ export default function Home() {
             <div className="flex flex-col h-full w-full max-w-[350px] px-9 py-12 bg-[linear-gradient(90deg,_#FFE1A7_0.79%,_#E5F4DE_97.08%)] rounded-2xl border border-[#D9A596]">
               <p className="font-bold text-3xl mb-10">公益プロジェクト</p>
               <p>
-                私たちは、社会的意義のあるn個のプロジェクトを公募の上、選定しました。これらのプロジェクトが寄付先の選択肢となり、マッチングプールからの資金分配を受け取ることができます。
+                私たちは、社会的意義のあるプロジェクトを公募の上、選定しました。これらのプロジェクトが寄付先の選択肢となり、マッチングプールからの資金分配を受け取ることができます。
               </p>
             </div>
           </div>

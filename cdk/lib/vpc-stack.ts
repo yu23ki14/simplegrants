@@ -53,11 +53,21 @@ export class VpcStack extends Stack {
       }
     )
 
-    this.ec2BastionSecurityGroup.addIngressRule(
-      ec2.Peer.anyIpv4(),
-      ec2.Port.tcp(config.aws.bastionSshPort),
-      "Allow SSH from anywhere"
-    )
+    if (config.aws.bastionAllowIpAddresses.length > 0) {
+      for (const ipAddress of config.aws.bastionAllowIpAddresses) {
+        this.ec2BastionSecurityGroup.addIngressRule(
+          ec2.Peer.ipv4(ipAddress),
+          ec2.Port.tcp(config.aws.bastionSshPort),
+          `Allow SSH from ${ipAddress}`
+        )
+      }
+    } else {
+      this.ec2BastionSecurityGroup.addIngressRule(
+        ec2.Peer.anyIpv4(),
+        ec2.Port.tcp(config.aws.bastionSshPort),
+        "Allow SSH from anywhere"
+      )
+    }
 
     new ec2.Instance(this, `${config.appName}Bastion`, {
       vpc: this.vpc,
