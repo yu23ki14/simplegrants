@@ -49,12 +49,6 @@ export default function GrantDetails() {
     }
   }, [id])
 
-  React.useEffect(() => {
-    if (status === "unauthenticated") {
-      router.replace("/sign-in")
-    }
-  }, [status])
-
   return (
     <div>
       <Head>
@@ -168,8 +162,7 @@ export default function GrantDetails() {
                         <Button
                           width="full"
                           className=""
-                          // disabled={!data.verified}
-                          disabled={true}
+                          disabled={!data.verified}
                           onClick={() => addToCart(data)}
                         >
                           カートに入れる
