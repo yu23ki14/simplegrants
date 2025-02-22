@@ -1,49 +1,49 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Head from "next/head";
-import { useSession } from "next-auth/react";
-import React from "react";
-import MainLayout from "../../../layouts/MainLayout";
-import Navbar from "../../../layouts/Navbar";
-import Button from "../../../components/Button";
-import Link from "next/link";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import { usePoolCartStore } from "../../../utils/store";
-import Divider from "../../../components/Divider";
-import { useHasHydrated } from "../../../utils/useHydrated";
-import TextInput from "../../../components/input/TextInput";
-import axios from "../../../utils/axios";
-import { toast } from "react-toastify";
-import BackButton from "../../../components/BackButton";
+import Head from "next/head"
+import { useSession } from "next-auth/react"
+import React from "react"
+import MainLayout from "../../../layouts/MainLayout"
+import Navbar from "../../../layouts/Navbar"
+import Button from "../../../components/Button"
+import Link from "next/link"
+import Image from "next/image"
+import { useRouter } from "next/router"
+import { usePoolCartStore } from "../../../utils/store"
+import Divider from "../../../components/Divider"
+import { useHasHydrated } from "../../../utils/useHydrated"
+import TextInput from "../../../components/input/TextInput"
+import axios from "../../../utils/axios"
+import { toast } from "react-toastify"
+import BackButton from "../../../components/BackButton"
 
 export default function PoolsCheckout() {
-  const router = useRouter();
-  const { pools, addToCart, removeFromCart, updateCart } = usePoolCartStore();
-  const { id } = router.query;
-  const { data: session, status } = useSession();
-  const [data, setData] = React.useState<any>();
-  const [loading, setLoading] = React.useState(false);
-  const hasHydrated = useHasHydrated();
+  const router = useRouter()
+  const { pools, addToCart, removeFromCart, updateCart } = usePoolCartStore()
+  const { id } = router.query
+  const { data: session, status } = useSession()
+  const [data, setData] = React.useState<any>()
+  const [loading, setLoading] = React.useState(false)
+  const hasHydrated = useHasHydrated()
 
   React.useEffect(() => {
     if (status === "unauthenticated") {
-      router.replace("/sign-in");
+      router.replace("/sign-in")
     }
-  }, [status]);
+  }, [status])
 
   React.useEffect(() => {
     if (data) {
-      router.push(data.url);
+      router.push(data.url)
     }
-  }, [data]);
+  }, [data])
 
   const subtotal = React.useMemo(
     () => pools.reduce((acc, pool) => acc + pool.amount, 0),
     [pools]
-  );
+  )
 
   const checkoutPools = () => {
-    setLoading(true);
+    setLoading(true)
     axios
       .post(
         "/pools/checkout",
@@ -59,25 +59,25 @@ export default function PoolsCheckout() {
       )
       .then((res) => setData(res.data))
       .catch((err) => {
-        console.error({ err });
+        console.error({ err })
         toast.error(
           err.response?.data?.message || err.message || "Something went wrong",
           {
             toastId: "checkout-pools-error",
           }
-        );
+        )
       })
-      .finally(() => setLoading(false));
-  };
+      .finally(() => setLoading(false))
+  }
 
   const updatePoolAmount = (id: string, amount: string) => {
-    const num = parseFloat(amount);
+    const num = parseFloat(amount)
     if (isNaN(num) || num < 0) {
-      updateCart(id, 0);
+      updateCart(id, 0)
     } else {
-      updateCart(id, num);
+      updateCart(id, num)
     }
-  };
+  }
 
   return (
     <div>
@@ -136,7 +136,7 @@ export default function PoolsCheckout() {
                               }
                               className="px-4 py-2 max-w-[144px] lg:max-w-[192px] text-lg"
                             />
-                            <p className="text-lg ml-3">USD</p>
+                            <p className="text-lg ml-3">JPY</p>
                           </div>
                         </div>
                         <p
@@ -208,5 +208,5 @@ export default function PoolsCheckout() {
         </div>
       </MainLayout>
     </div>
-  );
+  )
 }

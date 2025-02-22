@@ -1,14 +1,14 @@
-import React, { ReactNode } from "react";
-import clsx from "clsx";
-import { FieldErrors, UseFormRegister } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message";
-import ErrorMessageText from "./ErrorMessageText";
+import React, { ReactNode } from "react"
+import clsx from "clsx"
+import { FieldErrors, UseFormRegister } from "react-hook-form"
+import { ErrorMessage } from "@hookform/error-message"
+import ErrorMessageText from "./ErrorMessageText"
 
 interface IInputProps extends React.HTMLProps<HTMLInputElement> {
-  icon?: ReactNode;
-  className?: string;
-  register?: UseFormRegister<any>;
-  errors?: FieldErrors<any>;
+  icon?: ReactNode
+  className?: string
+  register?: UseFormRegister<any>
+  errors?: FieldErrors<any>
 }
 
 export default function TextInput({
@@ -19,7 +19,7 @@ export default function TextInput({
   errors,
   ...props
 }: IInputProps) {
-  const { id, type } = props;
+  const { id, type } = props
 
   return (
     <>
@@ -37,7 +37,7 @@ export default function TextInput({
         <input
           className={clsx(
             icon ? "pl-10" : "",
-            "block w-full px-7 py-3 border focus:border-sg-primary focus:ring-0 focus:ring-offset-0 outline-none rounded-lg",
+            "block w-full px-4 py-3 border focus:border-sg-primary focus:ring-0 focus:ring-offset-0 outline-none rounded-lg",
             errors && !!errors[id || ""] ? "border-sg-error" : "border-sg-500"
           )}
           {...props}
@@ -55,5 +55,5 @@ export default function TextInput({
         />
       )}
     </>
-  );
+  )
 }

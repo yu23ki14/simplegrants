@@ -150,7 +150,9 @@ export default function Home() {
 
 
         <div className="relative flex flex-col items-center w-full md:-translate-y-[30%] translate-y-10">
-          <h2 className="font-bold text-3xl md:text-5xl mb-8">運営パートナー</h2>
+          <h2 className="font-bold text-3xl md:text-5xl mb-8">
+            運営パートナー
+          </h2>
           <div className="flex flex-wrap justify-center">
             <div className="flex justify-center items-center m-8">
               <Image
@@ -246,11 +248,12 @@ export default function Home() {
           </div>
         </section>
 
+
         <section className="px-8 md:px-18 lg:px-36">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <div className="flex flex-col h-full w-full px-9 py-12 bg-white rounded-2xl border border-black">
-              <p className="font-bold text-3xl mb-6">寄付</p>
-              <p className="flex-grow">
+          <div className="flex flex-wrap w-full items-center justify-center gap-x-12 gap-y-8">
+            <div className="flex flex-col h-full w-full max-w-[350px] px-9 py-12 bg-[linear-gradient(90deg,_#E4F3DD_17.22%,_#FFE0DB_96.29%)] rounded-2xl border border-[#D9A596]">
+              <p className="font-bold text-3xl mb-10">寄付</p>
+              <p>
                 お気に入りのプロジェクトを見つけて、誰でも寄付することができます。
                 <br></br>
                 あなたが寄付したお金は、QFの計算式に基づいてマッチングプールから上乗せされ、プロジェクトに対してより多くの資金を提供することができます。
@@ -484,6 +487,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row gap-12">
             {data &&
               data
+                .sort(() => Math.random() - 0.5)
                 .slice(0, 3)
                 .map((grant) => (
                   <GrantCard

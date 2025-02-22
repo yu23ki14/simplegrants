@@ -1,64 +1,60 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Head from "next/head";
-import { useSession } from "next-auth/react";
-import React from "react";
-import MainLayout from "../../../layouts/MainLayout";
-import Navbar from "../../../layouts/Navbar";
-import Button from "../../../components/Button";
-import axios from "../../../utils/axios";
-import Link from "next/link";
-import { toast } from "react-toastify";
-import { GrantDetailResponse } from "../../../types/grant";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import FundingBar from "../../../components/FundingBar";
-import { useGrantCartStore } from "../../../utils/store";
-import Location from "../../../components/icons/Location";
-import Twitter from "../../../components/icons/Twitter";
-import Website from "../../../components/icons/Website";
-import BackButton from "../../../components/BackButton";
+import Head from "next/head"
+import { useSession } from "next-auth/react"
+import React from "react"
+import MainLayout from "../../../layouts/MainLayout"
+import Navbar from "../../../layouts/Navbar"
+import Button from "../../../components/Button"
+import axios from "../../../utils/axios"
+import Link from "next/link"
+import { toast } from "react-toastify"
+import { GrantDetailResponse } from "../../../types/grant"
+import Image from "next/image"
+import { useRouter } from "next/router"
+import FundingBar from "../../../components/FundingBar"
+import { useGrantCartStore } from "../../../utils/store"
+import Location from "../../../components/icons/Location"
+import Twitter from "../../../components/icons/Twitter"
+import Website from "../../../components/icons/Website"
+import BackButton from "../../../components/BackButton"
 
 export default function GrantDetails() {
-  const router = useRouter();
-  const { grants, addToCart, removeFromCart } = useGrantCartStore();
-  const { id } = router.query;
-  const { data: session, status } = useSession();
-  const [data, setData] = React.useState<GrantDetailResponse>();
-  const [loading, setLoading] = React.useState(false);
+  const router = useRouter()
+  const { grants, addToCart, removeFromCart } = useGrantCartStore()
+  const { id } = router.query
+  const { data: session, status } = useSession()
+  const [data, setData] = React.useState<GrantDetailResponse>()
+  const [loading, setLoading] = React.useState(false)
 
   const getGrant = () => {
-    setLoading(true);
+    setLoading(true)
     axios
       .get(`/grants/${id}`)
       .then((res) => setData(res.data))
       .catch((err) => {
-        console.error({ err });
+        console.error({ err })
         toast.error(
           err.response?.data?.message || err.message || "Something went wrong",
           {
             toastId: "retrieve-grant-error",
           }
-        );
+        )
       })
-      .finally(() => setLoading(false));
-  };
+      .finally(() => setLoading(false))
+  }
 
   React.useEffect(() => {
     if (id) {
-      getGrant();
+      getGrant()
     }
-  }, [id]);
-
-  React.useEffect(() => {
-    if (status === "unauthenticated") {
-      router.replace("/sign-in");
-    }
-  }, [status]);
+  }, [id])
 
   return (
     <div>
       <Head>
-        <title>{data?.name || "Grant not found"} | DigDAO マッチングドネーション</title>
+        <title>
+          {data?.name || "Grant not found"} | DigDAO マッチングドネーション
+        </title>
         <meta
           name="description"
           content="マッチングドネーション（Quadratic Funding）でお気に入りのプロジェクトに寄付して、公共財を支援しよう"
@@ -71,7 +67,10 @@ export default function GrantDetails() {
           {/* <Link href="/grants/create">
             <Button>プロジェクト登録</Button>
           </Link> */}
-          <Link href="https://scrapbox.io/public-goods-funding/%E5%85%AC%E7%9B%8A%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%A8%E3%81%97%E3%81%A6%E6%8E%B2%E8%BC%89%E3%81%97%E3%81%9F%E3%81%84%E4%BA%BA%E3%81%B8" target="_blank">
+          <Link
+            href="https://scrapbox.io/public-goods-funding/%E5%85%AC%E7%9B%8A%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%A8%E3%81%97%E3%81%A6%E6%8E%B2%E8%BC%89%E3%81%97%E3%81%9F%E3%81%84%E4%BA%BA%E3%81%B8"
+            target="_blank"
+          >
             <Button>プロジェクト登録</Button>
           </Link>
         </Navbar>
@@ -108,7 +107,14 @@ export default function GrantDetails() {
                       </Link>
                     </div>
                   </div>
-                  <p className="mt-12">{data.description}</p>
+                  <p className="mt-12">
+                    {data.description.split("\n").map((line, index) => (
+                      <React.Fragment key={index}>
+                        {line}
+                        <br />
+                      </React.Fragment>
+                    ))}
+                  </p>
                 </div>
               </div>
               <div className="basis-full md:basis-2/5 px-4 flex flex-col items-center gap-4">
@@ -175,26 +181,28 @@ export default function GrantDetails() {
                   )}
                 </div>
                 {data.team.some(
-                  (team) => team.id === (session?.user as any).id
+                  (team) => team?.id === (session?.user as any)?.id
                 ) && (
-                    <div className="flex flex-col w-full bg-white shadow-card py-8 px-6 rounded-xl max-w-sm">
-                      <p className="font-bold mb-4">Looking to make changes?</p>
-                      <Link href={`/grants/${id}/edit`}>
-                        <Button width="full" className="">
-                          プロジェクトを編集する
-                        </Button>
-                      </Link>
-                    </div>
-                  )}
+                  <div className="flex flex-col w-full bg-white shadow-card py-8 px-6 rounded-xl max-w-sm">
+                    <p className="font-bold mb-4">Looking to make changes?</p>
+                    <Link href={`/grants/${id}/edit`}>
+                      <Button width="full" className="">
+                        プロジェクトを編集する
+                      </Button>
+                    </Link>
+                  </div>
+                )}
               </div>
             </div>
           ) : (
             <div className="w-full flex flex-col md:flex-row my-10 gap-y-8 items-center justify-center">
-              <p className="font-bold text-xl text-center">プロジェクトが見つかりません</p>
+              <p className="font-bold text-xl text-center">
+                プロジェクトが見つかりません
+              </p>
             </div>
           )}
         </div>
       </MainLayout>
     </div>
-  );
+  )
 }

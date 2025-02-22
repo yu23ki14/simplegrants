@@ -3,6 +3,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { PoolMatchInformation, PoolQfInformation } from './qf.interface';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { ProviderService } from 'src/provider/provider.service';
+import { User } from '@prisma/client';
 // import { ProviderModule } from 'src/provider/provider.module';
 // import { PrismaModule } from 'src/prisma/prisma.module';
 
@@ -43,6 +44,8 @@ export class QfService {
     if (!matchingRound || donationAmount <= 0) return 0;
 
     const qfInfo = await this.calculateQuadraticFundingAmount(matchingRound.id);
+    console.log(qfInfo);
+
     /**
      * We can estimate the QF amount by doing these steps:
      * 1. Square root the qfValue
@@ -66,7 +69,46 @@ export class QfService {
     return matchedAmountDifference;
   }
 
-  async calculateQuadraticFundingAmount(matchingRoundId: string) {
+  async estimateMatchedAmounts(
+    params: { grantId: string; amount: number }[],
+    user?: User,
+  ) {
+    const paramsOfMatchingRounds = {};
+    for (const grant of params) {
+      const round = await this.getActiveMatchingRoundByGrant(grant.grantId);
+      if (paramsOfMatchingRounds[round.id]) {
+        paramsOfMatchingRounds[round.id].push(grant);
+      } else {
+        paramsOfMatchingRounds[round.id] = [grant];
+      }
+    }
+
+    if (Object.keys(paramsOfMatchingRounds).length === 0) {
+      return {};
+    }
+
+    const matchingRounds = {};
+    for (const matchingRoundId of Object.keys(paramsOfMatchingRounds)) {
+      const qfInfo = await this.calculateQuadraticFundingAmount(
+        matchingRoundId,
+        {
+          userId: user?.id || 'unknown',
+          grants: paramsOfMatchingRounds[matchingRoundId],
+        },
+      );
+      matchingRounds[matchingRoundId] = qfInfo;
+    }
+
+    return matchingRounds;
+  }
+
+  async calculateQuadraticFundingAmount(
+    matchingRoundId: string,
+    grantsForEstimation?: {
+      userId: string;
+      grants: { grantId: string; amount: number }[];
+    },
+  ) {
     /**
      * We first need to get all the info of the matching round
      * 1. We need the amount of funds available
@@ -89,10 +131,17 @@ export class QfService {
     });
 
     // Here we get the total amount of funds in the matching pool
-    const totalFundsInPool = matchingRound.contributions.reduce(
+    let totalFundsInPool = matchingRound.contributions.reduce(
       (prev, matched) => prev + matched.amountUsd,
       0,
     );
+    if (grantsForEstimation) {
+      const totalFundsForEstimation = grantsForEstimation.grants.reduce(
+        (prev, grant) => prev + grant.amount,
+        0,
+      );
+      totalFundsInPool += totalFundsForEstimation;
+    }
 
     const qfInfo: PoolQfInformation = {
       grants: {},
@@ -125,6 +174,23 @@ export class QfService {
         {},
       );
 
+      if (grantsForEstimation) {
+        const grantForEstimation = grantsForEstimation.grants.find(
+          (g) => g.grantId === grant.id,
+        );
+        if (grantForEstimation) {
+          if (!grantContributionInfo[grantsForEstimation.userId])
+            grantContributionInfo[grantsForEstimation.userId] = {
+              amountUsd: 0,
+              qfValue: 0,
+            };
+          grantContributionInfo[grantsForEstimation.userId].amountUsd +=
+            grantForEstimation.amount;
+          grantContributionInfo[grantsForEstimation.userId].qfValue +=
+            Math.sqrt(grantForEstimation.amount);
+        }
+      }
+
       // Then now we can store the unique contributions under the grant
       qfInfo.grants[grant.id] = grantContributionInfo;
       qfInfo.recipients[grant.id] = grant.paymentAccount.recipientAddress;
@@ -155,7 +221,9 @@ export class QfService {
       (prev, grantId) => {
         const grants = prev.grants;
         const qfValue = qfInfo.qfValues[grantId];
-        const qfPercentage = qfValue / qfInfo.sumOfQfValues;
+        const qfPercentage = qfInfo.sumOfQfValues
+          ? qfValue / qfInfo.sumOfQfValues
+          : 0;
         const qfAmount = qfPercentage * totalFundsInPool;
 
         grants[grantId] = {
@@ -179,7 +247,8 @@ export class QfService {
     );
   }
 
-  @Cron(CronExpression.EVERY_HOUR)
+  // 本来Cronで自動的にマッチングした金額を振り込むが、今回は止める
+  // @Cron(CronExpression.EVERY_HOUR)
   async distributeMatchedFunds() {
     // Find every ended pool
     const endedPools = await this.prismaService.matchingRound.findMany({

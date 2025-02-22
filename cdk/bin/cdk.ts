@@ -5,7 +5,7 @@ import { AmplifyStack } from "../lib/amplify-stack"
 import { getConfig } from "../config/config"
 import { VpcStack } from "../lib/vpc-stack"
 import { RdsStack } from "../lib/rds-stack"
-import { BackendAppStack } from "../lib/app-stack"
+import { BackendAppStack, FrontendAppStack } from "../lib/app-stack"
 
 const app = new cdk.App()
 
@@ -20,7 +20,7 @@ const config = getConfig(stage)
 
 const vpc = new VpcStack(
   app,
-  `${stage}${config.appName}Vpc`,
+  `${config.appName}Vpc`,
   {
     description: "VPC for the application",
     env: {
@@ -62,6 +62,23 @@ new BackendAppStack(
     vpc: vpc.vpc,
     config,
     appRunnerSecurityGroup: rds.backendAppRunnerSG,
+  }
+)
+
+new FrontendAppStack(
+  app,
+  `${stage}${config.appName}FrontendApp`,
+  {
+    description: "Frontend App Runner for the application",
+    env: {
+      account: config.aws.account,
+      region: config.aws.region,
+    },
+  },
+  {
+    vpc: vpc.vpc,
+    config,
+    appRunnerSecurityGroup: rds.frontendAppRunnerSG,
   }
 )
 
