@@ -1,12 +1,12 @@
-import { signIn } from "next-auth/react";
-import React from "react";
-import Link from "next/link";
-import clsx from "clsx";
-import Image from "next/image";
-import Button from "../../components/Button";
+import { signIn } from "next-auth/react"
+import React from "react"
+import Link from "next/link"
+import clsx from "clsx"
+import Image from "next/image"
+import Button from "../../components/Button"
 
 interface ILandingNavbarProps {
-  className?: string;
+  className?: string
 }
 
 export default function LandingNavbar({ className }: ILandingNavbarProps) {
@@ -29,9 +29,9 @@ export default function LandingNavbar({ className }: ILandingNavbarProps) {
           {/* <Button style="ghost" onClick={() => signIn()}>
             サインイン
           </Button> */}
-          <Button className="bg-white border-none" onClick={() => signIn()}>
+          {/* <Button className="bg-white border-none" onClick={() => signIn()}>
             ログイン
-          </Button>
+          </Button> */}
         </div>
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -54,9 +54,9 @@ export default function LandingNavbar({ className }: ILandingNavbarProps) {
             tabIndex={0}
             className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
           >
-            <li>
+            {/* <li>
               <Link href="/sign-in">ログイン</Link>
-            </li>
+            </li> */}
             {/* <li>
               <Link href="/sign-in">サインアップ</Link>
             </li> */}
@@ -64,5 +64,5 @@ export default function LandingNavbar({ className }: ILandingNavbarProps) {
         </div>
       </div>
     </div>
-  );
+  )
 }

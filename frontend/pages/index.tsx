@@ -17,37 +17,40 @@ import Twitter from "../components/icons/Twitter"
 import Link from "next/link"
 
 const nl2br = (str: string) => {
-  return str.split('\n').map((line, i) => (
+  return str.split("\n").map((line, i) => (
     <React.Fragment key={i}>
       {line}
-      {i !== str.split('\n').length - 1 && <br />}
+      {i !== str.split("\n").length - 1 && <br />}
     </React.Fragment>
-  ));
-};
-
+  ))
+}
 
 const testimonials = [
   {
     name: "関 治之",
     title: "Code for Japan",
-    image: "https://pbs.twimg.com/profile_images/1417298617132486657/4AL2yixW_400x400.jpg",
-    comment: "マッチングドネーションは、より多くの人の価値観を反映するための新たな参加形寄付方式です。\nこれにより、自治体内での審査プロセスは短縮し、より民主的な方法で資金を分配できるようになりました。",
+    image:
+      "https://pbs.twimg.com/profile_images/1417298617132486657/4AL2yixW_400x400.jpg",
+    comment:
+      "マッチングドネーションは、より多くの人の価値観を反映するための新たな参加形寄付方式です。\nこれにより、自治体内での審査プロセスは短縮し、より民主的な方法で資金を分配できるようになりました。",
   },
   {
     name: "奥村春香",
     title: "第3の家族",
-    image: "https://pbs.twimg.com/profile_images/1596524266308374528/8Pc4BgOt_400x400.jpg",
-    comment: "第3の家族は中学生〜大学生向けのサービス、かつ親や学校がステークホルダーにないサービスなので、支持者が他の団体に比べると若く、寄付額が少ないことが悩みでした。\n取り組みによって、支援してくれる人の所得帯が異なることは課題感として感じていたので、本当に今回のマッチングドネーションの取り組みに私たちも希望を感じています。",
+    image:
+      "https://pbs.twimg.com/profile_images/1868195497003094016/QN23hdYp_400x400.jpg",
+    comment:
+      "第3の家族は中学生〜大学生向けのサービス、かつ親や学校がステークホルダーにないサービスなので、支持者が他の団体に比べると若く、寄付額が少ないことが悩みでした。\n取り組みによって、支援してくれる人の所得帯が異なることは課題感として感じていたので、本当に今回のマッチングドネーションの取り組みに私たちも希望を感じています。",
   },
   {
     name: "白取 耕一郎",
     title: "支援みつもりヤドカリくん",
     image: "https://i.gyazo.com/756c60efb14b1987e4b0b25a40d28aa5.jpg",
-    comment: "市民活動にもお金は必要です。特にアプリ開発のように費用も時間も多くかかりがちな分野では特にそうだと思います。ずっと持ち出しで活動していると息切れする率が高くなると感じます。\nQFのような仕組みなら、政府や民間財団が集権的に決めなくても、関心の高い市民が意思決定に加わればデジタル公共財が供給できます。",
+    comment:
+      "市民活動にもお金は必要です。特にアプリ開発のように費用も時間も多くかかりがちな分野では特にそうだと思います。ずっと持ち出しで活動していると息切れする率が高くなると感じます。\nQFのような仕組みなら、政府や民間財団が集権的に決めなくても、関心の高い市民が意思決定に加わればデジタル公共財が供給できます。",
   },
   // 他の証言を追加...
-];
-
+]
 
 export default function Home() {
   const { data: session } = useSession()
@@ -124,14 +127,24 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row justify-center mt-8 gap-4">
               <Button
                 style="outline"
-                className="bg-white text-black border-2 border-black py-2 px-6 hover:bg-gray-100 transition-colors duration-300 rounded-none"
-                onClick={() => window.open('https://note.com/tkgshn/n/nfa5142139665', '_blank')}
+                className="bg-white text-black border-2 border-black py-2 px-6 hover:bg-gray-100 transition-colors duration-300 rounded-none w-auto"
+                onClick={() =>
+                  window.open(
+                    "https://note.com/tkgshn/n/nfa5142139665",
+                    "_blank"
+                  )
+                }
               >
                 第一回目の実験結果を見る
               </Button>
               <Button
-                className="bg-black text-white py-2 px-6 hover:bg-gray-800 transition-colors duration-300 rounded-none"
-                onClick={() => window.open('https://twitter.com/intent/follow?screen_name=digdaox', '_blank')}
+                className="bg-black text-white py-2 px-6 hover:bg-gray-800 transition-colors duration-300 rounded-none w-auto"
+                onClick={() =>
+                  window.open(
+                    "https://twitter.com/intent/follow?screen_name=digdaox",
+                    "_blank"
+                  )
+                }
               >
                 最新情報を受け取る
               </Button>
@@ -147,7 +160,6 @@ export default function Home() {
             className="scale-200 md:scale-150 lg:scale-125 w-screen"
           />
         </div>
-
 
         <div className="relative flex flex-col items-center w-full md:-translate-y-[30%] translate-y-10">
           <h2 className="font-bold text-3xl md:text-5xl mb-8">
@@ -181,23 +193,27 @@ export default function Home() {
           </div>
         </div>
 
-
-
-
-
-
         <section className="px-8 md:px-18 lg:px-36 py-16 bg-white">
           <div className="max-w-6xl mx-auto border border-black rounded-lg overflow-hidden">
             <div className="flex flex-col">
               <div className="flex flex-col md:flex-row">
                 <div className="md:w-1/2 p-8 border-b md:border-b-0 md:border-r border-black">
-                  <h3 className="text-4xl font-bold mb-6">クラウドファンディングと助成金の融合</h3>
-                  <p className="mb-6">Quadratic Funding でコミュニティの力を活用する</p>
+                  <h3 className="text-4xl font-bold mb-6">
+                    クラウドファンディングと助成金の融合
+                  </h3>
+                  <p className="mb-6">
+                    Quadratic Funding でコミュニティの力を活用する
+                  </p>
                   <blockquote className="border-l-4 border-gray-300 pl-4 text-sm mb-6">
                     <p>
-                      Gitcoin による二次資金の助成は、資金の割り当てだけでなく、優れたシグナル伝達ツールでもあります。ここ数ラウンド、Gitcoin に行くことで、これまで知らなかった本当にクールな Ethereum プロジェクトをたくさん発見することができました。
+                      Gitcoin
+                      による二次資金の助成は、資金の割り当てだけでなく、優れたシグナル伝達ツールでもあります。ここ数ラウンド、Gitcoin
+                      に行くことで、これまで知らなかった本当にクールな Ethereum
+                      プロジェクトをたくさん発見することができました。
                     </p>
-                    <footer className="text-sm italic mt-2">ヴィタリック・ブテリン、イーサリアム</footer>
+                    <footer className="text-sm italic mt-2">
+                      ヴィタリック・ブテリン、イーサリアム
+                    </footer>
                   </blockquote>
                 </div>
                 <div className="relative md:w-1/2 h-64 md:h-auto">
@@ -220,22 +236,26 @@ export default function Home() {
                   />
                 </div>
                 <div className="md:w-1/2 p-8">
-                  <h3 className="text-4xl font-bold mb-6">サポーターを活性化する</h3>
-                  <p className="mb-6">つながりを育み、プロジェクトの評判を高めます</p>
+                  <h3 className="text-4xl font-bold mb-6">
+                    サポーターを活性化する
+                  </h3>
+                  <p className="mb-6">
+                    つながりを育み、プロジェクトの評判を高めます
+                  </p>
                   <blockquote className="border-l-4 border-gray-300 pl-4 text-sm mb-6">
                     <p>
-                      Gitcoin が私にもたらしてくれた最大のことは、検証を与えてくれたことです。
+                      Gitcoin
+                      が私にもたらしてくれた最大のことは、検証を与えてくれたことです。
                     </p>
-                    <footer className="text-sm italic mt-2">デビッド・ホフマン、バンクレス</footer>
+                    <footer className="text-sm italic mt-2">
+                      デビッド・ホフマン、バンクレス
+                    </footer>
                   </blockquote>
                 </div>
               </div>
             </div>
           </div>
         </section>
-
-
-
 
         <section className="px-8 md:px-18 lg:px-36 py-16 bg-white">
           <div className="max-w-6xl mx-auto">
@@ -247,7 +267,6 @@ export default function Home() {
             </p>
           </div>
         </section>
-
 
         <section className="px-8 md:px-18 lg:px-36">
           <div className="flex flex-wrap w-full items-center justify-center gap-x-12 gap-y-8">
@@ -285,7 +304,6 @@ export default function Home() {
           </div>
         </section>
 
-
         <section className="px-8 md:px-18 lg:px-36">
           <div className="max-w-6xl mx-auto">
             <h2 className="font-bold text-3xl md:text-5xl mt-12 lg:mt-0 mb-16">
@@ -308,7 +326,7 @@ export default function Home() {
                   <p>
                     マッチングドネーションの計算にQuadratic
                     Fundingメカニズムを用いることで、幅広いコミュニティから支持されているプロジェクトが多くの助成金を受け取ることができます。
-                                   </p>
+                  </p>
                 </div>
               </div>
               <div className="flex flex-col md:flex-row h-full w-full px-8 py-14 md:items-center rounded-2xl bg-white border border-black gap-6">
@@ -386,7 +404,15 @@ export default function Home() {
           <div className="max-w-6xl mx-auto border border-black rounded-lg overflow-hidden">
             <div className="flex flex-col">
               <div className="p-8 border-b border-black">
-                <button className="text-sm font-semibold text-gray-500 mb-2 flex items-center" onClick={() => window.open("https://note.com/tkgshn/n/nfa5142139665", "_blank")}>
+                <button
+                  className="text-sm font-semibold text-gray-500 mb-2 flex items-center"
+                  onClick={() =>
+                    window.open(
+                      "https://note.com/tkgshn/n/nfa5142139665",
+                      "_blank"
+                    )
+                  }
+                >
                   DigDAOマッチングドネーション第一回目の結果を見る
                   <ArrowTopRightIcon className="ml-2" />
                 </button>
@@ -398,8 +424,13 @@ export default function Home() {
               <div className="flex flex-col md:flex-row">
                 <div className="flex-1 p-8 border-b md:border-b-0 md:border-r border-black">
                   <p className="text-4xl font-bold">18</p>
-                  <p className="text-sm text-gray-500 mb-4">支援されたプロジェクト</p>
-                  <div className="relative" style={{ position: 'relative', paddingTop: '75%' }}>
+                  <p className="text-sm text-gray-500 mb-4">
+                    支援されたプロジェクト
+                  </p>
+                  <div
+                    className="relative"
+                    style={{ position: "relative", paddingTop: "75%" }}
+                  >
                     <Image
                       src="https://i.gyazo.com/edf444f6dcc7345abff45d89391c2498.png"
                       alt="project distribution"
@@ -411,7 +442,10 @@ export default function Home() {
                 <div className="flex-1 p-8 border-b md:border-b-0 md:border-r border-black">
                   <p className="text-4xl font-bold">¥155,968</p>
                   <p className="text-sm text-gray-500 mb-4">ユニークな寄付</p>
-                  <div className="relative" style={{ position: 'relative', paddingTop: '75%' }}>
+                  <div
+                    className="relative"
+                    style={{ position: "relative", paddingTop: "75%" }}
+                  >
                     <Image
                       src="https://i.gyazo.com/0c1dcdda30dfb05a0acf5df87b0855b9.png"
                       alt="donation breakdown"
@@ -423,7 +457,10 @@ export default function Home() {
                 <div className="flex-1 p-8">
                   <p className="text-4xl font-bold">¥267,536</p>
                   <p className="text-sm text-gray-500 mb-4">公共財への支援</p>
-                  <div className="relative" style={{ position: 'relative', paddingTop: '75%' }}>
+                  <div
+                    className="relative"
+                    style={{ position: "relative", paddingTop: "75%" }}
+                  >
                     <Image
                       src="https://i.gyazo.com/7c432690b3c4e92fb4c621649cc5f515.png"
                       alt="allocation distribution"
@@ -444,7 +481,10 @@ export default function Home() {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {testimonials.map((testimonial, index) => (
-                <div key={index} className="border rounded-lg p-6 flex flex-col mx-auto border border-black rounded-lg overflow-hidden">
+                <div
+                  key={index}
+                  className="border rounded-lg p-6 flex flex-col mx-auto border border-black rounded-lg overflow-hidden"
+                >
                   <div className="flex items-center mb-4">
                     <Image
                       src={testimonial.image}
@@ -455,7 +495,9 @@ export default function Home() {
                     />
                     <div>
                       <h3 className="font-bold text-xl">{testimonial.name}</h3>
-                      <p className="text-base text-gray-600">{testimonial.title}</p>
+                      <p className="text-base text-gray-600">
+                        {testimonial.title}
+                      </p>
                     </div>
                   </div>
                   <p className="text-lg mb-4">{nl2br(testimonial.comment)}</p>
@@ -464,7 +506,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-
 
         {/* <section className="flex flex-row w-full justify-center bg-sg-primary px-8 md:px-24 lg:px-48 xl:px-96 py-28 gap-x-4">
           <p className="font-bold text-[128px] text-[#99BCD1] leading-none -translate-y-6 absolute left-0 md:relative">
@@ -480,7 +521,7 @@ export default function Home() {
           </div>
         </section> */}
 
-        <section className="flex flex-col w-full items-center justify-center mt-24">
+        {/* <section className="flex flex-col w-full items-center justify-center mt-24">
           <h3 className="font-bold text-3xl lg:text-5xl mb-14 text-center">
             前回掲載したプロジェクトの一例
           </h3>
@@ -498,7 +539,7 @@ export default function Home() {
                   />
                 ))}
           </div>
-        </section>
+        </section> */}
         <section className="flex flex-col w-full items-center justify-center text-center mt-40">
           <h3 className="font-bold text-3xl lg:text-5xl">
             あなたの寄付が公益プロジェクトを支える
@@ -507,12 +548,12 @@ export default function Home() {
             100円からでもプロジェクトに資金を提供できます。
           </p>
           {/* <Button onClick={() => router.push("/get-started")}> */}
-          <Button
+          {/* <Button
             className="bg-black text-white py-2 px-6 hover:bg-gray-800 transition-colors duration-300 rounded-none"
             onClick={() => router.push("/grants")}
           >
             前回のプロジェクト一覧を見る
-          </Button>
+          </Button> */}
         </section>
         <div className="relative flex w-full my-16">
           <Image
